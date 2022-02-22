@@ -5,7 +5,6 @@ import * as global from '../../../GLOBAL';
 import { Rate } from '../../others/models/rate';
 import {
   NbComponentStatus,
-  NbGlobalLogicalPosition,
   NbGlobalPhysicalPosition,
   NbGlobalPosition,
   NbToastrService,
@@ -41,18 +40,24 @@ export class RatesComponent implements OnInit {
     'danger',
   ];
 
-  errorOperationFee = false;
+  errors = false;
   formRates : FormGroup = new FormGroup ({
     /** 
      * Primer parametro: valor incial
      * Segundo parametro: validators
     */  
-     operatorFee : new FormControl(null, [ 
+    operatorFee : new FormControl(null, [ 
        Validators.required, 
        Validators.min(0), 
        Validators.pattern('[0-9]+(.[0-9]+)?')
       ] 
-      )
+    ),
+    priorizationFee : new FormControl(null, [ 
+      Validators.required, 
+      Validators.min(0), 
+      Validators.pattern('[0-9]+(.[0-9]+)?')
+     ] 
+     ),  
   });
 
   constructor(private api_rates : RatesService, private toastrService: NbToastrService) { }
@@ -63,27 +68,29 @@ export class RatesComponent implements OnInit {
   set_rates() {
     if (this.formRates.valid) {
       // Mandar la peticion de crear
-      let newRate : Rate = {
-        ratename: 'Tarifa de operación',
-        rate: parseFloat(this.formRates.get('operatorFee').value)
-      }
-      console.log(newRate);
-      // Obj1, Obj2
-      // Obj[]
-      this.api_rates.postRates(newRate)
-      .subscribe({
-        next : (res) => {
-          this.showToast(this.types[1], 'Agregado', 'Tarifa por operación agregado correctamente.');
-          this.formRates.reset();
-        },
-        error:() =>{
-          this.showToast(this.types[4], 'Error', 'Error mientras se agregaba la tarifa por operación vuelve a intentarlo.');
-        }
-      });
+      this.createRate('Tarifa por operación', parseFloat(this.formRates.get('operatorFee').value));
+      this.createRate('Tarifa por priorización', parseFloat(this.formRates.get('priorizationFee').value));
     } else {
-      this.errorOperationFee = true;
+      this.errors = true;
       return;
     }
+  }
+
+  private createRate(name, fee) {
+    let newRate : Rate = {
+      ratename: name,
+      rate: fee
+    };
+    this.api_rates.postRates(newRate)
+    .subscribe({
+      next : (res) => {
+        this.showToast(this.types[1], 'Agregado', name + ' agregado correctamente.');
+        this.formRates.reset();
+      },
+      error:() =>{
+        this.showToast(this.types[4], 'Error', 'Error mientras se agregaba la \"' + name + '\", vuelve a intentarlo.');
+      }
+    });
   }
 
   private showToast(type: NbComponentStatus, title: string, body: string) {
