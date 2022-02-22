@@ -7,18 +7,18 @@
         <!-- Formulario para tarifas -->
         <form [formGroup]="formRates">
           <div class="row">
-             <!-- Por Operacion -->
+            <!-- Por Operacion -->
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="operationFee" class="label">Por Operación</label> 
-                <div *ngIf="formRates.get('operatorFee')?.errors && formRates.get('operatorFee')?.touched || errorOperationFee" >
+                <div *ngIf="formRates.get('operatorFee')?.errors && formRates.get('operatorFee')?.touched || errors" >
                   <label class="label" style="color: red;" *ngIf="formRates.get('operatorFee').hasError('required')">{{ERROR_REQUIRED}}</label>
                   <label class="label" style="color: red;" *ngIf="formRates.get('operatorFee').hasError('min')">{{ERROR_MIN}}</label><br>
                   <label class="label" style="color: red;" *ngIf="formRates.get('operatorFee').hasError('pattern')">{{ERROR_NUMBER}}</label>
                 </div>
                 <input 
                 type="number"
-                [class.inp-invalid]="formRates.get('operatorFee')?.errors && formRates.get('operatorFee')?.touched || errorOperationFee" 
+                [class.inp-invalid]="formRates.get('operatorFee')?.errors && formRates.get('operatorFee')?.touched || errors" 
                 formControlName="operatorFee" 
                 step="0.01" 
                 min="0" 
@@ -31,13 +31,30 @@
               </div>
             </div>
 
-
-            <div class="col-sm-6">
+             <!-- De Priorización -->
+             <div class="col-sm-6">
               <div class="form-group">
-                <label for="inputLastName" class="label">Last Name</label>
-                <input type="text" nbInput fullWidth id="inputLastName" placeholder="Last Name" />
+                <label for="priorizationFee" class="label">Por Priorización</label> 
+                <div *ngIf="formRates.get('priorizationFee')?.errors && formRates.get('priorizationFee')?.touched || errors" >
+                  <label class="label" style="color: red;" *ngIf="formRates.get('priorizationFee').hasError('required')">{{ERROR_REQUIRED}}</label>
+                  <label class="label" style="color: red;" *ngIf="formRates.get('priorizationFee').hasError('min')">{{ERROR_MIN}}</label><br>
+                  <label class="label" style="color: red;" *ngIf="formRates.get('priorizationFee').hasError('pattern')">{{ERROR_NUMBER}}</label>
+                </div>
+                <input 
+                type="number"
+                [class.inp-invalid]="formRates.get('priorizationFee')?.errors && formRates.get('priorizationFee')?.touched || errors" 
+                formControlName="priorizationFee" 
+                step="0.01" 
+                min="0" 
+                nbInput 
+                fullWidth 
+                id="priorizationFee" 
+                placeholder="Priorización"
+                required
+                />
               </div>
             </div>
+            
           </div>
           <div class="row">
             <div class="col-sm-6">
