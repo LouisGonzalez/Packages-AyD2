@@ -16,7 +16,7 @@ import { NbMenuModule } from '@nebular/theme';
     AdminModule,
     OperatorModule,
     RecepModule,
-    NbMenuModule
+    NbMenuModule,
   ]
 })
 export class UsersModule { }

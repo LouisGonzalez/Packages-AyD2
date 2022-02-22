@@ -10,7 +10,7 @@ const routes: Routes = [
     component: ViewsComponent,
     children: [
       {
-        path: 'auth2',
+        path: 'auth',
         loadChildren: () => import('./auth/auth.module')
           .then(m => m.AuthModule)
       },
@@ -18,7 +18,13 @@ const routes: Routes = [
         path: 'users',
         loadChildren: () => import('./users/users.module')
           .then(m => m.UsersModule)
+      },
+      {
+        path: '',
+        redirectTo: 'auth2/login',
+        pathMatch: 'full'
       }
+
     ]
   }
 ];

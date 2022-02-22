@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
 
 const routes: Routes = [
   {
@@ -8,6 +9,10 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       //Aqui iran los hijos
+      {
+        path: 'register',
+        component: RegisterUserComponent
+      },
     ]
   }
 ];
