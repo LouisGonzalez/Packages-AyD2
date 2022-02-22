@@ -58,6 +58,12 @@ export class RatesComponent implements OnInit {
       Validators.pattern('[0-9]+(.[0-9]+)?')
      ] 
      ),  
+    pricePerPound: new FormControl(null, [ 
+      Validators.required, 
+      Validators.min(0), 
+      Validators.pattern('[0-9]+(.[0-9]+)?')
+     ] 
+     ),  
   });
 
   constructor(private api_rates : RatesService, private toastrService: NbToastrService) { }
@@ -70,6 +76,7 @@ export class RatesComponent implements OnInit {
       // Mandar la peticion de crear
       this.createRate('Tarifa por operación', parseFloat(this.formRates.get('operatorFee').value));
       this.createRate('Tarifa por priorización', parseFloat(this.formRates.get('priorizationFee').value));
+      this.createRate('Tarifa por libra', parseFloat(this.formRates.get('pricePerPound').value));
     } else {
       this.errors = true;
       return;
@@ -84,7 +91,7 @@ export class RatesComponent implements OnInit {
     this.api_rates.postRates(newRate)
     .subscribe({
       next : (res) => {
-        this.showToast(this.types[1], 'Agregado', name + ' agregado correctamente.');
+        this.showToast(this.types[1], 'Agregado', name + ', agregado correctamente.');
         this.formRates.reset();
       },
       error:() =>{

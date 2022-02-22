@@ -49,7 +49,7 @@
                 nbInput 
                 fullWidth 
                 id="priorizationFee" 
-                placeholder="Priorización"
+                placeholder="Por Priorización"
                 required
                 />
               </div>
@@ -57,21 +57,33 @@
             
           </div>
           <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="inputFirstName" class="label">First Name</label>
-                <input type="text" nbInput fullWidth id="inputFirstName" placeholder="First Name" />
+            <!-- Por Libra -->
+            <div class="form-group">
+              <label for="pricePerPound" class="label">Por Libra</label> 
+              <div *ngIf="formRates.get('pricePerPound')?.errors && formRates.get('pricePerPound')?.touched || errors" >
+                <label class="label" style="color: red;" *ngIf="formRates.get('pricePerPound').hasError('required')">{{ERROR_REQUIRED}}</label>
+                <label class="label" style="color: red;" *ngIf="formRates.get('pricePerPound').hasError('min')">{{ERROR_MIN}}</label><br>
+                <label class="label" style="color: red;" *ngIf="formRates.get('pricePerPound').hasError('pattern')">{{ERROR_NUMBER}}</label>
               </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for="inputLastName" class="label">Last Name</label>
-                <input type="text" nbInput fullWidth id="inputLastName" placeholder="Last Name" />
-              </div>
+              <input 
+              type="number"
+              [class.inp-invalid]="formRates.get('pricePerPound')?.errors && formRates.get('pricePerPound')?.touched || errors" 
+              formControlName="pricePerPound" 
+              step="0.01" 
+              min="0" 
+              nbInput 
+              fullWidth 
+              id="pricePerPound" 
+              placeholder="Por Libra"
+              required
+              />
             </div>
           </div>
           
-          <button type="submit" nbButton status="danger" (click)="set_rates()">Agregar</button>
+          <div class="row">
+            <button type="submit" nbButton status="primary" (click)="set_rates()" hero>Agregar</button>&nbsp;&nbsp;
+            <button nbButton status="danger" hero>Cancelar</button>
+          </div>
         </form>
       </nb-card-body>
     </nb-card>
