@@ -1,0 +1,27 @@
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-inline [fullWidth] {
+    flex: 1;
+}
+  
+.form-inline > * {
+    margin: 0 1.5rem 1.5rem 0;
+}
+  
+nb-card.inline-form-card nb-card-body {
+    padding-bottom: 0;
+}
+  
+.inp-invalid {
+    background-color: rgb(255, 204, 204);
+    box-shadow: 0 0 5px red;
+}
+
+.inp-valid {
+    background-color: rgb(219, 255, 214);
+    box-shadow: 0 0 5px green;
+}
