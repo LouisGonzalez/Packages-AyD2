@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+
 import { 
   NbMenuModule,
   NbCardModule,
@@ -17,13 +19,15 @@ import { RatesComponent } from './rates/rates.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateDestinationComponent } from './create-destination/create-destination.component';
+import { CheckpointListComponent } from './checkpoint-list/checkpoint-list.component';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
     RatesComponent,
-    CreateDestinationComponent
+    CreateDestinationComponent,
+    CheckpointListComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +46,8 @@ import { CreateDestinationComponent } from './create-destination/create-destinat
     ReactiveFormsModule,
     // Modulos necesarios para la api rest
     HttpClientModule,
+    // Modulos necesarios para las tablas
+    Ng2SmartTableModule,
   ]
 })
 export class AdminModule { }

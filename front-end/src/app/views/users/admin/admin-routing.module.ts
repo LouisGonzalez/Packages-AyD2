@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
+import { CheckpointListComponent } from './checkpoint-list/checkpoint-list.component';
 import { CreateDestinationComponent } from './create-destination/create-destination.component';
 import { RatesComponent } from './rates/rates.component';
 
@@ -16,6 +17,10 @@ const routes: Routes = [
       { // views/admin/create-destination
         path: 'create-destination',       
         component: CreateDestinationComponent     
+      }, 
+      { // views/admin/checkpoints
+        path: 'checkpoints',       
+        component: CheckpointListComponent     
       }, 
     ]
   }
