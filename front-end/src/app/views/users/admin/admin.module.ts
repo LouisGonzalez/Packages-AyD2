@@ -9,7 +9,6 @@ import { RatesComponent } from './rates/rates.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateDestinationComponent } from './create-destination/create-destination.component';
-
 import { RegisterUserComponent } from './register-user/register-user.component';
 import {
   NbButtonModule,
@@ -59,7 +58,6 @@ import { ListUsersComponent } from './list-users/list-users.component';
     NbCheckboxModule,
     Ng2SmartTableModule,
     HttpClientModule,
-
   ]
 })
 export class AdminModule { }

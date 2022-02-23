@@ -1,5 +1,5 @@
-import { Destination } from "./destination";
 import { Checkpoint } from "./Checkpoint";
+import { Destination } from "./destination";
 
 export class Route{
     active: boolean;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Route } from '../../../../../models/Route';
+import { Route } from '../../../others/models/Route';
 
 @Component({
   selector: 'ngx-add-route',
