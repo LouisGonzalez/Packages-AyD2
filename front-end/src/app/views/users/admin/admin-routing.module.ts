@@ -7,7 +7,11 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
-      //Aqui iran los hijos
+      {
+        path: 'routes',
+        loadChildren: () => import('./routes/routes.module')
+          .then(m => m.RoutesModule)
+      }
     ]
   }
 ];
@@ -17,3 +21,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AdminRoutingModule { }
+
