@@ -1,0 +1,202 @@
+
+<div class="row">
+  <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+    <nb-card >
+      <nb-card-header><h1 id="title" class="title">Register</h1></nb-card-header>
+
+        <nb-card-body>
+
+<form [formGroup]="form" aria-labelledby="title">
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label" for="input-name" >Nombres</label>
+    <div class="col-sm-9">
+
+    <input nbInput
+           formControlName="name"
+           id="input-name"
+           name="fullName"
+           placeholder="Full name"
+           autofocus
+           fullWidth>
+           <!-- Aqui abajo va la condicional de si el fullname no existe -->
+    <ng-container>
+      <p class="caption status-danger">
+        Nombres es un campo requerido
+      </p>
+      <p class="caption status-danger">
+        <!-- Full name should contains
+        from {{getConfigValue('forms.validation.fullName.minLength')}}
+        to {{getConfigValue('forms.validation.fullName.maxLength')}}
+        characters -->
+      </p>
+    </ng-container>
+  </div>
+</div>
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label" for="input-name" >Apellidos</label>
+    <div class="col-sm-9">
+
+    <input nbInput
+           formControlName="lastname"
+           id="input-name"
+           name="fullName"
+           placeholder="Full name"
+           autofocus
+           fullWidth>
+           <!-- Aqui abajo va la condicional de si el fullname no existe -->
+    <ng-container>
+      <p class="caption status-danger">
+        Apellidos es un campo requerido
+      </p>
+      <p class="caption status-danger">
+        <!-- Full name should contains
+        from {{getConfigValue('forms.validation.fullName.minLength')}}
+        to {{getConfigValue('forms.validation.fullName.maxLength')}}
+        characters -->
+      </p>
+    </ng-container>
+  </div>
+</div>
+
+
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label" for="input-email">Email:</label>
+    <div class="col-sm-9">
+    <input nbInput
+           formControlName="email"
+           id="input-email"
+           name="email"
+           placeholder="Email address"
+           fullWidth>
+           <!-- Abajo la condicional de si el email no existe o tiene errores -->
+    <ng-container>
+      <p class="caption status-danger">
+        Email es un campo requerido
+      </p>
+      <p class="caption status-danger">
+        Llenar el campo email de forma correcta ej: abc@correo.com
+      </p>
+    </ng-container>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label"  for="input-email">Username:</label>
+    <div class="col-sm-9">
+    <input nbInput
+            formControlName="username"
+           id="input-email"
+           name="email"
+           placeholder="Email address"
+           fullWidth>
+           <!-- Abajo la condicional de si el email no existe o tiene errores -->
+    <ng-container>
+      <p class="caption status-danger">
+        Username es un campo requerido
+      </p>
+    </ng-container>
+    </div>
+  </div>
+
+
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label"  for="input-password">Contraseña:</label>
+    <div class="col-sm-9">
+    <input nbInput
+          formControlName="password"
+           type="password"
+           id="input-password"
+           name="password"
+           placeholder="Password"
+           fullWidth>
+           <!-- Abajo la condicional de si el password no existe o tiene errores -->
+    <ng-container>
+      <p class="caption status-danger">
+        Password es un campo requerido
+      </p>
+      <p class="caption status-danger">
+
+      </p>
+    </ng-container>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label"  for="input-re-password">Repetir contraseña</label>
+    <div class="col-sm-9">
+      <input nbInput
+           type="password"
+           id="input-re-password"
+           name="rePass"
+           placeholder="Confirm Password"
+           fullWidth
+           [(ngModel)]="pass2">
+           <!-- Abajo la condicional de si la verificacion de password no existe o tiene errores -->
+    <ng-container>
+      <p class="caption status-danger">
+        La validacion de contraseña es requerida
+      </p>
+      <p class="caption status-danger">
+        La contraseña previamente definida no coincide con el campo
+      </p>
+    </ng-container>
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label"  for="input-name" >CUI</label>
+    <div class="col-sm-9">
+      <input nbInput
+           formControlName="CUI"
+           id="input-name"
+           name="fullName"
+           placeholder="Full name"
+           autofocus
+           fullWidth>
+           <!-- Aqui abajo va la condicional de si el fullname no existe -->
+    <ng-container>
+      <p class="caption status-danger">
+        CUI es un campo requerido
+      </p>
+      <p class="caption status-danger">
+        <!-- Full name should contains
+        from {{getConfigValue('forms.validation.fullName.minLength')}}
+        to {{getConfigValue('forms.validation.fullName.maxLength')}}
+        characters -->
+      </p>
+    </ng-container>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label"  for="input-name" >Tipo de usuario</label>
+    <div class="col-sm-9">
+
+    <nb-select [selected]=1 status="primary" formControlName="type">
+      <nb-option [value]="1">Administrador</nb-option>
+      <nb-option [value]="2">Operador</nb-option>
+      <nb-option [value]="3">Recepcionista</nb-option>
+    </nb-select>
+    </div>
+  </div>
+
+  <div class="form-control-group">
+    <button nbButton
+    status="primary"
+    [disabled]="form.invalid"
+    (click)="submit()">
+Register
+</button>
+
+  </div>
+</form>
+</nb-card-body>
+<!-- abajo iba una condicion de si hay links -->
+</nb-card>
+</div>
+</div>

@@ -1,17 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-
-import { 
-  NbMenuModule,
-  NbCardModule,
-  NbButtonModule,
-  NbInputModule,
-  NbActionsModule,
-  NbUserModule,
-  NbIconModule,
-} from '@nebular/theme';
-
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { ThemeModule } from '../../../@theme/theme.module';
@@ -21,33 +10,59 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateDestinationComponent } from './create-destination/create-destination.component';
 import { CheckpointListComponent } from './checkpoint-list/checkpoint-list.component';
 
+import { RegisterUserComponent } from './register-user/register-user.component';
+import {
+  NbButtonModule,
+  NbLayoutModule,
+  NbCardModule,
+  NbProgressBarModule,
+  NbTabsetModule,
+  NbUserModule,
+  NbIconModule,
+  NbSelectModule,
+  NbListModule,
+  NbInputModule,
+  NbCheckboxModule,
+  NbMenuModule,
+  NbActionsModule
+} from '@nebular/theme';
+import { ListUsersComponent } from './list-users/list-users.component';
+import { RoutesModule } from './routes/routes.module';
 
 @NgModule({
   declarations: [
     AdminComponent,
     RatesComponent,
     CreateDestinationComponent,
-    CheckpointListComponent
+    CheckpointListComponent,
+    RegisterUserComponent,
+    ListUsersComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     NbMenuModule,
     ThemeModule,
-    // Agregados 
-    NbCardModule,
-    NbButtonModule,
-    NbInputModule,
-    NbActionsModule,
-    NbUserModule,
-    NbIconModule,
-    // Modulos necesarios para funciones del formulario
     FormsModule,
     ReactiveFormsModule,
-    // Modulos necesarios para la api rest
+    NbInputModule,
+    NbButtonModule,
+    NbActionsModule,
+    NbLayoutModule,
+    NbCardModule,
+    NbProgressBarModule,
+    NbTabsetModule,
+    NbUserModule,
+    NbIconModule,
+    NbSelectModule,
+    NbListModule,
+    NbInputModule,
+    NbCheckboxModule,
+    Ng2SmartTableModule,
     HttpClientModule,
     // Modulos necesarios para las tablas
     Ng2SmartTableModule,
+    RoutesModule
   ]
 })
 export class AdminModule { }

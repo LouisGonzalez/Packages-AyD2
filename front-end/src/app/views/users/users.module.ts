@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { ThemeModule } from '../../@theme/theme.module';
 import { UsersRoutingModule } from './users-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { OperatorModule } from './operator/operator.module';

@@ -4,6 +4,8 @@ import { AdminComponent } from './admin.component';
 import { CheckpointListComponent } from './checkpoint-list/checkpoint-list.component';
 import { CreateDestinationComponent } from './create-destination/create-destination.component';
 import { RatesComponent } from './rates/rates.component';
+import { ListUsersComponent } from './list-users/list-users.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
 
 const routes: Routes = [
   {
@@ -11,9 +13,9 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       { // views/admin/rates
-        path: 'rates',       
-        component: RatesComponent     
-      }, 
+        path: 'rates',
+        component: RatesComponent
+      },
       { // views/admin/create-destination
         path: 'create-destination',       
         component: CreateDestinationComponent     
@@ -21,7 +23,21 @@ const routes: Routes = [
       { // views/admin/checkpoints
         path: 'checkpoints',       
         component: CheckpointListComponent     
-      }, 
+      },
+      //Aqui iran los hijos
+      {
+        path: 'register',
+        component: RegisterUserComponent
+      },
+      {
+        path: 'list-users',
+        component: ListUsersComponent
+      },  
+      {
+        path: 'routes',
+        loadChildren: () => import('./routes/routes.module')
+          .then(m => m.RoutesModule)
+      }
     ]
   }
 ];
@@ -31,3 +47,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AdminRoutingModule { }
+
