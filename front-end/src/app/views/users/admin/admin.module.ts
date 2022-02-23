@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbMenuModule } from '@nebular/theme';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
@@ -21,11 +22,13 @@ import {
   NbInputModule,
   NbCheckboxModule
 } from '@nebular/theme';
+import { ListUsersComponent } from './list-users/list-users.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    ListUsersComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +47,9 @@ import {
     NbSelectModule,
     NbListModule,
     NbInputModule,
-    NbCheckboxModule
+    NbCheckboxModule,
+    Ng2SmartTableModule,
+
 
   ]
 })
