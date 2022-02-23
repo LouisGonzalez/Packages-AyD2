@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import { SmartTableData } from '../../../../@core/data/smart-table';
 import { User } from '../../others/models/employee';
@@ -58,7 +59,7 @@ export class ListUsersComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData, private adminService: AdminService) {
+  constructor(private service: SmartTableData, private adminService: AdminService, private router: Router) {
     this.getData();
   }
 
@@ -83,6 +84,8 @@ export class ListUsersComponent implements OnInit {
       this.user.activo = 0;
       this.adminService.updateUser(this.user).subscribe(data => {
         console.log('empleado desactivado')
+        this.router.navigate(['/views/users/admin/list-users']);
+
       })
 
     } else {
