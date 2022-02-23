@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
+import { CreateDestinationComponent } from './create-destination/create-destination.component';
 import { RatesComponent } from './rates/rates.component';
 
 const routes: Routes = [
@@ -11,6 +12,10 @@ const routes: Routes = [
       { // views/admin/rates
         path: 'rates',       
         component: RatesComponent     
+      }, 
+      { // views/admin/create-destination
+        path: 'create-destination',       
+        component: CreateDestinationComponent     
       }, 
     ]
   }

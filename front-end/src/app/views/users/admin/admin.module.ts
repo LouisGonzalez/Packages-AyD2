@@ -16,12 +16,14 @@ import { ThemeModule } from '../../../@theme/theme.module';
 import { RatesComponent } from './rates/rates.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateDestinationComponent } from './create-destination/create-destination.component';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
-    RatesComponent
+    RatesComponent,
+    CreateDestinationComponent
   ],
   imports: [
     CommonModule,
