@@ -28,6 +28,7 @@ import {
   NbActionsModule
 } from '@nebular/theme';
 import { ListUsersComponent } from './list-users/list-users.component';
+import { RoutesModule } from './routes/routes.module';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,6 @@ import { ListUsersComponent } from './list-users/list-users.component';
     AdminRoutingModule,
     NbMenuModule,
     ThemeModule,
-
     FormsModule,
     ReactiveFormsModule,
     NbInputModule,
@@ -59,9 +59,8 @@ import { ListUsersComponent } from './list-users/list-users.component';
     NbInputModule,
     NbCheckboxModule,
     Ng2SmartTableModule,
-
     HttpClientModule,
-
+    RoutesModule
   ]
 })
 export class AdminModule { }

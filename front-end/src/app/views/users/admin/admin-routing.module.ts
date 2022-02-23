@@ -27,6 +27,11 @@ const routes: Routes = [
       {
         path: 'list-users',
         component: ListUsersComponent
+      },  
+      {
+        path: 'routes',
+        loadChildren: () => import('./routes/routes.module')
+          .then(m => m.RoutesModule)
       }
     ]
   }
@@ -37,3 +42,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AdminRoutingModule { }
+
