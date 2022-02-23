@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { NbMenuModule } from '@nebular/theme';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
+
 @NgModule({
   declarations: [
     ViewsComponent,
@@ -18,8 +19,7 @@ import { ReportsModule } from './reports/reports.module';
     AuthModule,
     ThemeModule,
     ReactiveFormsModule,
-    NbMenuModule,
-    UsersModule,
+        UsersModule,
     ReportsModule,
 
   ]

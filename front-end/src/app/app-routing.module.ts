@@ -15,12 +15,6 @@ export const routes: Routes = [
     loadChildren: () => import('./views/views.module')
       .then(m => m.ViewsModule)
   },
-
-
-
-
-
-
   {
     path: 'pages',
     loadChildren: () => import('./pages/pages.module')

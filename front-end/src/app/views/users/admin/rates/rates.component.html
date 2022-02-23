@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+    <nb-card>
+      <!-- Titulo del formulario de tarifas globales  -->
+      <nb-card-header>
+        <nb-icon icon="plus" pack="eva"></nb-icon>
+        <nb-icon icon="trending-up-outline" pack="eva"></nb-icon>
+        Tarifas
+      </nb-card-header>
+      <nb-card-body>
+        <!-- Formulario para tarifas -->
+        <form [formGroup]="formRates">
+          <div class="row">
+            <!-- Por Operacion -->
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="operationFee" class="label">Por Operación</label> 
+                <div *ngIf="formRates.get('operatorFee')?.errors && formRates.get('operatorFee')?.touched || errors" >
+                  <label class="label" style="color: red;" *ngIf="formRates.get('operatorFee').hasError('required')">{{ERROR_REQUIRED}}</label>
+                  <label class="label" style="color: red;" *ngIf="formRates.get('operatorFee').hasError('min')">{{ERROR_MIN}}</label><br>
+                  <label class="label" style="color: red;" *ngIf="formRates.get('operatorFee').hasError('pattern')">{{ERROR_NUMBER}}</label>
+                </div>
+                <input 
+                type="number"
+                [class.inp-invalid]="formRates.get('operatorFee')?.errors && formRates.get('operatorFee')?.touched || errors" 
+                formControlName="operatorFee" 
+                step="0.01" 
+                min="0" 
+                nbInput 
+                fullWidth 
+                id="operationFee" 
+                placeholder="Por Operacion"
+                required
+                />
+              </div>
+            </div>
+
+             <!-- De Priorización -->
+             <div class="col-sm-6">
+              <div class="form-group">
+                <label for="priorizationFee" class="label">Por Priorización</label> 
+                <div *ngIf="formRates.get('priorizationFee')?.errors && formRates.get('priorizationFee')?.touched || errors" >
+                  <label class="label" style="color: red;" *ngIf="formRates.get('priorizationFee').hasError('required')">{{ERROR_REQUIRED}}</label>
+                  <label class="label" style="color: red;" *ngIf="formRates.get('priorizationFee').hasError('min')">{{ERROR_MIN}}</label><br>
+                  <label class="label" style="color: red;" *ngIf="formRates.get('priorizationFee').hasError('pattern')">{{ERROR_NUMBER}}</label>
+                </div>
+                <input 
+                type="number"
+                [class.inp-invalid]="formRates.get('priorizationFee')?.errors && formRates.get('priorizationFee')?.touched || errors" 
+                formControlName="priorizationFee" 
+                step="0.01" 
+                min="0" 
+                nbInput 
+                fullWidth 
+                id="priorizationFee" 
+                placeholder="Por Priorización"
+                required
+                />
+              </div>
+            </div>
+            
+          </div>
+          <div class="row">
+            <!-- Por Libra -->
+            <div class="form-group">
+              <label for="pricePerPound" class="label">Por Libra</label> 
+              <div *ngIf="formRates.get('pricePerPound')?.errors && formRates.get('pricePerPound')?.touched || errors" >
+                <label class="label" style="color: red;" *ngIf="formRates.get('pricePerPound').hasError('required')">{{ERROR_REQUIRED}}</label>
+                <label class="label" style="color: red;" *ngIf="formRates.get('pricePerPound').hasError('min')">{{ERROR_MIN}}</label><br>
+                <label class="label" style="color: red;" *ngIf="formRates.get('pricePerPound').hasError('pattern')">{{ERROR_NUMBER}}</label>
+              </div>
+              <input 
+              type="number"
+              [class.inp-invalid]="formRates.get('pricePerPound')?.errors && formRates.get('pricePerPound')?.touched || errors" 
+              formControlName="pricePerPound" 
+              step="0.01" 
+              min="0" 
+              nbInput 
+              fullWidth 
+              id="pricePerPound" 
+              placeholder="Por Libra"
+              required
+              />
+            </div>
+          </div>
+          
+          <div class="row">
+            <button type="submit" nbButton status="primary" (click)="set_rates()" hero>Agregar</button>&nbsp;&nbsp;
+            <button nbButton status="danger" hero>Cancelar</button>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
