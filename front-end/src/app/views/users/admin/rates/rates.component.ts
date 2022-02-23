@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RatesService } from '../../others/services/rates.service';
+import { RatesService } from '../../others/services/rates/rates.service';
 import * as global from '../../../GLOBAL';
 import { Rate } from '../../others/models/rate';
 import {
