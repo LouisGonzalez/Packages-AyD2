@@ -23,9 +23,14 @@ export class RatesComponent implements OnInit {
   ERROR_MIN = global.GLOBAL.ERROR_MIN;
   ERROR_NUMBER = global.GLOBAL.ERROR_NUMBER;
 
+  OPERATION_FEE = 'Tarifa por operación';
+  PRICE_PER_POUND = 'Tarifa por libra';
+  PRIORIZATION_FEE = 'Tarifa por priorización';
+
   /** Toastr */
   config: NbToastrConfig;
 
+  datarates : Rate [];
   index = 1;
   destroyByClick = true;
   duration = 2500;
@@ -48,19 +53,16 @@ export class RatesComponent implements OnInit {
      * Segundo parametro: validators
     */  
     operatorFee : new FormControl(null, [ 
-       Validators.required, 
        Validators.min(0), 
        Validators.pattern('[0-9]+(.[0-9]+)?')
       ] 
     ),
     priorizationFee : new FormControl(null, [ 
-      Validators.required, 
       Validators.min(0), 
       Validators.pattern('[0-9]+(.[0-9]+)?')
      ] 
      ),  
     pricePerPound: new FormControl(null, [ 
-      Validators.required, 
       Validators.min(0), 
       Validators.pattern('[0-9]+(.[0-9]+)?')
      ] 
@@ -79,9 +81,10 @@ export class RatesComponent implements OnInit {
   set_rates() {
     if (this.formRates.valid) {
       // Mandar la peticion de crear
-      this.createRate('Tarifa por operación', parseFloat(this.formRates.get('operatorFee').value), true)  
-      this.createRate('Tarifa por priorización', parseFloat(this.formRates.get('priorizationFee').value), false)  
-      this.createRate('Tarifa por libra', parseFloat(this.formRates.get('pricePerPound').value), false);
+      console.log(this.formRates);
+      this.addRates(this.OPERATION_FEE, this.formRates.get('operatorFee').value, true)  
+      this.addRates(this.PRIORIZATION_FEE, this.formRates.get('priorizationFee').value, false)  
+      this.addRates(this.PRICE_PER_POUND, this.formRates.get('pricePerPound').value, false);
     } else {
       this.errors = true;
       return;
@@ -89,38 +92,88 @@ export class RatesComponent implements OnInit {
   }
 
   private set_values(){
-    console.log('hola');
     this.api_rates.getRates()
     .subscribe({
       next:(res) => {
-        console.log(res);
+        this.addField(res);
       },
       error:(err) => {
-        alert('Error while getting movie list')
+        this.showToast(this.types[4], 'Error', 'Error mientras se obtenian las tarifas, vuelve a intentarlo.');
       }
     });
   }
 
-  private createRate(name, fee, redirect) {
-    let newRate : Rate = {
-      ratename: name,
-      rate: fee
-    };
-    this.api_rates.postRates(newRate)
-    .subscribe({
-      next : (res) => {
-        if (redirect) {
-          setTimeout(() => {
-            this.formRates.reset();
-            this.router.navigate(['views', 'admin']);
-          }, 2700);
-        }
-        this.showToast(this.types[1], 'Agregado', name + ', agregado correctamente.');
-      },
-      error:() =>{
-        this.showToast(this.types[4], 'Error', 'Error mientras se agregaba la \"' + name + '\", vuelve a intentarlo.');
-      }
+  private getIdRate(name) : Rate {
+    return this.datarates.find( function(item){
+        return item.ratename === name;
     });
+  }
+
+  private addField(data){
+    this.datarates = data;
+    for (const iterator of data) {
+      console.log("Aqui: " + iterator);
+      if (iterator['ratename'] === 'Tarifa por operación') {
+        this.formRates.controls['operatorFee'].setValue(iterator['rate'])
+      } else if (iterator['ratename'] === 'Tarifa por priorización') {
+        this.formRates.controls['priorizationFee'].setValue(iterator['rate'])
+      } else {
+        this.formRates.controls['pricePerPound'].setValue(iterator['rate'])
+      }
+    }
+  }
+
+  private addRates(name, fee, redirect) {
+    let newRate : Rate;
+    let rateSearch = this.getIdRate(name);
+    if (rateSearch != null) {
+      newRate = {
+        id : rateSearch.id,
+        ratename : name,
+        rate : fee == null ? 0 : parseFloat(fee)
+      }
+      this.api_rates.putRates(newRate, rateSearch.id)
+      .subscribe({
+        next : (res) => {
+          if (redirect) {
+            setTimeout(() => {
+              this.formRates.reset();
+              this.router.navigate(['views', 'admin']);
+            }, 3000);
+          }
+          fee == null 
+          ? this.showToast(this.types[3], 'Precaución', 'Debido a que el campo de: ' + name + ', esta vacio, el valor por defecto sera 0.')
+          : console.log("");  
+          this.showToast(this.types[1], 'Editado', name + ', modificado correctamente.');
+        },
+        error:() =>{
+          this.showToast(this.types[4], 'Error', 'Error mientras se agregaba la \"' + name + '\", vuelve a intentarlo.');
+        }
+      }); 
+    } else {
+      newRate = { 
+        ratename: name,
+        rate: fee == null ? 0 : fee
+      };
+      this.api_rates.postRates(newRate)
+      .subscribe({
+        next : (res) => {
+          if (redirect) {
+            setTimeout(() => {
+              this.formRates.reset();
+              this.router.navigate(['views', 'admin']);
+            }, 2700);
+          }
+          fee == null 
+          ? this.showToast(this.types[3], 'Precaución', 'Debido a que el campo de: ' + name + ', esta vacio, el valor por defecto sera 0.')
+          : console.log("");
+          this.showToast(this.types[1], 'Agregado', name + ', agregado correctamente.');
+        },
+        error:() =>{
+          this.showToast(this.types[4], 'Error', 'Error mientras se agregaba la \"' + name + '\", vuelve a intentarlo.');
+        }
+      }); 
+    }
   }
 
   onCancel() {
