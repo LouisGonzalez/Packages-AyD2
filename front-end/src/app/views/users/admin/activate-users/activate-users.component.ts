@@ -1,31 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
-import { SmartTableData } from '../../../../@core/data/smart-table';
 import { User } from '../../others/models/employee';
 import { AdminService } from '../../others/services/admin.service';
+import { UsersModule } from '../../users.module';
 
 @Component({
-  selector: 'ngx-list-users',
-  templateUrl: './list-users.component.html',
-  styleUrls: ['./list-users.component.scss']
+  selector: 'ngx-activate-users',
+  templateUrl: './activate-users.component.html',
+  styleUrls: ['./activate-users.component.scss']
 })
-export class ListUsersComponent implements OnInit {
+export class ActivateUsersComponent implements OnInit {
 
   users: User[];
   user: User;
+
   settings = {
     actions: {
       add: false,
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+      edit: false
     },
     delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
+      //editButtonContent: '<i class="nb-edit"></i>',
+      deleteButtonContent: '<i class="nb-checkmark"></i>',
+      //cancelButtonContent: '<i class="nb-close"></i>',
+      confirmDelete: true
     },
     columns: {
       id: {
@@ -56,37 +54,27 @@ export class ListUsersComponent implements OnInit {
     },
 
   };
-
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData, private adminService: AdminService, private router: Router) {
+  constructor(private adminService: AdminService) {
     this.getData();
   }
 
   getData(){
-    this.adminService.getAllActivates().subscribe(response => {
+    this.adminService.getAllDeactivates().subscribe(response => {
       this.users = response;
-      console.log(this.users[0].username);
       this.source.load(this.users)
     })
   }
 
-  deactivateConfirm(event): void{
-    if(window.confirm('Estas seguro de desactivar a este usuario?')){
-    } else {
-      event.confirm.reject();
-    }
-  }
-
   onDeleteConfirm(event): void {
-    if (window.confirm('Estas seguro de desactivar a este usuario?')) {
+    if(window.confirm('Estas seguro de activar a este usuario?')){
       this.user = event.data;
-      this.user.activo = 0;
+      this.user.activo = 1;
       this.adminService.updateUser(this.user).subscribe(data => {
-        console.log('empleado desactivado')
+        console.log('empleado desactivo')
         this.getData();
       })
-
     } else {
       event.confirm.reject();
     }

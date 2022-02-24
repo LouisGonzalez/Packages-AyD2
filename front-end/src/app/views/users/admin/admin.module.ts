@@ -25,10 +25,14 @@ import {
   NbInputModule,
   NbCheckboxModule,
   NbMenuModule,
-  NbActionsModule
+  NbActionsModule,
+  NbSearchModule,
+  NbPopoverModule,
+  NbSidebarModule
 } from '@nebular/theme';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { RoutesModule } from './routes/routes.module';
+import { ActivateUsersComponent } from './activate-users/activate-users.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,8 @@ import { RoutesModule } from './routes/routes.module';
     RatesComponent,
     CreateDestinationComponent,
     RegisterUserComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    ActivateUsersComponent,
   ],
   imports: [
     CommonModule,
@@ -57,7 +62,10 @@ import { RoutesModule } from './routes/routes.module';
     NbSelectModule,
     NbListModule,
     NbInputModule,
+    NbSearchModule,
+    NbPopoverModule,
     NbCheckboxModule,
+    NbSidebarModule,
     Ng2SmartTableModule,
     HttpClientModule,
     RoutesModule
