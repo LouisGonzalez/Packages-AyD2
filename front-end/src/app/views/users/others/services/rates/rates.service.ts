@@ -10,6 +10,10 @@ export class RatesService {
   constructor(private http: HttpClient) {}
 
   postRates(data: any) {
-    return this.http.post<any>(global.GLOBAL.url + "rates/", data);
+    return this.http.post<any>(global.GLOBAL.url + "/rates/", data);
+  }
+
+  getRates(){
+    return this.http.get<any>(global.GLOBAL.url + "/rates/");
   }
 }

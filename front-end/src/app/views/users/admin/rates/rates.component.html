@@ -86,7 +86,7 @@
           
           <div class="row">
             <button type="submit" nbButton status="primary" (click)="set_rates()" hero>Agregar</button>&nbsp;&nbsp;
-            <button nbButton status="danger" hero>Cancelar</button>
+            <button nbButton status="danger" (click)="onCancel()" hero>Cancelar</button>
           </div>
         </form>
       </nb-card-body>

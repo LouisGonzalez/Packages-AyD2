@@ -5,7 +5,9 @@ export class Checkpoint{
     description: string;
     queueCapacity: number;
     operationFee: number;
-    assignedOperator: Operator;
+    assignedOperator ?: Operator;
     route: Route;
     pakageOnQueue: number;
+    active ?: boolean;
+    id ?: number;
 }

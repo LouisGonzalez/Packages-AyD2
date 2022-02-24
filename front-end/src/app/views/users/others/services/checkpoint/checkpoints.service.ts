@@ -5,11 +5,11 @@ import * as global from '../../../../GLOBAL';
 @Injectable({
   providedIn: 'root'
 })
-export class DestinationService {
+export class CheckpointsService {
 
   constructor(private http: HttpClient) { }
 
-  createDestination(data: any) {
-    return this.http.post<any>(global.GLOBAL.url + "/destination/", data);
+  getAllCheckpoints() {
+    return this.http.get<any>(`${global.GLOBAL.url}/checkpoints/`)
   }
 }
