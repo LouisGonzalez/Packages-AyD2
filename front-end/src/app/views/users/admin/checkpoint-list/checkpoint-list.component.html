@@ -1,10 +1,15 @@
 <nb-card>
     <nb-card-header>
-      Smart Table
+      Puntos de control
     </nb-card-header>
   
     <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source">
+      <ng2-smart-table 
+      [settings]="settings" 
+      [source]="source"
+      (editConfirm)="updateRecord($event)"
+      (deleteConfirm)="deleteRecord($event)"
+      >
       </ng2-smart-table>
     </nb-card-body>
   </nb-card>

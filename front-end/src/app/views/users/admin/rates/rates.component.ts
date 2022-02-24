@@ -10,6 +10,7 @@ import {
   NbToastrService,
   NbToastrConfig,
 } from '@nebular/theme';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-rates',
@@ -27,7 +28,7 @@ export class RatesComponent implements OnInit {
 
   index = 1;
   destroyByClick = true;
-  duration = 5000;
+  duration = 2500;
   hasIcon = true;
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
@@ -66,24 +67,41 @@ export class RatesComponent implements OnInit {
      ),  
   });
 
-  constructor(private api_rates : RatesService, private toastrService: NbToastrService) { }
+  constructor(
+    private api_rates : RatesService, 
+    private toastrService: NbToastrService,
+    private router: Router) { }
 
   ngOnInit(): void {
+    this.set_values();
   }
 
   set_rates() {
     if (this.formRates.valid) {
       // Mandar la peticion de crear
-      this.createRate('Tarifa por operación', parseFloat(this.formRates.get('operatorFee').value));
-      this.createRate('Tarifa por priorización', parseFloat(this.formRates.get('priorizationFee').value));
-      this.createRate('Tarifa por libra', parseFloat(this.formRates.get('pricePerPound').value));
+      this.createRate('Tarifa por operación', parseFloat(this.formRates.get('operatorFee').value), true)  
+      this.createRate('Tarifa por priorización', parseFloat(this.formRates.get('priorizationFee').value), false)  
+      this.createRate('Tarifa por libra', parseFloat(this.formRates.get('pricePerPound').value), false);
     } else {
       this.errors = true;
       return;
     }
   }
 
-  private createRate(name, fee) {
+  private set_values(){
+    console.log('hola');
+    this.api_rates.getRates()
+    .subscribe({
+      next:(res) => {
+        console.log(res);
+      },
+      error:(err) => {
+        alert('Error while getting movie list')
+      }
+    });
+  }
+
+  private createRate(name, fee, redirect) {
     let newRate : Rate = {
       ratename: name,
       rate: fee
@@ -91,13 +109,22 @@ export class RatesComponent implements OnInit {
     this.api_rates.postRates(newRate)
     .subscribe({
       next : (res) => {
+        if (redirect) {
+          setTimeout(() => {
+            this.formRates.reset();
+            this.router.navigate(['views', 'admin']);
+          }, 2700);
+        }
         this.showToast(this.types[1], 'Agregado', name + ', agregado correctamente.');
-        this.formRates.reset();
       },
       error:() =>{
         this.showToast(this.types[4], 'Error', 'Error mientras se agregaba la \"' + name + '\", vuelve a intentarlo.');
       }
     });
+  }
+
+  onCancel() {
+    this.router.navigate(['views', 'admin'])
   }
 
   private showToast(type: NbComponentStatus, title: string, body: string) {

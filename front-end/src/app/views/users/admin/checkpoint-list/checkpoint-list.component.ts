@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource }from 'ng2-smart-table';
+import { CheckpointsService } from '../../others/services/checkpoint/checkpoints.service';
+import { CheckpointListTemplate } from '../../others/models/checkpoint-list-template';
+
 @Component({
   selector: 'ngx-checkpoint-list',
   templateUrl: './checkpoint-list.component.html',
@@ -8,18 +11,8 @@ import { LocalDataSource }from 'ng2-smart-table';
 export class CheckpointListComponent implements OnInit {
 
   settings = {
-    add: {
-      addButtonContent: '<i class="nb-search"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
     delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
+      deleteButtonContent: '<i class="nb-edit"></i>',
       confirmDelete: true,
     },
     columns: {
@@ -27,41 +20,82 @@ export class CheckpointListComponent implements OnInit {
         title: 'ID',
         type: 'number',
       },
-      firstName: {
-        title: 'First Name',
-        type: 'string',
-      },
-      lastName: {
-        title: 'Last Name',
-        type: 'string',
-      },
-      username: {
-        title: 'Username',
-        type: 'string',
-      },
-      email: {
-        title: 'E-mail',
-        type: 'string',
-      },
-      age: {
-        title: 'Age',
+      queueCapacity: {
+        title: 'Capacidad de cola',
         type: 'number',
       },
+      operationFee: {
+        title: 'Tarifa de operación',
+        type: 'number',
+      },
+      pakageOnQueue: {
+        title: 'Paquetes en cola',
+        type: 'number',
+      },
+      route: {
+        title: 'Ruta',
+        type: 'number',
+      },
+      active : {
+        title: 'Estado',
+        type: 'string',
+      } 
     },
+    defaultStyle: false,
     actions: {
       columnTitle: 'Actions',
-      add: true,
+      
+      add: false,
       edit: true,
       delete: true,
+      
       position: 'right'
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor() { }
+  constructor(private api : CheckpointsService) { }
 
   ngOnInit(): void {
+    this.getAllCheckpints();
+  }
+
+  private getAllCheckpints(){
+    this.api.getAllCheckpoints()
+    .subscribe({
+      next:(res) => {
+        this.source.load(this.convertCheckpointList(res));
+        console.log(res);
+      },  
+      error:(res) => {
+        alert('Error mientras se obtenia la lista de puntos de control')
+      }
+    });
+  }
+
+  deleteRecord(event){
+    console.log('delete');
+  }
+
+  updateRecord(event){
+    console.log('update');
+  }
+
+  private convertCheckpointList(data : any) {
+    let array = [];
+    for (const iterator of data) {
+      let newCheckpointTemplate : CheckpointListTemplate = {
+        id : iterator['id'],
+        queueCapacity : iterator['queueCapacity'],
+        pakageOnQueue : iterator['packageOnQueue'],
+        operationFee : iterator['operationFee'],
+        route : iterator['route'],
+        active : iterator['active'] == 1 || iterator['active'] ? 'Activo' : 'Desactivado'
+      }
+      array.push(newCheckpointTemplate);
+    }
+    return array;
   }
 
   onDeleteConfirm(event): void {
