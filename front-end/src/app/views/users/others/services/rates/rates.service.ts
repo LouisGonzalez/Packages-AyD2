@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Rate } from '../../models/rate';
 import * as global from "../../../../GLOBAL";
 
 @Injectable({
@@ -14,6 +15,10 @@ export class RatesService {
   }
 
   getRates(){
-    return this.http.get<any>(global.GLOBAL.url + "/rates/");
+    return this.http.get<Rate[]>(global.GLOBAL.url + "/rates/");
+  }
+
+  putRates(data : any, id : number) {
+    return this.http.put<any>(global.GLOBAL.url + "/rates/" + id, data);
   }
 }
