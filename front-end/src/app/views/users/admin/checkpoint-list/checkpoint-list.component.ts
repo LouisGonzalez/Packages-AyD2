@@ -78,7 +78,6 @@ export class CheckpointListComponent implements OnInit {
     .subscribe({
       next:(res) => {
         this.source.load(this.convertCheckpointList(res));
-        console.log(res);
       },  
       error:(res) => {
         alert('Error mientras se obtenia la lista de puntos de control')
@@ -99,9 +98,6 @@ export class CheckpointListComponent implements OnInit {
         console.log('delete');
         break;
     }
-    
-   
-    console.log(event.data);
   }
 
   private convertCheckpointList(data : any) {

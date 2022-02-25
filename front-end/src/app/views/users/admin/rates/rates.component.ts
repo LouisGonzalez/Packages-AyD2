@@ -61,7 +61,6 @@ export class RatesComponent implements OnInit {
   set_rates() {
     if (this.formRates.valid) {
       // Mandar la peticion de crear
-      console.log(this.formRates);
       this.addRates(this.OPERATION_FEE, this.formRates.get('operatorFee').value, true)  
       this.addRates(this.PRIORIZATION_FEE, this.formRates.get('priorizationFee').value, false)  
       this.addRates(this.PRICE_PER_POUND, this.formRates.get('pricePerPound').value, false);
@@ -92,7 +91,6 @@ export class RatesComponent implements OnInit {
   private addField(data){
     this.datarates = data;
     for (const iterator of data) {
-      console.log("Aqui: " + iterator);
       if (iterator['ratename'] === 'Tarifa por operación') {
         this.formRates.controls['operatorFee'].setValue(iterator['rate'])
       } else if (iterator['ratename'] === 'Tarifa por priorización') {
@@ -157,6 +155,7 @@ export class RatesComponent implements OnInit {
   }
 
   onCancel() {
+    this.formRates.reset();
     this.router.navigate(['views', 'admin'])
   }
 }

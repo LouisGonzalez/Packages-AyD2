@@ -14,6 +14,8 @@ import {
 })
 export class NotificationsComponent implements OnInit {
 
+  ERROR_NOT_FOUD = 'No se encuentra '
+
    /** Toastr */
    config: NbToastrConfig;
 
@@ -35,6 +37,15 @@ export class NotificationsComponent implements OnInit {
   constructor(private toastrService: NbToastrService) { }
 
   ngOnInit(): void {
+  }
+
+  errors(type, message) {
+    console.log(type);
+    if (type == 404) {
+      this.showToast(4, 'Error',`${this.ERROR_NOT_FOUD} ${message}`, 3000);
+    } else {
+      this.showToast(4, 'Error',`${message}`, 3000);
+    }
   }
 
   showToast(typeNotification, title: string, body: string, durationNotification) {

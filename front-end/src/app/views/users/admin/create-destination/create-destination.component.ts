@@ -32,7 +32,7 @@ export class CreateDestinationComponent implements OnInit {
     description : new FormControl(null, null)
   });
 
-  constructor(
+  constructor (
     private api_destination : DestinationService, 
     private toastrService : NbToastrService,
     private router : Router ) { }
@@ -65,9 +65,6 @@ export class CreateDestinationComponent implements OnInit {
       next : (res) => {
         this.notification.showToast(1, 'Agregado', `Destino: ${nameDestintaion}, agregado correctamente.`, 2500);
         this.formDestination.reset();
-        setTimeout(() => {
-          this.router.navigate(['views', 'admin']);
-        }, 2700);
       },
       error : () => {
         this.notification.showToast(4, 'Error', `Error mientras se agregaba el destino: ${nameDestintaion}, vuelve a intentarlo.`, 3000);
@@ -76,6 +73,7 @@ export class CreateDestinationComponent implements OnInit {
   }
 
   onCancel() {
+    this.formDestination.reset();
     this.router.navigate(['views', 'admin'])
   }
 }

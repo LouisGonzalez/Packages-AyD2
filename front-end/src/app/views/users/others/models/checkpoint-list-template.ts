@@ -5,4 +5,5 @@ export class CheckpointListTemplate{
     active ?: string;
     id ?: number;
     route : number;
+    description ?: string;
 }
