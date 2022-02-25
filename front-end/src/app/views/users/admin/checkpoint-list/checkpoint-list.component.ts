@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { LocalDataSource }from 'ng2-smart-table';
 import { CheckpointsService } from '../../others/services/checkpoint/checkpoints.service';
 import { CheckpointListTemplate } from '../../others/models/checkpoint-list-template';
+import { Router } from '@angular/router';
+import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-checkpoint-list',
@@ -43,21 +46,30 @@ export class CheckpointListComponent implements OnInit {
     },
     defaultStyle: false,
     actions: {
-      columnTitle: 'Actions',
+      columnTitle: 'Acciones',
       
       add: false,
-      edit: true,
-      delete: true,
-      
+      edit: false,
+      delete: false,
+      custom: [
+        { name: 'editCheckpoint', title: '<i class="nb-compose"></i>' },
+        { name: 'deleteCheckpoint', title: '<i class="nb-close-circled"></i>' },
+      ],
       position: 'right'
     },
   };
 
+  notification : NotificationsComponent;
+
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private api : CheckpointsService) { }
+  constructor(
+    private api : CheckpointsService,  
+    private router: Router,
+    private toastrService: NbToastrService) { }
 
   ngOnInit(): void {
+    this.notification = new NotificationsComponent(this.toastrService);
     this.getAllCheckpints();
   }
 
@@ -74,12 +86,22 @@ export class CheckpointListComponent implements OnInit {
     });
   }
 
-  deleteRecord(event){
-    console.log('delete');
-  }
-
-  updateRecord(event){
-    console.log('update');
+  onCustomAction(event){
+    switch (event.action) {
+      case 'editCheckpoint':
+        if(parseInt(event.data['pakageOnQueue']) > 20) {
+          this.notification.showToast(4, 'Error', 'Error no se puede editar este punto de control debido a que tiene paquetes en cola.', 3000);
+        } else {
+          this.router.navigate(['views', 'admin', 'edit-checkpoint', event.data['id']]);
+        }
+        break;
+      case 'deleteCheckpoint':
+        console.log('delete');
+        break;
+    }
+    
+   
+    console.log(event.data);
   }
 
   private convertCheckpointList(data : any) {
@@ -96,14 +118,6 @@ export class CheckpointListComponent implements OnInit {
       array.push(newCheckpointTemplate);
     }
     return array;
-  }
-
-  onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
   }
 
 }

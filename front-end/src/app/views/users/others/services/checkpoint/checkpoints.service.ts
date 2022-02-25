@@ -12,4 +12,8 @@ export class CheckpointsService {
   getAllCheckpoints() {
     return this.http.get<any>(`${global.GLOBAL.url}/checkpoints/`)
   }
+  
+  getCheckpoint(id : number) {
+    return this.http.get<any>(`${global.GLOBAL.url}/checkpoints/` + id);
+  }
 }
