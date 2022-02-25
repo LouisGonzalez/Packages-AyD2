@@ -6,4 +6,5 @@ export class CheckpointListTemplate{
     id ?: number;
     route : number;
     description ?: string;
+    assignedOperator ?: number;
 }
