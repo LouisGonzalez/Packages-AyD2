@@ -52,8 +52,8 @@ export class CheckpointListComponent implements OnInit {
       edit: false,
       delete: false,
       custom: [
-        { name: 'editCheckpoint', title: '<i class="nb-compose"></i>' },
-        { name: 'deleteCheckpoint', title: '<i class="nb-close-circled"></i>' },
+        { name: 'editCheckpoint', title: '<i class="ion-ios-edit-outline"></i>' },
+        { name: 'deleteCheckpoint', title: '<i class="ion-ios-people-outline"></i>' },
       ],
       position: 'right'
     },

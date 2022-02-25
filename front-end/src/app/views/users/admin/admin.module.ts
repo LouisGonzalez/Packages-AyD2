@@ -29,6 +29,7 @@ import {
 import { ListUsersComponent } from './list-users/list-users.component';
 import { RoutesModule } from './routes/routes.module';
 import { EditCheckpointComponent } from './edit-checkpoint/edit-checkpoint.component';
+import { UpdateAssignamentOperatorCheckpointComponent } from './update-assignament-operator-checkpoint/update-assignament-operator-checkpoint.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { EditCheckpointComponent } from './edit-checkpoint/edit-checkpoint.compo
     CheckpointListComponent,
     RegisterUserComponent,
     ListUsersComponent,
-    EditCheckpointComponent
+    EditCheckpointComponent,
+    UpdateAssignamentOperatorCheckpointComponent
   ],
   imports: [
     CommonModule,
