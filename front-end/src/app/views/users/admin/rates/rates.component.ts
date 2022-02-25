@@ -3,13 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RatesService } from '../../others/services/rates/rates.service';
 import * as global from '../../../GLOBAL';
 import { Rate } from '../../others/models/rate';
-import {
-  NbComponentStatus,
-  NbGlobalPhysicalPosition,
-  NbGlobalPosition,
-  NbToastrService,
-  NbToastrConfig,
-} from '@nebular/theme';
+import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
+import { NbToastrService } from '@nebular/theme';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,24 +22,8 @@ export class RatesComponent implements OnInit {
   PRICE_PER_POUND = 'Tarifa por libra';
   PRIORIZATION_FEE = 'Tarifa por priorización';
 
-  /** Toastr */
-  config: NbToastrConfig;
-
   datarates : Rate [];
-  index = 1;
-  destroyByClick = true;
-  duration = 2500;
-  hasIcon = true;
-  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-  preventDuplicates = false;
-
-  types: NbComponentStatus[] = [
-    'primary',
-    'success',
-    'info',
-    'warning',
-    'danger',
-  ];
+  notification : NotificationsComponent;
 
   errors = false;
   formRates : FormGroup = new FormGroup ({
@@ -75,13 +54,13 @@ export class RatesComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.notification = new NotificationsComponent(this.toastrService);
     this.set_values();
   }
 
   set_rates() {
     if (this.formRates.valid) {
       // Mandar la peticion de crear
-      console.log(this.formRates);
       this.addRates(this.OPERATION_FEE, this.formRates.get('operatorFee').value, true)  
       this.addRates(this.PRIORIZATION_FEE, this.formRates.get('priorizationFee').value, false)  
       this.addRates(this.PRICE_PER_POUND, this.formRates.get('pricePerPound').value, false);
@@ -98,7 +77,7 @@ export class RatesComponent implements OnInit {
         this.addField(res);
       },
       error:(err) => {
-        this.showToast(this.types[4], 'Error', 'Error mientras se obtenian las tarifas, vuelve a intentarlo.');
+        this.notification.showToast(4, 'Error', 'Error mientras se obtenian las tarifas, vuelve a intentarlo.', 2500);
       }
     });
   }
@@ -112,7 +91,6 @@ export class RatesComponent implements OnInit {
   private addField(data){
     this.datarates = data;
     for (const iterator of data) {
-      console.log("Aqui: " + iterator);
       if (iterator['ratename'] === 'Tarifa por operación') {
         this.formRates.controls['operatorFee'].setValue(iterator['rate'])
       } else if (iterator['ratename'] === 'Tarifa por priorización') {
@@ -142,12 +120,12 @@ export class RatesComponent implements OnInit {
             }, 3000);
           }
           fee == null 
-          ? this.showToast(this.types[3], 'Precaución', 'Debido a que el campo de: ' + name + ', esta vacio, el valor por defecto sera 0.')
+          ? this.notification.showToast(3, 'Precaución', 'Debido a que el campo de: ' + name + ', esta vacio, el valor por defecto sera 0.', 2500)
           : console.log("");  
-          this.showToast(this.types[1], 'Editado', name + ', modificado correctamente.');
+          this.notification.showToast(1, 'Editado', name + ', modificado correctamente.', 2500);
         },
         error:() =>{
-          this.showToast(this.types[4], 'Error', 'Error mientras se agregaba la \"' + name + '\", vuelve a intentarlo.');
+          this.notification.showToast(4, 'Error', 'Error mientras se agregaba la \"' + name + '\", vuelve a intentarlo.', 2500);
         }
       }); 
     } else {
@@ -165,36 +143,19 @@ export class RatesComponent implements OnInit {
             }, 2700);
           }
           fee == null 
-          ? this.showToast(this.types[3], 'Precaución', 'Debido a que el campo de: ' + name + ', esta vacio, el valor por defecto sera 0.')
+          ? this.notification.showToast(3, 'Precaución', 'Debido a que el campo de: ' + name + ', esta vacio, el valor por defecto sera 0.', 2500)
           : console.log("");
-          this.showToast(this.types[1], 'Agregado', name + ', agregado correctamente.');
+          this.notification.showToast(1, 'Agregado', name + ', agregado correctamente.', 2500);
         },
         error:() =>{
-          this.showToast(this.types[4], 'Error', 'Error mientras se agregaba la \"' + name + '\", vuelve a intentarlo.');
+          this.notification.showToast(4, 'Error', 'Error mientras se agregaba la \"' + name + '\", vuelve a intentarlo.', 2500);
         }
       }); 
     }
   }
 
   onCancel() {
+    this.formRates.reset();
     this.router.navigate(['views', 'admin'])
-  }
-
-  private showToast(type: NbComponentStatus, title: string, body: string) {
-    const config = {
-      status: type,
-      destroyByClick: this.destroyByClick,
-      duration: this.duration,
-      hasIcon: this.hasIcon,
-      position: this.position,
-      preventDuplicates: this.preventDuplicates,
-    };
-    const titleContent = title ? `${title}` : '';
-
-    this.index += 1;
-    this.toastrService.show(
-      body,
-      `${titleContent}`,
-      config);
   }
 }

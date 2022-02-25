@@ -28,6 +28,7 @@ import {
 } from '@nebular/theme';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { RoutesModule } from './routes/routes.module';
+import { EditCheckpointComponent } from './edit-checkpoint/edit-checkpoint.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { RoutesModule } from './routes/routes.module';
     CreateDestinationComponent,
     CheckpointListComponent,
     RegisterUserComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    EditCheckpointComponent
   ],
   imports: [
     CommonModule,
