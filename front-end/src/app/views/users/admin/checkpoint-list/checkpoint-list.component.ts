@@ -52,8 +52,8 @@ export class CheckpointListComponent implements OnInit {
       edit: false,
       delete: false,
       custom: [
-        { name: 'editCheckpoint', title: '<i class="ion-ios-edit-outline"></i>' },
-        { name: 'deleteCheckpoint', title: '<i class="ion-ios-people-outline"></i>' },
+        { name: 'editCheckpoint', title: '<i class="nb-edit"></i>' },
+        { name: 'operatorCheckpoint', title: '<i class="ion-ios-people-outline"></i>' },
       ],
       position: 'right'
     },
@@ -80,7 +80,7 @@ export class CheckpointListComponent implements OnInit {
         this.source.load(this.convertCheckpointList(res));
       },  
       error:(res) => {
-        alert('Error mientras se obtenia la lista de puntos de control')
+        this.notification.errors(400, 'Error mientras se obtenia la lista de puntos de control');
       }
     });
   }
@@ -88,14 +88,18 @@ export class CheckpointListComponent implements OnInit {
   onCustomAction(event){
     switch (event.action) {
       case 'editCheckpoint':
-        if(parseInt(event.data['pakageOnQueue']) > 20) {
+        if(parseInt(event.data['pakageOnQueue']) > 0) {
           this.notification.showToast(4, 'Error', 'Error no se puede editar este punto de control debido a que tiene paquetes en cola.', 3000);
         } else {
           this.router.navigate(['views', 'admin', 'edit-checkpoint', event.data['id']]);
         }
         break;
-      case 'deleteCheckpoint':
-        console.log('delete');
+      case 'operatorCheckpoint':
+        if(parseInt(event.data['pakageOnQueue']) > 0) {
+          this.notification.showToast(4, 'Error', 'Error no se puede editar este punto de control debido a que tiene paquetes en cola.', 3000);
+        } else {
+          this.router.navigate(['views', 'admin', 'update-assignament-operator', event.data['id']]);
+        }
         break;
     }
   }

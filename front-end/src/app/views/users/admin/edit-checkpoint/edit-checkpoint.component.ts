@@ -4,7 +4,6 @@ import { Location } from '@angular/common';
 import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 import { NbToastrService } from '@nebular/theme';
 import { CheckpointsService } from '../../others/services/checkpoint/checkpoints.service';
-import { Checkpoint } from '../../others/models/Checkpoint';
 import { Router } from '@angular/router';
 import * as global from '../../../GLOBAL';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -57,7 +56,7 @@ export class EditCheckpointComponent implements OnInit {
     .subscribe({
       next:(res) => {
         this.data = res;
-        if (parseInt(this.data['packageOnQueue']) == 0) {
+        if (parseInt(this.data['packageOnQueue']) > 0) {
           this.notification.showToast(4, "Error", "Error no se puede editar el punto de control porque tiene paquetes en cola", 3000);
           setTimeout(() => {
             this.location.back();
@@ -113,6 +112,5 @@ export class EditCheckpointComponent implements OnInit {
   onCancel() {
     this.formEditCheckpoint.reset();
     this.router.navigate(['views', 'admin', 'checkpoints'])
-   
   }
 }
