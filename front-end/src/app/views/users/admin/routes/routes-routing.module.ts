@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddRouteComponent } from './add-route/add-route.component';
+import { CreateRouteComponent } from './create-route/create-route.component';
 
 const routes: Routes = [
    {
-        path: 'add-route',
-        component: AddRouteComponent,
+        path: 'create-route',
+        component: CreateRouteComponent,
    }
 ];
 

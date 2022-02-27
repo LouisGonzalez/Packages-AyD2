@@ -2,32 +2,36 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RoutesRoutingModule } from './routes-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { 
-  NbCheckboxModule,
   NbCardModule,
-  NbRadioModule, 
   NbButtonModule,
   NbInputModule,
-  NbStepperModule,
+  NbIconModule,
+  NbSearchModule,
+  NbListModule,
+  NbSpinnerModule
 } from '@nebular/theme';
 
-import { AddRouteComponent } from './add-route/add-route.component';
+import { CreateRouteComponent } from './create-route/create-route.component'; 
 
 @NgModule({
   imports: [
     CommonModule,
     RoutesRoutingModule,
-    NbCheckboxModule,
     NbCardModule,
-    NbRadioModule,
     NbButtonModule,
     NbInputModule,
-    NbStepperModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NbIconModule,
+    HttpClientModule,
+    NbSearchModule,
+    NbListModule,
+    NbSpinnerModule
   ],
   declarations: [
-    AddRouteComponent
+    CreateRouteComponent
   ] 
 
 })

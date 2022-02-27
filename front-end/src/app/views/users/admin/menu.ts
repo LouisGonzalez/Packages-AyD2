@@ -6,13 +6,23 @@ export const ADMINISTRATOR_MENU_ITEMS: NbMenuItem[] = [
         icon: 'car-outline',
         children:[
             {
-                title: 'Registrar',
-                link: '/views/users/admin/routes/add-route'
+                title: 'Crear',
+                link: '/views/users/admin/routes/create-route'
             },
             {
                 title: 'Listado de Rutas',
                 link: '/views/users/admin'
             }
-        ] 
+        ], 
+    },
+    {
+        title: 'Puntos de Control',
+        icon: 'home-outline',
+        children:[
+            {
+                title: 'Crear',
+                link: '/views/users/admin/create-checkpoint'
+            }
+        ], 
     }
 ];

@@ -23,9 +23,12 @@ import {
   NbInputModule,
   NbCheckboxModule,
   NbMenuModule,
-  NbActionsModule
+  NbActionsModule,
+  NbSpinnerModule,
+
 } from '@nebular/theme';
 import { ListUsersComponent } from './list-users/list-users.component';
+import { CreateCheckpointComponent } from './create-checkpoint/create-checkpoint.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { ListUsersComponent } from './list-users/list-users.component';
     RatesComponent,
     CreateDestinationComponent,
     RegisterUserComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    CreateCheckpointComponent
   ],
   imports: [
     CommonModule,
@@ -58,6 +62,11 @@ import { ListUsersComponent } from './list-users/list-users.component';
     NbCheckboxModule,
     Ng2SmartTableModule,
     HttpClientModule,
+    NbIconModule,
+    NbListModule,
+    NbSpinnerModule,
+    NbCardModule,
+    NbListModule
   ]
 })
 export class AdminModule { }

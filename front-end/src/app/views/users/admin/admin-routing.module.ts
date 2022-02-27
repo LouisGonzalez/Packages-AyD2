@@ -5,6 +5,7 @@ import { CreateDestinationComponent } from './create-destination/create-destinat
 import { RatesComponent } from './rates/rates.component';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
+import { CreateCheckpointComponent } from './create-checkpoint/create-checkpoint.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: 'list-users',
         component: ListUsersComponent
+      },
+      {
+        path: 'create-checkpoint',
+        component: CreateCheckpointComponent
       }
     ]
   }

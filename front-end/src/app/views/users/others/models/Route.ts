@@ -3,8 +3,8 @@ import { Destination } from "./destination";
 
 export class Route{
     active: boolean;
-    checkpoint: [Checkpoint]
-    description: string;
+    checkpoints?: [Checkpoint]
+    name: string;
     destination: Destination;
     packageOnRoute: number;
     totalPackages: number;
