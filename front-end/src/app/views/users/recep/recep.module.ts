@@ -24,10 +24,14 @@ import {
   NbActionsModule,
   NbSearchModule,
   NbPopoverModule,
-  NbSidebarModule
+  NbSidebarModule,
+  NbRadioModule
 } from '@nebular/theme';
 import { CreateClientComponent } from './create-client/create-client.component';
 import { EnterPackageComponent } from './enter-package/enter-package.component';
+import { InvoiceComponent } from './invoice/invoice.component';
+import { DeliverPackageComponent } from './deliver-package/deliver-package.component';
+import { DeliverButtonComponent } from './deliver-package/deliver-button/deliver-button.component';
 
 
 @NgModule({
@@ -35,7 +39,10 @@ import { EnterPackageComponent } from './enter-package/enter-package.component';
     RecepComponent,
     ClientListComponent,
     CreateClientComponent,
-    EnterPackageComponent
+    EnterPackageComponent,
+    InvoiceComponent,
+    DeliverPackageComponent,
+    DeliverButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -60,7 +67,8 @@ import { EnterPackageComponent } from './enter-package/enter-package.component';
     NbSidebarModule,
     FormsModule,
     ReactiveFormsModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    NbRadioModule
 
   ]
 })

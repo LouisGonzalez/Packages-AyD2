@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { Client } from '../../others/models/Client';
 import { RecepService } from '../../others/services/recep.service';
-import Swal from 'sweetalert2';
+//import Swal from 'sweetalert2';
 import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {
@@ -50,18 +50,18 @@ export class CreateClientComponent implements OnInit {
     if(this.form.valid){
       this.client = this.form.value;
       this.recepService.addClient(this.client).pipe(
-        catchError(error => {
-          Swal.fire({
-            icon: 'error',
-            title: ':(',
-            text: error
-          })
-          return EMPTY;
-        })
+        // catchError(error => {
+        //   Swal.fire({
+        //     icon: 'error',
+        //     title: ':(',
+        //     text: error
+        //   })
+        //   return EMPTY;
+        // })
       )
       .subscribe(
         result => {
-          this.ref.close();
+          this.ref.close(this.client);
           this.makeToast('success', null, 'Cliente agregado!');
         }
       )
