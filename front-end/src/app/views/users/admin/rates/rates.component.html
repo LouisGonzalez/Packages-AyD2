@@ -30,7 +30,6 @@
                 fullWidth 
                 id="operationFee" 
                 placeholder="Por Operacion"
-                required
                 />
               </div>
             </div>
@@ -54,7 +53,6 @@
                 fullWidth 
                 id="priorizationFee" 
                 placeholder="Por Priorización"
-                required
                 />
               </div>
             </div>
@@ -79,14 +77,13 @@
               fullWidth 
               id="pricePerPound" 
               placeholder="Por Libra"
-              required
               />
             </div>
           </div>
           
           <div class="row">
             <button type="submit" nbButton status="primary" (click)="set_rates()" hero>Agregar</button>&nbsp;&nbsp;
-            <button nbButton status="danger" hero>Cancelar</button>
+            <button nbButton status="danger" (click)="onCancel()" hero>Cancelar</button>
           </div>
         </form>
       </nb-card-body>

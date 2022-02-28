@@ -7,9 +7,12 @@ import { OperatorModule } from './operator/operator.module';
 import { RecepModule } from './recep/recep.module';
 
 import { NbMenuModule } from '@nebular/theme';
+import { NotificationsComponent } from './others/source/notifications/notifications.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    NotificationsComponent
+  ],
   imports: [
     CommonModule,
     UsersRoutingModule,

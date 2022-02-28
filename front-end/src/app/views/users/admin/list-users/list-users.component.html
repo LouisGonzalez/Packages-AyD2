@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <nb-card id="table-employeers">
   <nb-card-header>
     Listado de usuarios
@@ -11,3 +12,15 @@
   </nb-card-body>
 </nb-card>
 <ng-container #container></ng-container>
+=======
+<nb-card>
+  <nb-card-header>
+    Listado de usuarios
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+>>>>>>> brayan

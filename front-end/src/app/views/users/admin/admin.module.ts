@@ -10,7 +10,9 @@ import { RatesComponent } from './rates/rates.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateDestinationComponent } from './create-destination/create-destination.component';
-
+import { EditCheckpointComponent } from './edit-checkpoint/edit-checkpoint.component';
+import { UpdateAssignamentOperatorCheckpointComponent } from './update-assignament-operator-checkpoint/update-assignament-operator-checkpoint.component';
+import { CheckpointListComponent } from './checkpoint-list/checkpoint-list.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import {
   NbRadioModule,
@@ -45,6 +47,9 @@ import { UpdateUserComponent } from './update-user/update-user.component';
     ListUsersComponent,
     ActivateUsersComponent,
     UpdateUserComponent,
+    CheckpointListComponent,
+    EditCheckpointComponent,
+    UpdateAssignamentOperatorCheckpointComponent
   ],
   imports: [
     CommonModule,
@@ -72,7 +77,7 @@ import { UpdateUserComponent } from './update-user/update-user.component';
     NbSidebarModule,
     Ng2SmartTableModule,
     HttpClientModule,
-    RoutesModule
+    RoutesModule,
   ]
 })
 export class AdminModule { }

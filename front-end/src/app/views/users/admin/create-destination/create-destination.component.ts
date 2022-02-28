@@ -3,13 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DestinationService } from '../../others/services/destination/destination.service';
 import * as global from '../../../GLOBAL';
 import { Destination } from '../../others/models/destination';
-import {
-  NbComponentStatus,
-  NbGlobalPhysicalPosition,
-  NbGlobalPosition,
-  NbToastrService,
-  NbToastrConfig,
-} from '@nebular/theme';
+import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
+import { NbToastrService } from '@nebular/theme';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-create-destination',
@@ -22,24 +18,7 @@ export class CreateDestinationComponent implements OnInit {
   ERROR_MIN = global.GLOBAL.ERROR_MIN;
   ERROR_NUMBER = global.GLOBAL.ERROR_NUMBER;
 
-  /** Toastr */
-  config: NbToastrConfig;
-
-  index = 1;
-  destroyByClick = true;
-  duration = 5000;
-  hasIcon = true;
-  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
-  preventDuplicates = false;
-
-  types: NbComponentStatus[] = [
-    'primary',
-    'success',
-    'info',
-    'warning',
-    'danger',
-  ];
-
+  notification : NotificationsComponent;
   errors = false;
   formDestination : FormGroup = new FormGroup ({
     name : new FormControl(null, [
@@ -53,9 +32,13 @@ export class CreateDestinationComponent implements OnInit {
     description : new FormControl(null, null)
   });
 
-  constructor(private api_destination : DestinationService, private toastrService: NbToastrService) { }
+  constructor (
+    private api_destination : DestinationService, 
+    private toastrService : NbToastrService,
+    private router : Router ) { }
 
   ngOnInit(): void {
+    this.notification = new NotificationsComponent(this.toastrService);
   }
 
   create_destination() {
@@ -80,30 +63,17 @@ export class CreateDestinationComponent implements OnInit {
     this.api_destination.createDestination(newDestination)
     .subscribe({
       next : (res) => {
-        this.showToast(this.types[1], 'Agregado', `Destino: ${nameDestintaion}, agregado correctamente.`);
+        this.notification.showToast(1, 'Agregado', `Destino: ${nameDestintaion}, agregado correctamente.`, 2500);
         this.formDestination.reset();
       },
       error : () => {
-        this.showToast(this.types[4], 'Error', `Error mientras se agregaba el destino: ${nameDestintaion}, vuelve a intentarlo.`);
+        this.notification.showToast(4, 'Error', `Error mientras se agregaba el destino: ${nameDestintaion}, vuelve a intentarlo.`, 3000);
       }
     });
   }
 
-  private showToast(type: NbComponentStatus, title: string, body: string) {
-    const config = {
-      status: type,
-      destroyByClick: this.destroyByClick,
-      duration: this.duration,
-      hasIcon: this.hasIcon,
-      position: this.position,
-      preventDuplicates: this.preventDuplicates,
-    };
-    const titleContent = title ? `${title}` : '';
-
-    this.index += 1;
-    this.toastrService.show(
-      body,
-      `${titleContent}`,
-      config);
+  onCancel() {
+    this.formDestination.reset();
+    this.router.navigate(['views', 'admin'])
   }
 }
