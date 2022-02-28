@@ -13,6 +13,7 @@ import { CreateDestinationComponent } from './create-destination/create-destinat
 
 import { RegisterUserComponent } from './register-user/register-user.component';
 import {
+  NbRadioModule,
   NbButtonModule,
   NbLayoutModule,
   NbCardModule,
@@ -25,10 +26,15 @@ import {
   NbInputModule,
   NbCheckboxModule,
   NbMenuModule,
-  NbActionsModule
+  NbActionsModule,
+  NbSearchModule,
+  NbPopoverModule,
+  NbSidebarModule
 } from '@nebular/theme';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { RoutesModule } from './routes/routes.module';
+import { ActivateUsersComponent } from './activate-users/activate-users.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 @NgModule({
   declarations: [
@@ -36,10 +42,13 @@ import { RoutesModule } from './routes/routes.module';
     RatesComponent,
     CreateDestinationComponent,
     RegisterUserComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    ActivateUsersComponent,
+    UpdateUserComponent,
   ],
   imports: [
     CommonModule,
+    NbRadioModule,
     AdminRoutingModule,
     NbMenuModule,
     ThemeModule,
@@ -57,7 +66,10 @@ import { RoutesModule } from './routes/routes.module';
     NbSelectModule,
     NbListModule,
     NbInputModule,
+    NbSearchModule,
+    NbPopoverModule,
     NbCheckboxModule,
+    NbSidebarModule,
     Ng2SmartTableModule,
     HttpClientModule,
     RoutesModule

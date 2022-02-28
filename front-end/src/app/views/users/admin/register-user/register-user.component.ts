@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-//import Swal from 'sweetalert2';
 import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AdminService } from '../../others/services/admin.service';

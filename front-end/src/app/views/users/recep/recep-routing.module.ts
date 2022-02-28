@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ClientListComponent } from './client-list/client-list.component';
+import { DeliverPackageComponent } from './deliver-package/deliver-package.component';
+import { EnterPackageComponent } from './enter-package/enter-package.component';
 import { RecepComponent } from './recep.component';
 
 const routes: Routes = [
@@ -7,7 +10,18 @@ const routes: Routes = [
     path: '',
     component: RecepComponent,
     children: [
-      //Aqui iran los hijos
+      {
+        path: 'client-list',
+        component: ClientListComponent
+      },
+      {
+        path: 'enter-package',
+        component: EnterPackageComponent
+      },
+      {
+        path: 'deliver-package',
+        component: DeliverPackageComponent
+      }
     ]
   }
 ];

@@ -7,4 +7,5 @@ export interface User {
   type: number;
   activo: number;
   CUI: number;
+  email: string;
 }
