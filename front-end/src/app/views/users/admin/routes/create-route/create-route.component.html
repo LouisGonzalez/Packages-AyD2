@@ -48,6 +48,7 @@
                   'inp-invalid': formRoute.get('destination')?.invalid && formRoute.get('destination')?.touched, 
                   'nbInput': formRoute.get('destination').valid
                 }"
+                #destinationSearchInput
                 nbInput
                 fullWidth
                 [ngClass]="{'loading': isLoading}"
@@ -64,17 +65,21 @@
               </div>
               
               <!-- Lista con los destinos obtenidos tras la busqueda -->
-              <nb-card [nbSpinner]="isLoading" nbSpinnerStatus="primary" class="list-card" size="small" style="border-style: none">
-                <nb-list>
-                  <nb-list-item 
-                    (click)="setDestination(item.id, item.name)" 
-                    *ngFor="let item of data | async"
-                    (mouseenter)="setHoverBorder($event)"
-                    (mouseleave)="setHoverBorder($event)">
-                      {{item.name}} <br>
-                      Tarifa: Q{{item.fee}}
-                  </nb-list-item>
-                </nb-list>
+              <nb-card 
+                [hidden]="data == null ? true : false"
+                [nbSpinner]="isLoading" 
+                nbSpinnerStatus="primary" 
+                class="list-card borderless" size="small">
+                  <nb-list >
+                    <nb-list-item 
+                      (click)="setDestination(item.id, item.name)" 
+                      *ngFor="let item of data | async"
+                      (mouseenter)="setHoverBorder($event)"
+                      (mouseleave)="setHoverBorder($event)">
+                        {{item.name}} <br>
+                        Tarifa: Q{{item.fee}}
+                    </nb-list-item>
+                  </nb-list>
               </nb-card>  
           </div>
              

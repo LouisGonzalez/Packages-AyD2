@@ -1,95 +1,199 @@
 <div class="center">
-    <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
-      <nb-card>
+  <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+    <nb-card>
 
-        <!-- Titulo del formulario para creacion de rutas  -->
-        <nb-card-header>
-            <nb-icon icon="plus" pack="eva"></nb-icon>
-            <nb-icon icon="car-outline" pack="eva"></nb-icon>
-            Ruta
-        </nb-card-header>
-        
-        <!-- Cuerpo del formulario para creacion de rutas -->
-        <nb-card-body>
-          <form [formGroup]="formRoute">
-            
-            <!-- Nombre -->
-            <div class="form-group">
-                <label class="required">*</label>
-                <label for="name" class="label">Nombre</label> 
-                <input 
-                    type="text"
-                    [class.inp-invalid]="formRoute.get('name')?.errors && formRoute.get('name')?.touched || errors" 
-                    formControlName="name"
-                    nbInput 
-                    fullWidth 
-                    id="name" 
-                    placeholder="Ingrese el nombre de la ruta a crear."
-                    required
-                />
-                <div *ngIf="formRoute.get('name')?.errors && formRoute.get('name')?.touched || errors" >
-                    <label class="label required" *ngIf="formRoute.get('name').hasError('required')">{{ERROR_REQUIRED}}</label>
-                </div>  
-            </div>
-
-            <!-- Destino -->
-            <div class="form-group">
+      <!-- Titulo del formulario para creacion de puntos de control  -->
+      <nb-card-header>
+          <nb-icon icon="plus" pack="eva"></nb-icon>
+          <nb-icon icon="home-outline" pack="eva"></nb-icon>
+          Punto de Control
+      </nb-card-header>
+      
+      <!-- Cuerpo del formulario para creacion de rutas -->
+      <nb-card-body>
+        <form [formGroup]="formCheckpoint">
+          
+          <!-- Nombre -->
+          <div class="form-group">
               <label class="required">*</label>
-              <label for="destination" class="label">Destino</label>  
+              <label for="name" class="label">Nombre</label> 
               <input 
-                    type="text"
-                    #destinationInput
-                    [class.inp-invalid]="formRoute.get('destination')?.errors && formRoute.get('destination')?.touched || errors" 
-                    formControlName="destination"
-                    nbInput 
-                    fullWidth 
-                    id="destination"
-                    placeholder="Busque un destino para la ruta."
-                    required
-                    readonly
-              />
-              <div *ngIf="formRoute.get('destination')?.errors && formRoute.get('destination')?.touched || errors" >
-                <label class="label required" *ngIf="formRoute.get('destination').hasError('required')">{{ERROR_REQUIRED}}</label>
-              </div>  
-
-              <br>
-              <br>
-              <!-- Barra de busqueda -->
-              <div>
-                <input
-                nbInput
-                [ngClass]="{'loading': isLoading}"
-                [spellcheck]="false"
-                placeholder="Buscar destino"
+                [ngClass]="{
+                  'inp-invalid': formCheckpoint.get('name').invalid && formCheckpoint.get('name').touched, 
+                  'nbInput': formCheckpoint.get('name').valid
+                }"
                 type="text"
-                (ngModelChange)="search($event)"
-                [(ngModel)]="src"
-                [ngModelOptions]="{standalone: true}">
-                <nb-icon icon="search-outline" pack="eva"></nb-icon>
-              </div>
-              
-              <!-- Lista con los destinos obtenidos tras la busqueda -->
-              <nb-card [nbSpinner]="isLoading" nbSpinnerStatus="primary" class="list-card bordeless" size="small">
+                formControlName="name"
+                nbInput 
+                fullWidth 
+                id="name" 
+                placeholder="Ingrese el nombre del punto de control a crear."
+                required
+              />
+              <div *ngIf="formCheckpoint.get('name').invalid && formCheckpoint.get('name').touched" >
+                  <label class="label required" *ngIf="formCheckpoint.get('name').hasError('required')">{{ERROR_REQUIRED}}</label>
+              </div>  
+          </div>
+
+
+          <!-- Ruta  -->
+          <div class="form-group">
+            <label class="required">*</label>
+            <label for="route" class="label">Ruta: &nbsp;</label>
+            <label class="label black" #routeLabel>No seleccionada.</label>
+            <br>   
+            
+            <!-- Barra de busqueda -->
+            <input
+              [ngClass]="{
+                'inp-invalid': formCheckpoint.get('route')?.invalid && formCheckpoint.get('route')?.touched, 
+                'nbInput': formCheckpoint.get('route').valid
+              }"
+              #routesSearchInput
+              nbInput
+              fullWidth
+              [ngClass]="{'loading': routesLoading}"
+              [spellcheck]="false"
+              placeholder="Buscar ruta por nombre."
+              type="text"
+              (ngModelChange)="searchRoutes($event)"
+              [(ngModel)]="routesSrc"
+              [ngModelOptions]="{standalone: true}">
+
+            <!-- Etiqueta de mensajes -->
+            <div *ngIf="formCheckpoint.get('route')?.invalid && formCheckpoint.get('route')?.touched" >
+              <label class="label required" *ngIf="formCheckpoint.get('route').hasError('required')">{{ERROR_REQUIRED}}</label>
+            </div>
+            
+            <!-- Lista con las rutas obtenidos tras la busqueda -->
+              <nb-card 
+                [hidden]="routesData == null ? true : false"
+                [nbSpinner]="routesLoading" nbSpinnerStatus="primary"
+                class="list-card"
+                size="small">
+                  <nb-list>
+                    <nb-list-item 
+                      (click)="setRoute(item.id, item.name)" 
+                      *ngFor="let item of routesData | async"
+                      (mouseenter)="setHoverBorder($event)"
+                      (mouseleave)="setHoverBorder($event)">
+                        {{item.name}}
+                    </nb-list-item>
+                  </nb-list>
+              </nb-card>
+        </div>
+           
+        <!-- Operador Asignado -->
+        <div class="form-group">
+          <label class="required">*</label>
+          <label for="operator" class="label">Operador asignado: &nbsp;</label>
+          <label class="label black" #operatorLabel>No seleccionado.</label>
+          <br>   
+          
+          <!-- Barra de busqueda -->
+          <input
+            [ngClass]="{
+              'inp-invalid': formCheckpoint.get('operator')?.invalid && formCheckpoint.get('operator')?.touched, 
+              'nbInput': formCheckpoint.get('operator').valid
+            }"
+            #operatorsSearchInput
+            nbInput
+            fullWidth
+            [ngClass]="{'loading': operatorsLoading}"
+            [spellcheck]="false"
+            placeholder="Buscar el operador por CUI."
+            type="text"
+            (ngModelChange)="searchOperators($event)"
+            [(ngModel)]="operatorsSrc"
+            [ngModelOptions]="{standalone: true}">
+
+          <!-- Etiqueta de mensajes -->
+          <div *ngIf="formCheckpoint.get('operator')?.invalid && formCheckpoint.get('operator')?.touched" >
+            <label class="label required" *ngIf="formCheckpoint.get('operator').hasError('required')">{{ERROR_REQUIRED}}</label>
+          </div>
+          
+          <!-- Lista con los operadores obtenidos tras la busqueda -->
+            <nb-card 
+              [hidden]="operatorsData == null ? true : false"
+              [nbSpinner]="operatorsLoading" nbSpinnerStatus="primary"
+              class="list-card"
+              size="small">
                 <nb-list>
                   <nb-list-item 
-                    (click)="setDestination(item.id, item.name)" 
-                    *ngFor="let item of data | async"
+                    (click)="setOperator(item.cui, item.name, item.surname)" 
+                    *ngFor="let item of operatorsData | async"
                     (mouseenter)="setHoverBorder($event)"
                     (mouseleave)="setHoverBorder($event)">
-                      {{item.name}} <br>
-                      Tarifa: Q{{item.fee}}
+                      {{item.name +' ' +item.surname}}
+                      <br>
+                      {{item.cui}}
                   </nb-list-item>
                 </nb-list>
-              </nb-card>  
-          </div>
-             
-            <div class="row">
-              <button type="submit" nbButton status="primary" (click)="createRoute()" hero>Crear</button>&nbsp;&nbsp;
-              <button routerLink="{{ADMIN_HOME}}" nbButton status="danger" hero>Cancelar</button>
+            </nb-card>
+            
+            <!-- Capacidad de Cola -->
+            <div class="form-group">
+              <br>
+              <label class="required">*</label>
+              <label for="queueCapacity" class="label">Capacidad de Cola</label> 
+              <input 
+                [ngClass]="{
+                  'inp-invalid': formCheckpoint.get('queueCapacity').invalid && formCheckpoint.get('queueCapacity').touched, 
+                  'nbInput': formCheckpoint.get('queueCapacity').valid
+                }"
+                type="number"
+                formControlName="queueCapacity"
+                nbInput 
+                fullWidth 
+                id="queueCapacity" 
+                placeholder="Ingrese la capacidad de la cola de paquetes."
+                required
+              />
+              <div *ngIf="formCheckpoint.get('queueCapacity').invalid && formCheckpoint.get('queueCapacity').touched" >
+                <label class="label required" *ngIf="formCheckpoint.get('queueCapacity').hasError('required')">{{ERROR_REQUIRED}}</label>
+                <label class="label required" *ngIf="formCheckpoint.get('queueCapacity').hasError('min')">{{ERROR_MIN}}</label><br>
+                <label class="label required" *ngIf="formCheckpoint.get('queueCapacity').hasError('pattern')">{{ERROR_NUMBER}}</label>
+              </div>
             </div>
-          </form>
 
-        </nb-card-body>
-      </nb-card>
-    </div>
+            <!-- Tarifa de Operacion -->
+            <div class="form-group">
+              <br>
+              <label class="required">*</label>
+              <label for="fee" class="label">Tarafia de Operacion</label> 
+              <br>
+              <nb-toggle (checkedChange)="setToogleValue()">Tarifa de Operacion Perzonalizada</nb-toggle> 
+              <input 
+                [ngClass]="{
+                  'inp-invalid': formCheckpoint.get('fee').invalid && formCheckpoint.get('fee').touched, 
+                  'nbInput': formCheckpoint.get('fee').valid
+                }"
+                #rateInput
+                type="number"
+                formControlName="fee"
+                nbInput 
+                fullWidth 
+                id="fee" 
+                placeholder="Ingrese la tarifa de operacion."
+                required
+                [readonly]="!customOperationFee"
+              />
+              <div *ngIf="formCheckpoint.get('fee').invalid && formCheckpoint.get('fee').touched" >
+                <label class="label required" *ngIf="formCheckpoint.get('fee').hasError('required')">{{ERROR_REQUIRED}}</label>
+                <label class="label required" *ngIf="formCheckpoint.get('fee').hasError('min')">{{ERROR_MIN}}</label><br>
+                <label class="label required" *ngIf="formCheckpoint.get('fee').hasError('pattern')">{{ERROR_NUMBER}}</label>
+              </div>  
+          </div>
+
+        </div>
+
+          <div class="row">
+            <button type="submit" nbButton status="primary" (click)="createCheckpoint()" hero>Crear</button>&nbsp;&nbsp;
+            <button routerLink="{{ADMIN_HOME}}" nbButton status="danger" hero>Cancelar</button>
+          </div>
+        </form>
+
+      </nb-card-body>
+    </nb-card>
   </div>
+</div>

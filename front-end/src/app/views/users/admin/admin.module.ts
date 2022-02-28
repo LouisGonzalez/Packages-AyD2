@@ -25,7 +25,7 @@ import {
   NbMenuModule,
   NbActionsModule,
   NbSpinnerModule,
-
+  NbToggleModule
 } from '@nebular/theme';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { CreateCheckpointComponent } from './create-checkpoint/create-checkpoint.component';
@@ -66,7 +66,8 @@ import { CreateCheckpointComponent } from './create-checkpoint/create-checkpoint
     NbListModule,
     NbSpinnerModule,
     NbCardModule,
-    NbListModule
+    NbListModule,
+    NbToggleModule
   ]
 })
 export class AdminModule { }

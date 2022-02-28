@@ -18,8 +18,12 @@ app.use(myconn(mysql, dbOptions, 'single'));
 //Rutas
 const baseRoutes = require('./querys-api/src/routes/base-routes');
 const destinationRoutes = require('./querys-api/src/routes/destination-routes');
+const routeRoutes = require('./querys-api/src/routes/route-routes');
+const operatorRoutes = require('./querys-api/src/routes/operator-routes');
 app.use(baseRoutes);
 app.use(destinationRoutes);
+app.use(routeRoutes);
+app.use(operatorRoutes);
 
 //Iniciar servidor
 app.listen(port, () => {

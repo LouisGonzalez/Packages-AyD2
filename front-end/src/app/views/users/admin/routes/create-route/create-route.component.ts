@@ -21,6 +21,7 @@ import {
 export class CreateRouteComponent implements OnInit {
   
   @ViewChild("destinationLabel") destinationLabel: ElementRef;
+  @ViewChild("destinationSearchInput") destinationSearchInput: ElementRef;
 
   //Constantes globales
   ERROR_REQUIRED = global.GLOBAL.ERROR_REQUIRED;
@@ -129,11 +130,11 @@ export class CreateRouteComponent implements OnInit {
       this.data = this.destinationService.getDestinations(pattern).pipe(
         finalize(() => this.isLoading = false )
       );
-    }
+    } else this.data = null;
   }
   
   /**
-   * Procedimiento que setea el valor del input destinationInput,
+   * Procedimiento que setea el valor del lable destinationLabel,
    * tambien establece el valor del formControl destinatioId, por
    * ultimo elimina todos los errores existentes en el formControl
    * destination.
@@ -144,6 +145,8 @@ export class CreateRouteComponent implements OnInit {
     this.destinationLabel.nativeElement.innerHTML = destinationName;
     this.formRoute.get('destinationId').setValue(destinationId);
     this.formRoute.get('destination').setErrors(null)
+    this.data = null;
+    this.destinationSearchInput.nativeElement.value = '';
   }
 
 
