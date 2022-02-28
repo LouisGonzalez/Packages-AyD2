@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
 import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AdminService } from '../../others/services/admin.service';
@@ -39,22 +38,22 @@ export class RegisterUserComponent implements OnInit {
     if(this.form.valid){
       this.user = this.form.value;
       this.adminService.add(this.user).pipe(
-        catchError(error => {
-          Swal.fire({
-            icon: 'error',
-            title: ':(',
-            text: error
-          })
-          return EMPTY
-        })
+        // catchError(error => {
+        //   Swal.fire({
+        //     icon: 'error',
+        //     title: ':(',
+        //     text: error
+        //   })
+        //   return EMPTY
+        // })
       )
       .subscribe(
         result => {
-          Swal.fire({
-            title: ':D',
-            text: 'Employee added succesfully',
-            icon: 'success'
-          })
+          // Swal.fire({
+          //   title: ':D',
+          //   text: 'Employee added succesfully',
+          //   icon: 'success'
+          // })
           this.router.navigate(['/views/users/admin']);
         }
       )

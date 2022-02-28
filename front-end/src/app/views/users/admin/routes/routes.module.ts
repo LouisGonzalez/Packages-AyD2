@@ -10,7 +10,10 @@ import {
   NbIconModule,
   NbSearchModule,
   NbListModule,
-  NbSpinnerModule
+  NbSpinnerModule,
+  NbCheckboxModule,
+  NbRadioModule, 
+  NbStepperModule
 } from '@nebular/theme';
 
 import { CreateRouteComponent } from './create-route/create-route.component'; 
@@ -28,11 +31,15 @@ import { CreateRouteComponent } from './create-route/create-route.component';
     HttpClientModule,
     NbSearchModule,
     NbListModule,
-    NbSpinnerModule
+    NbSpinnerModule,
+    NbCheckboxModule,
+    NbRadioModule,
+    NbStepperModule
   ],
   declarations: [
     CreateRouteComponent
   ] 
 
 })
+
 export class RoutesModule { }

@@ -9,8 +9,16 @@ import { RatesComponent } from './rates/rates.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateDestinationComponent } from './create-destination/create-destination.component';
+import { EditCheckpointComponent } from './edit-checkpoint/edit-checkpoint.component';
+import { UpdateAssignamentOperatorCheckpointComponent } from './update-assignament-operator-checkpoint/update-assignament-operator-checkpoint.component';
+import { CheckpointListComponent } from './checkpoint-list/checkpoint-list.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
+import { ListUsersComponent } from './list-users/list-users.component';
+import { CreateCheckpointComponent } from './create-checkpoint/create-checkpoint.component';
+import { ActivateUsersComponent } from './activate-users/activate-users.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 import {
+  NbRadioModule,
   NbButtonModule,
   NbLayoutModule,
   NbCardModule,
@@ -25,10 +33,11 @@ import {
   NbMenuModule,
   NbActionsModule,
   NbSpinnerModule,
-  NbToggleModule
+  NbToggleModule,
+  NbSearchModule,
+  NbPopoverModule,
+  NbSidebarModule
 } from '@nebular/theme';
-import { ListUsersComponent } from './list-users/list-users.component';
-import { CreateCheckpointComponent } from './create-checkpoint/create-checkpoint.component';
 
 @NgModule({
   declarations: [
@@ -37,10 +46,16 @@ import { CreateCheckpointComponent } from './create-checkpoint/create-checkpoint
     CreateDestinationComponent,
     RegisterUserComponent,
     ListUsersComponent,
-    CreateCheckpointComponent
+    CreateCheckpointComponent,
+    ActivateUsersComponent,
+    UpdateUserComponent,
+    CheckpointListComponent,
+    EditCheckpointComponent,
+    UpdateAssignamentOperatorCheckpointComponent
   ],
   imports: [
     CommonModule,
+    NbRadioModule,
     AdminRoutingModule,
     NbMenuModule,
     ThemeModule,
@@ -59,7 +74,10 @@ import { CreateCheckpointComponent } from './create-checkpoint/create-checkpoint
     NbSelectModule,
     NbListModule,
     NbInputModule,
+    NbSearchModule,
+    NbPopoverModule,
     NbCheckboxModule,
+    NbSidebarModule,
     Ng2SmartTableModule,
     HttpClientModule,
     NbIconModule,
@@ -67,7 +85,8 @@ import { CreateCheckpointComponent } from './create-checkpoint/create-checkpoint
     NbSpinnerModule,
     NbCardModule,
     NbListModule,
-    NbToggleModule
+    NbToggleModule,
+    RoutesModule
   ]
 })
 export class AdminModule { }

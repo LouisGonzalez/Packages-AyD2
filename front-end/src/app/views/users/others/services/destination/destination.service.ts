@@ -12,7 +12,7 @@ export class DestinationService {
   constructor(private http: HttpClient) { }
 
   public createDestination(data: any) {
-    return this.http.post<any>(global.GLOBAL.url + "destination/", data);
+    return this.http.post<any>(global.GLOBAL.url + "/destination/", data);
   }
 
   public getDestinations(pattern: string):Observable<Destination[]>{
