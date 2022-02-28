@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import {
+  NbActionsModule,
+  NbAlertModule,
   NbButtonModule,
   NbLayoutModule,
   NbCardModule,
@@ -24,6 +26,8 @@ import { LoginComponent } from './login/login.component';
 import { ChartModule } from 'angular2-chartjs';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { FormsModule } from '@angular/forms';
+import { RequestPasswordComponent } from './request-password/request-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -46,12 +50,16 @@ import { FormsModule } from '@angular/forms';
     NbLayoutModule,
     ChartModule,
     LeafletModule,
+    NbActionsModule,
+    NbAlertModule,
     FormsModule
 
   ],
   declarations: [
     AuthComponent,
     LoginComponent,
+    RequestPasswordComponent,
+    ResetPasswordComponent,
   ]
 })
 export class AuthModule { }
