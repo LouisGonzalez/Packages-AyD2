@@ -6,6 +6,7 @@ import { RatesComponent } from './rates/rates.component';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { ActivateUsersComponent } from './activate-users/activate-users.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: 'activate-users',
         component: ActivateUsersComponent
+      },
+      {
+        path: 'update-user',
+        component: UpdateUserComponent
       },
       {
         path: 'routes',

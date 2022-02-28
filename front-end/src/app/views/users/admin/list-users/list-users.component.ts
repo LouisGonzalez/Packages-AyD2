@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
+import { Subject } from 'rxjs';
 import { SmartTableData } from '../../../../@core/data/smart-table';
 import { User } from '../../others/models/employee';
 import { AdminService } from '../../others/services/admin.service';
+import { UpdateUserComponent } from '../update-user/update-user.component';
 
 @Component({
   selector: 'ngx-list-users',
@@ -12,19 +14,25 @@ import { AdminService } from '../../others/services/admin.service';
 })
 export class ListUsersComponent implements OnInit {
 
+
+  @ViewChild('container', { read: ViewContainerRef })
+  container!: ViewContainerRef;
+
   users: User[];
   user: User;
   settings = {
     actions: {
       add: false,
+      edit: false
     },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
+    // edit: {
+    //   editButtonContent: '<i class="nb-edit"></i>',
+    //   saveButtonContent: '<i class="nb-checkmark"></i>',
+    //   cancelButtonContent: '<i class="nb-close"></i>',
+    //   confirmEdit: true
+    // },
     delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
+      deleteButtonContent: '<i class="nb-edit"></i>',
       confirmDelete: true,
     },
     columns: {
@@ -59,7 +67,7 @@ export class ListUsersComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableData, private adminService: AdminService, private router: Router) {
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private service: SmartTableData, private adminService: AdminService, private router: Router) {
     this.getData();
   }
 
@@ -78,18 +86,33 @@ export class ListUsersComponent implements OnInit {
     }
   }
 
-  onDeleteConfirm(event): void {
-    if (window.confirm('Estas seguro de desactivar a este usuario?')) {
-      this.user = event.data;
-      this.user.activo = 0;
-      this.adminService.updateUser(this.user).subscribe(data => {
-        console.log('empleado desactivado')
-        this.getData();
-      })
+  goToEdit(event){
+    console.log('hola mundo')
 
-    } else {
-      event.confirm.reject();
-    }
+  }
+
+  onDeleteConfirm(event): void {
+    // if (window.confirm('Estas seguro de desactivar a este usuario?')) {
+    //   this.user = event.data;
+    //   this.user.activo = 0;
+    //   this.adminService.updateUser(this.user).subscribe(data => {
+    //     console.log('empleado desactivado')
+    //     this.getData();
+    //   })
+
+    // } else {
+    //   event.confirm.reject();
+    // }
+    const dynamicComponentFactory = this.componentFactoryResolver.resolveComponentFactory(UpdateUserComponent);
+    const componentRef = this.container.createComponent(dynamicComponentFactory);
+    componentRef.instance.userReceive = event.data;
+    componentRef.instance.users = this.users;
+    componentRef.instance.source = this.source;
+    document.getElementById('table-employeers').style.display = "none";
+  }
+
+  onCustom(event): void {
+    console.log('hola mundo');
   }
 
   ngOnInit(): void {

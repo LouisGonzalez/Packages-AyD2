@@ -33,7 +33,6 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { DeliverPackageComponent } from './deliver-package/deliver-package.component';
 import { DeliverButtonComponent } from './deliver-package/deliver-button/deliver-button.component';
 
-
 @NgModule({
   declarations: [
     RecepComponent,
