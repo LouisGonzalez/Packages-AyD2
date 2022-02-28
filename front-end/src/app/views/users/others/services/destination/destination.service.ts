@@ -18,4 +18,8 @@ export class DestinationService {
   public getDestinations(pattern: string):Observable<Destination[]>{
     return this.http.get<Destination[]>(global.GLOBAL.querysUrl + "destination?name="+pattern);
   }
+
+  public getDestination(id : number) {
+    return this.http.get<Destination>(global.GLOBAL.url + "/destination/" + id);
+  }
 }

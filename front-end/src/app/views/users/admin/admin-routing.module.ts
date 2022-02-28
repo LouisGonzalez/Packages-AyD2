@@ -11,6 +11,7 @@ import { UpdateUserComponent } from './update-user/update-user.component';
 import { EditCheckpointComponent } from './edit-checkpoint/edit-checkpoint.component';
 import { UpdateAssignamentOperatorCheckpointComponent } from './update-assignament-operator-checkpoint/update-assignament-operator-checkpoint.component';
 import { CheckpointListComponent } from './checkpoint-list/checkpoint-list.component';
+import { RouteListComponent } from './route-list/route-list.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,10 @@ const routes: Routes = [
       { // views/admin/checkpoints
         path: 'checkpoints',       
         component: CheckpointListComponent     
+      },
+      { // views/admin/routes
+        path: 'route-list',       
+        component: RouteListComponent     
       },
     ]
   }
