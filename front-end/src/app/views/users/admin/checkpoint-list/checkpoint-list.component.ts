@@ -54,7 +54,7 @@ export class CheckpointListComponent implements OnInit {
       custom: [
         { name: 'editCheckpoint', title: '<i class="nb-edit"></i>' },
         { name: 'operatorCheckpoint', title: '<i class="ion-ios-people-outline"></i>' },
-        { name: 'removeCheckpoint', title: '<i class="icon ion-trash-a"></i>' },
+        { name: 'removeCheckpoint', title: '<i class="nb-trash"></i>' },
       ],
       position: 'right'
     },

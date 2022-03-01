@@ -20,6 +20,17 @@ export class RouteService {
     return this.http.get<Route[]>(global.GLOBAL.querysUrl + "route?name="+pattern);
   }
 
+  getAllRoutes() {
+    return this.http.get<any>(global.GLOBAL.url + "/route/");
+  }
+
+  getRoute(id : number) {
+    return this.http.get<Route>(global.GLOBAL.url + "/route/" + id);
+  }
+
+  putRoute(data : any, id : number) {
+    return this.http.put<any>(global.GLOBAL.url + "/route/" + id, data);
+  }
 }
 
 

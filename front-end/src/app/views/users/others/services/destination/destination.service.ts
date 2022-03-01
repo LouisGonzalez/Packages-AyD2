@@ -30,7 +30,7 @@ export class DestinationService {
    * Funcion que ejecuta una peticion http GET para obtener todos los destinos.
    * @returns Listado de destinos
    */
-   public getAllDestinations():Observable<Destination[]>{
+  public getAllDestinations():Observable<Destination[]>{
     return this.http.get<Destination[]>(global.GLOBAL.url + '/destination');
   }
 
@@ -43,4 +43,7 @@ export class DestinationService {
   }
 
 
+  public getDestinationById(id : number) {
+    return this.http.get<Destination>(global.GLOBAL.url + "/destination/" + id);
+  }
 }

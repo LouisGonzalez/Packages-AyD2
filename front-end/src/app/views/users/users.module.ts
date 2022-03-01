@@ -5,7 +5,6 @@ import { UsersRoutingModule } from './users-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { OperatorModule } from './operator/operator.module';
 import { RecepModule } from './recep/recep.module';
-
 import { NbMenuModule } from '@nebular/theme';
 import { NotificationsComponent } from './others/source/notifications/notifications.component';
 
@@ -19,7 +18,8 @@ import { NotificationsComponent } from './others/source/notifications/notificati
     AdminModule,
     OperatorModule,
     RecepModule,
-    NbMenuModule
+    NbMenuModule,
+    ThemeModule,
   ]
 })
 export class UsersModule { }

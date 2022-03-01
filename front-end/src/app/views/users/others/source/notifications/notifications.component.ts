@@ -27,11 +27,11 @@ export class NotificationsComponent implements OnInit {
    preventDuplicates = false;
  
    types: NbComponentStatus[] = [
-     'primary',
-     'success',
-     'info',
-     'warning',
-     'danger',
+     'primary', // 0
+     'success',  // 1
+     'info',  // 2
+     'warning',  // 3
+     'danger',  // 4
    ];
 
   constructor(private toastrService: NbToastrService) { }

@@ -13,6 +13,7 @@ import { UpdateAssignamentOperatorCheckpointComponent } from './update-assigname
 import { CheckpointListComponent } from './checkpoint-list/checkpoint-list.component';
 import { ListDestinationsComponent } from './list-destinations/list-destinations.component';
 import { EditDestinationComponent } from './edit-destination/edit-destination.component';
+import { RouteListComponent } from './route-list/route-list.component';
 
 const routes: Routes = [
   {
@@ -72,7 +73,11 @@ const routes: Routes = [
       {
         path: 'edit-destination/:id',
         component: EditDestinationComponent
-      }
+      },
+      { // views/admin/routes
+        path: 'route-list',       
+        component: RouteListComponent     
+      },
     ]
   }
 ];
