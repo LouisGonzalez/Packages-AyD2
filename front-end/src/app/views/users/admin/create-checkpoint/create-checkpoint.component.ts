@@ -131,7 +131,7 @@ export class CreateCheckpointComponent implements OnInit {
       description: checkpointName, 
       queueCapacity: queueCapacity,
       operationFee: fee,
-      packagesOnQueue: 0,
+      packageOnQueue: 0,
       assignedOperator: operatorCUI,
       route: routeId,
       active: true

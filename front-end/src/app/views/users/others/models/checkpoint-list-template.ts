@@ -1,7 +1,7 @@
 export class CheckpointListTemplate{
     queueCapacity: number;
     operationFee: number;
-    pakageOnQueue: number;
+    packageOnQueue: number;
     active ?: string;
     id ?: number;
     route : number;

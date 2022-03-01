@@ -1,4 +1,4 @@
-@import '../../../../@theme/styles/themes.scss';
+@import "../../../../@theme/styles/themes.scss";
 
 @include nb-install-component() {
   nb-card {
@@ -6,17 +6,24 @@
   }
 }
 
-:host ::ng-deep ng2-st-tbody-edit-delete {display: flex !important;
+:host ::ng-deep ng2-st-tbody-edit-delete {
+  display: flex !important;
   height: 0 !important;
 }
 
-:host ::ng-deep ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
+:host
+  ::ng-deep
+  ng2-st-tbody-custom
+  a.ng2-smart-action.ng2-smart-action-custom-custom {
   display: inline-block;
-  width: 50px;
+  width: 30px;
   text-align: center;
-  font-size: 1.1em;
+  font-size: 0.5em;
 }
 
-:host ::ng-deep ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom:hover {
+:host
+  ::ng-deep
+  ng2-st-tbody-custom
+  a.ng2-smart-action.ng2-smart-action-custom-custom:hover {
   color: #5a6769;
 }

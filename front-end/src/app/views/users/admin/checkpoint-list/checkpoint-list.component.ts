@@ -31,7 +31,7 @@ export class CheckpointListComponent implements OnInit {
         title: 'Tarifa de operación',
         type: 'number',
       },
-      pakageOnQueue: {
+      packageOnQueue: {
         title: 'Paquetes en cola',
         type: 'number',
       },
@@ -54,6 +54,7 @@ export class CheckpointListComponent implements OnInit {
       custom: [
         { name: 'editCheckpoint', title: '<i class="nb-edit"></i>' },
         { name: 'operatorCheckpoint', title: '<i class="ion-ios-people-outline"></i>' },
+        { name: 'removeCheckpoint', title: '<i class="icon ion-trash-a"></i>' },
       ],
       position: 'right'
     },
@@ -86,21 +87,32 @@ export class CheckpointListComponent implements OnInit {
   }
 
   onCustomAction(event){
-    switch (event.action) {
-      case 'editCheckpoint':
-        if(parseInt(event.data['pakageOnQueue']) > 0) {
-          this.notification.showToast(4, 'Error', 'Error no se puede editar este punto de control debido a que tiene paquetes en cola.', 3000);
-        } else {
+    if(parseInt(event.data['packageOnQueue']) > 0){
+      this.notification.showToast(4, 'Error', 'Error no se pueden realizar acciones sobre este punto de control debido a que tiene paquetes en cola.', 3000);
+    } else{
+      switch (event.action) {
+        case 'editCheckpoint':
           this.router.navigate(['views', 'admin', 'edit-checkpoint', event.data['id']]);
-        }
-        break;
-      case 'operatorCheckpoint':
-        if(parseInt(event.data['pakageOnQueue']) > 0) {
-          this.notification.showToast(4, 'Error', 'Error no se puede editar este punto de control debido a que tiene paquetes en cola.', 3000);
-        } else {
+          break;
+        case 'operatorCheckpoint':
           this.router.navigate(['views', 'admin', 'update-assignament-operator', event.data['id']]);
-        }
-        break;
+          break;
+        case 'removeCheckpoint':   
+          if(window.confirm('¿Eliminar permanentemente el punto de control?')){
+            this.api.deleteCheckpoint(event.data['id']).subscribe({
+              next:(res) => {
+                this.notification.showToast(1, 'Exito', 'Punto de control eliminado exitosamente.', 3000);
+                this.getAllCheckpints();
+              },  
+              error:(res) => {
+                this.notification.showToast(3, 'Error', 'No se pudo eliminar el punto de control seleccionado.', 3000);
+              }
+            })
+          } else {
+            event.confirm.reject();
+          } 
+          break;
+      }
     }
   }
 
@@ -110,7 +122,7 @@ export class CheckpointListComponent implements OnInit {
       let newCheckpointTemplate : CheckpointListTemplate = {
         id : iterator['id'],
         queueCapacity : iterator['queueCapacity'],
-        pakageOnQueue : iterator['packageOnQueue'],
+        packageOnQueue : iterator['packageOnQueue'],
         operationFee : iterator['operationFee'],
         route : iterator['route'],
         active : iterator['active'] == 1 || iterator['active'] ? 'Activo' : 'Desactivado'

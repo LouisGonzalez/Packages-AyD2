@@ -31,4 +31,8 @@ export class CheckpointsService {
     return this.http.put<CheckpointListTemplate>(`${global.GLOBAL.url}/checkpoints/` + id, data);
   }
 
+  deleteCheckpoint(id : number) {
+    return this.http.delete<any>(`${global.GLOBAL.url}/checkpoints/` + id);
+  }
+
 }
