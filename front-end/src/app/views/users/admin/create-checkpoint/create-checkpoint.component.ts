@@ -13,6 +13,7 @@ import {
 import { OperatorService } from '../../others/services/operator/operator.service';
 import { RatesService } from '../../others/services/rates/rates.service';
 import { CheckpointService } from '../../others/services/checkpoint/checkpoint.service';
+import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 
 @Component({
   selector: 'ngx-create-checkpoint',
@@ -34,10 +35,6 @@ export class CreateCheckpointComponent implements OnInit {
   ERROR_NUMBER = global.GLOBAL.ERROR_NUMBER;
   ADMIN_HOME = global.GLOBAL.ADMIN_HOME;
 
-  //Varaiables
-  config: NbToastrConfig;
-  index = 1;
-  
   //Variables para busqueda de rutas
   routesSrc: string;
   routesData: any = null;
@@ -51,6 +48,8 @@ export class CreateCheckpointComponent implements OnInit {
   //Variable que almacena la tarifa de operacion global
   globalOperationFee: number;
   customOperationFee: boolean = false;
+
+  notification: NotificationsComponent;
 
   //Fomulario reactivo
   formCheckpoint: FormGroup = new FormGroup({
@@ -81,19 +80,21 @@ export class CreateCheckpointComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    this.notification = new NotificationsComponent(this.toastService);
     this.ratesService.getOperationFee().subscribe(
       (response) => {
         this.globalOperationFee = response[0].rate;
         this.rateInput.nativeElement.value = this.globalOperationFee;
         this.formCheckpoint.get('fee').setValue(this.globalOperationFee);
-        this.showToast(
-          'primary',
+        this.notification.showToast(
+          0,
           'Tarifa de Operacion Global',
-           `La tarifa de operacion global es de Q` + this.globalOperationFee
+          `La tarifa de operacion global es de Q` + this.globalOperationFee,
+          5000
         ); 
       },
       (error) => {
-        this.showToast('warning', 'Error', `Hubo un error obteniendo la tarifa de operacion global.`);
+        this.notification.showToast(3, 'Error', `Hubo un error obteniendo la tarifa de operacion global.`, 5000);
       } 
     );
   }    
@@ -136,26 +137,15 @@ export class CreateCheckpointComponent implements OnInit {
       active: true
     }).subscribe({
       next : (res) => {
-        this.showToast('success', 'Exito', `Punto de Control ${checkpointName} creado exitosamente.`);
+        this.notification.showToast(1, 'Exito', `Punto de Control ${checkpointName} creado exitosamente.`, 5000);
         this.formCheckpoint.reset();
         this.router.navigate([this.ADMIN_HOME]);
       },
       error : () => {
-        this.showToast('warning', 'Error', `Error en la creacion del Punto de Control ${checkpointName}, vuelva a intentarlo.`);
+        this.notification.showToast(3, 'Error', `Error en la creacion del Punto de Control ${checkpointName}, vuelva a intentarlo.`, 5000);
       }
     });
   }
-
- 
-  
-
-
-
-
-
-
-
-
 
     /**
    * Procedimiento que llama a la funcion getRoutes del servicio
@@ -245,29 +235,5 @@ export class CreateCheckpointComponent implements OnInit {
         newsImage.style.border = 'none';
       }
     }
-
-     /**
-   * Procedimiento que muestra en pantalla un Toast
-   * @param type Tipo de toast a mostrar.
-   * @param title Titulo del toast
-   * @param body Cuerpo del toast
-   */
-  private showToast(type: NbComponentStatus, title: string, body: string) {
-    const config = {
-      status: type,
-      destroyByClick: true,
-      duration: 5000,
-      hasIcon: true,
-      position: NbGlobalPhysicalPosition.TOP_RIGHT,
-      preventDuplicates: false,
-    };
-
-    const titleContent = title ? `${title}` : '';
-    this.index += 1;
-    this.toastService.show(
-      body,
-      `${titleContent}`,
-      config);
-  }
 
 }

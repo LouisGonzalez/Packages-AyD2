@@ -5,11 +5,9 @@ import { RouteService } from '../../../others/services/route/route.service';
 import { DestinationService } from '../../../others/services/destination/destination.service';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { NotificationsComponent } from '../../../others/source/notifications/notifications.component';
 import {
-  NbComponentStatus,
-  NbGlobalPhysicalPosition,
   NbToastrService,
-  NbToastrConfig
 } from '@nebular/theme';
 
 @Component({
@@ -28,8 +26,7 @@ export class CreateRouteComponent implements OnInit {
   ADMIN_HOME = global.GLOBAL.ADMIN_HOME;
 
   //Varaiables
-  config: NbToastrConfig;
-  index = 1;
+  notification: NotificationsComponent;
   isLoading: boolean = false;
   src: string;
   data: any;
@@ -48,7 +45,9 @@ export class CreateRouteComponent implements OnInit {
     private router: Router
   ){}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.notification = new NotificationsComponent(this.toastService);
+  }
 
   /**
    * Procedimiento que valida que el form sea valido, de ser 
@@ -83,38 +82,14 @@ export class CreateRouteComponent implements OnInit {
       totalPackages: 0
     }).subscribe({
       next : (res) => {
-        this.showToast('success', 'Exito', `Ruta ${routeName} creada exitosamente.`);
+        this.notification.showToast(1, 'Exito', `Ruta ${routeName} creada exitosamente.`, 5000);
         this.formRoute.reset();
         this.router.navigate([this.ADMIN_HOME]);
       },
       error : () => {
-        this.showToast('warning', 'Error', `Error en la creacion de la ruta: ${routeName}, vuelva a intentarlo.`);
+        this.notification.showToast(3, 'Error', `Error en la creacion de la ruta: ${routeName}, vuelva a intentarlo.`, 5000);
       }
     });
-  }
-
-  /**
-   * Procedimiento que muestra en pantalla un Toast
-   * @param type Tipo de toast a mostrar.
-   * @param title Titulo del toast
-   * @param body Cuerpo del toast
-   */
-  private showToast(type: NbComponentStatus, title: string, body: string) {
-    const config = {
-      status: type,
-      destroyByClick: true,
-      duration: 5000,
-      hasIcon: true,
-      position: NbGlobalPhysicalPosition.TOP_RIGHT,
-      preventDuplicates: false,
-    };
-
-    const titleContent = title ? `${title}` : '';
-    this.index += 1;
-    this.toastService.show(
-      body,
-      `${titleContent}`,
-      config);
   }
 
   /**
@@ -149,7 +124,6 @@ export class CreateRouteComponent implements OnInit {
     this.destinationSearchInput.nativeElement.value = '';
   }
 
-
   /**
    * Procedimiento que se encarga de establecer el tipo de borde
    * del elemento html que se recibe como parametro.
@@ -164,4 +138,3 @@ export class CreateRouteComponent implements OnInit {
     }
   }
 }
-
