@@ -1,5 +1,5 @@
 import { Component, ComponentRef, OnInit } from '@angular/core';
-import { NbDialogService, NbIconLibraries, NbWindowComponent } from '@nebular/theme';
+import { NbDialogService, NbIconLibraries, NbToastrService, NbWindowComponent } from '@nebular/theme';
 import { Client } from '../../others/models/Client';
 import { Destination } from '../../others/models/destination';
 import { Package } from '../../others/models/Package';
@@ -10,6 +10,7 @@ import { NbWindowService } from '@nebular/theme';
 import { InvoiceComponent } from '../invoice/invoice.component';
 import * as moment from 'moment'
 import { Invoice } from '../../others/models/Invoice';
+import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 
 @Component({
   selector: 'ngx-enter-package',
@@ -29,6 +30,8 @@ export class EnterPackageComponent implements OnInit {
   routeSelected: number[] = [];
   unitTotal: number[] = [];
 
+  notification: NotificationsComponent;
+
   actualDate: any;
   generalTotal: number = 0;
   invoice: Invoice = { id:null, nitClient: null, subTotal: null, total: null, dateEmit: null};
@@ -38,7 +41,7 @@ export class EnterPackageComponent implements OnInit {
   age: number; CUI: number; NIT: number;
   nitParameter: number;
 
-  constructor(iconsLibrary: NbIconLibraries, private recepService: RecepService, private dialogService: NbDialogService, private windowService: NbWindowService) {
+  constructor(iconsLibrary: NbIconLibraries, private recepService: RecepService, private dialogService: NbDialogService, private windowService: NbWindowService, private toastrService: NbToastrService) {
     this.evaIcons = Array.from(iconsLibrary.getPack('eva').icons.keys())
       .filter(icon => icon.indexOf('outline') === -1);
 
@@ -104,9 +107,11 @@ export class EnterPackageComponent implements OnInit {
       } else {
         //Modal de advertencia que indique que se debe elegir un usuario
         console.log('Antes debe asignar un cliente')
+        this.notification.showToast(3, 'Cuidado', `Debe elegir un usuario antes de ingresar un paquete`, 2500);
       }
     } else {
       //Modal de advertencia que indique que se debe elegir un usuario
+      this.notification.showToast(3, 'Cuidado', `Debe elegir un usuario antes de ingresar un paquete`, 2500);
       console.log('Antes debe asignar un cliente')
     }
   }
@@ -177,7 +182,7 @@ export class EnterPackageComponent implements OnInit {
           this.packages[i].idClient = this.client[0].id;
           this.packages[i].noInvoice = result.id;
           this.recepService.creaatePackage(this.packages[i]).subscribe(result => {
-
+            this.notification.showToast(1, 'Completado', `Factura realizada con exito`, 2500);
             console.log('proceso finalizado')
             this.cleanData();
           })
@@ -185,6 +190,7 @@ export class EnterPackageComponent implements OnInit {
      })
     } else {
       //Aqui debe ir un modal
+      this.notification.showToast(3, 'Cuidado', `Todos los paquetes deben ser llenados antes de su proceso`, 2500);
       console.log('todos los paquetes deben ser llenados')
     }
 

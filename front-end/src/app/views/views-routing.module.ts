@@ -20,14 +20,14 @@ const routes: Routes = [
           .then(m => m.UsersModule)
       },
       {
-        path: '',
-        redirectTo: 'auth2/login',
-        pathMatch: 'full'
-      },
-      {
         path: 'reports',
         loadChildren: () => import('./reports/reports.module')
           .then(m => m.ReportsModule)
+      },
+      {
+        path: '',
+        redirectTo: 'auth/login',
+        pathMatch: 'full'
       },
     ]
   }

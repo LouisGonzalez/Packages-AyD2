@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NbToastrService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { User } from '../../others/models/employee';
 import { AdminService } from '../../others/services/admin.service';
+import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 import { UsersModule } from '../../users.module';
 
 @Component({
@@ -13,6 +15,8 @@ export class ActivateUsersComponent implements OnInit {
 
   users: User[];
   user: User;
+
+  notification: NotificationsComponent;
 
   settings = {
     actions: {
@@ -56,7 +60,7 @@ export class ActivateUsersComponent implements OnInit {
   };
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AdminService, private toatrService: NbToastrService) {
     this.getData();
   }
 
@@ -72,6 +76,7 @@ export class ActivateUsersComponent implements OnInit {
       this.user = event.data;
       this.user.activo = 1;
       this.adminService.updateUser(this.user).subscribe(data => {
+        this.notification.showToast(1, 'Activado', `Usuario activado con exito`, 2500);
         console.log('empleado desactivo')
         this.getData();
       })
@@ -81,6 +86,7 @@ export class ActivateUsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.notification = new NotificationsComponent(this.toatrService);
   }
 
 }

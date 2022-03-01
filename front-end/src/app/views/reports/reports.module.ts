@@ -27,11 +27,16 @@ import { ReportsRoutingModule } from './reports-routing.module';
 import { ReportsComponent } from './reports.component';
 import { PackagesOnARouteComponent } from './packages-on-a-route/packages-on-a-route.component';
 import { ThemeModule } from '../../@theme/theme.module';
+import { Report2Component } from './report2/report2.component';
+import { Report3Component } from './report3/report3.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
   declarations: [
     ReportsComponent,
-    PackagesOnARouteComponent
+    PackagesOnARouteComponent,
+    Report2Component,
+    Report3Component
   ],
   imports: [
     CommonModule,
@@ -57,7 +62,8 @@ import { ThemeModule } from '../../@theme/theme.module';
     NbSidebarModule,
     NbTreeGridModule,
     TablesRoutingModule,
-    ThemeModule
+    ThemeModule,
+    Ng2SmartTableModule
   ]
 })
 export class ReportsModule { }

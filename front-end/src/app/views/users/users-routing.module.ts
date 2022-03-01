@@ -19,6 +19,11 @@ const routes: Routes = [
         path: 'recep',
         loadChildren: () => import('./recep/recep.module')
           .then(m => m.RecepModule)
+      },
+      {
+        path: 'general',
+        loadChildren: () => import('./general/general.module')
+          .then(m => m.GeneralModule)
       }
     ]
   }
