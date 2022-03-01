@@ -23,8 +23,12 @@ const routes: Routes = [
         path: '',
         redirectTo: 'auth2/login',
         pathMatch: 'full'
-      }
-
+      },
+      {
+        path: 'reports',
+        loadChildren: () => import('./reports/reports.module')
+          .then(m => m.ReportsModule)
+      },
     ]
   }
 ];
