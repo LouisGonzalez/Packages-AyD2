@@ -1,0 +1,20 @@
+<div class="center">
+  <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+      <nb-card>
+        <nb-card-header>
+          Destinos
+        </nb-card-header>
+      
+        <nb-card-body>
+          <ng2-smart-table 
+          [settings]="settings" 
+          [source]="source"
+          (custom)="onCustomAction($event)"
+          >
+          </ng2-smart-table>
+        </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+

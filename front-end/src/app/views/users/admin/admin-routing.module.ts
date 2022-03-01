@@ -11,6 +11,8 @@ import { UpdateUserComponent } from './update-user/update-user.component';
 import { EditCheckpointComponent } from './edit-checkpoint/edit-checkpoint.component';
 import { UpdateAssignamentOperatorCheckpointComponent } from './update-assignament-operator-checkpoint/update-assignament-operator-checkpoint.component';
 import { CheckpointListComponent } from './checkpoint-list/checkpoint-list.component';
+import { ListDestinationsComponent } from './list-destinations/list-destinations.component';
+import { EditDestinationComponent } from './edit-destination/edit-destination.component';
 
 const routes: Routes = [
   {
@@ -44,10 +46,6 @@ const routes: Routes = [
         component: CreateCheckpointComponent
       },
       {
-        path: 'list-users',
-        component: ListUsersComponent
-      },
-      {
         path: 'activate-users',
         component: ActivateUsersComponent
       },
@@ -67,6 +65,14 @@ const routes: Routes = [
         path: 'checkpoints',       
         component: CheckpointListComponent     
       },
+      {
+        path: 'destinations',
+        component: ListDestinationsComponent 
+      },
+      {
+        path: 'edit-destination/:id',
+        component: EditDestinationComponent
+      }
     ]
   }
 ];

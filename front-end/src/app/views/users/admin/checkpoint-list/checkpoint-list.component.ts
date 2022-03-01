@@ -47,7 +47,7 @@ export class CheckpointListComponent implements OnInit {
     defaultStyle: false,
     actions: {
       columnTitle: 'Acciones',
-      
+      columnTitle2: 'Borrar',
       add: false,
       edit: false,
       delete: false,

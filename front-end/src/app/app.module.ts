@@ -21,7 +21,6 @@ import {
   NbWindowModule,
   NbButtonModule
 } from '@nebular/theme';
-import { ViewsModule } from './views/views.module';
 
 @NgModule({
   declarations: [AppComponent],

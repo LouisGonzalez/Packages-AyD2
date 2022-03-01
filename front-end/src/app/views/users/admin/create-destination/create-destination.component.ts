@@ -17,6 +17,7 @@ export class CreateDestinationComponent implements OnInit {
   ERROR_REQUIRED = global.GLOBAL.ERROR_REQUIRED;
   ERROR_MIN = global.GLOBAL.ERROR_MIN;
   ERROR_NUMBER = global.GLOBAL.ERROR_NUMBER;
+  ADMIN_HOME = global.GLOBAL.ADMIN_HOME;
 
   notification : NotificationsComponent;
   errors = false;
@@ -65,6 +66,7 @@ export class CreateDestinationComponent implements OnInit {
       next : (res) => {
         this.notification.showToast(1, 'Agregado', `Destino: ${nameDestintaion}, agregado correctamente.`, 2500);
         this.formDestination.reset();
+        this.router.navigate([this.ADMIN_HOME])
       },
       error : () => {
         this.notification.showToast(4, 'Error', `Error mientras se agregaba el destino: ${nameDestintaion}, vuelve a intentarlo.`, 3000);

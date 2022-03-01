@@ -38,6 +38,8 @@ import {
   NbPopoverModule,
   NbSidebarModule
 } from '@nebular/theme';
+import { ListDestinationsComponent } from './list-destinations/list-destinations.component';
+import { EditDestinationComponent } from './edit-destination/edit-destination.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import {
     UpdateUserComponent,
     CheckpointListComponent,
     EditCheckpointComponent,
-    UpdateAssignamentOperatorCheckpointComponent
+    UpdateAssignamentOperatorCheckpointComponent,
+    ListDestinationsComponent,
+    EditDestinationComponent
   ],
   imports: [
     CommonModule,
