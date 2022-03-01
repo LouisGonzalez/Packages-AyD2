@@ -19,7 +19,7 @@ const routes: Routes = [
         component: EnterPackageComponent
       },
       {
-        path: 'deliver-package',
+        path: '',
         component: DeliverPackageComponent
       }
     ]

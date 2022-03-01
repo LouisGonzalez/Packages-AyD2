@@ -41,7 +41,7 @@ import { DeliverButtonComponent } from './deliver-package/deliver-button/deliver
     EnterPackageComponent,
     InvoiceComponent,
     DeliverPackageComponent,
-    DeliverButtonComponent,
+    DeliverButtonComponent
   ],
   imports: [
     CommonModule,
