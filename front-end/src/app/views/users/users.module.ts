@@ -7,6 +7,7 @@ import { OperatorModule } from './operator/operator.module';
 import { RecepModule } from './recep/recep.module';
 import { NbMenuModule } from '@nebular/theme';
 import { NotificationsComponent } from './others/source/notifications/notifications.component';
+import { GeneralModule } from './general/general.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { NotificationsComponent } from './others/source/notifications/notificati
     RecepModule,
     NbMenuModule,
     ThemeModule,
+    GeneralModule,
   ]
 })
 export class UsersModule { }

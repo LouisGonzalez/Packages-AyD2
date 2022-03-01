@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ADMINISTRATOR_MENU_ITEMS } from '../users/admin/menu';
 
 @Component({
   selector: 'ngx-reports',
@@ -11,5 +12,7 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  menu = ADMINISTRATOR_MENU_ITEMS;
 
 }

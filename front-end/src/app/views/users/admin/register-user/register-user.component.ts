@@ -6,6 +6,8 @@ import { catchError } from 'rxjs/operators';
 import { AdminService } from '../../others/services/admin.service';
 import { User } from '../../others/models/employee';
 import * as global from '../../../GLOBAL';
+import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-register-user',
@@ -36,8 +38,9 @@ export class RegisterUserComponent implements OnInit {
   public token: any;
 
   errors = false;
+  notification: NotificationsComponent;
 
-  constructor(private adminService: AdminService, private router: Router) { }
+  constructor(private adminService: AdminService, private router: Router, private toastrService: NbToastrService) { }
 
   submit(){
     this.form.value.active = 1;
@@ -45,24 +48,16 @@ export class RegisterUserComponent implements OnInit {
     if(this.form.valid){
       this.user = this.form.value;
       this.adminService.add(this.user).pipe(
-        // catchError(error => {
-        //   Swal.fire({
-        //     icon: 'error',
-        //     title: ':(',
-        //     text: error
-        //   })
-        //   return EMPTY
-        // })
+        catchError(error => {
+        this.notification.showToast(4, 'Error', `Error durante la creacion del usuario, intente nuevamente`, 2500);
+        return EMPTY
+        })
       )
       .subscribe(
         result => {
-          // Swal.fire({
-          //   title: ':D',
-          //   text: 'Employee added succesfully',
-          //   icon: 'success'
-          // })
+          this.notification.showToast(1, 'Agregado', `Empleado agregado correctamente`, 2500);
           this.router.navigate(['/views/users/admin']);
-        }
+        },
       )
     } else {
       console.log('error form no valido');
@@ -74,6 +69,7 @@ export class RegisterUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.notification = new NotificationsComponent(this.toastrService);
   }
 
 }
