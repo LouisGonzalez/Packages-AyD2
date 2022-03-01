@@ -42,7 +42,6 @@ export class DestinationService {
     return this.http.put<DestinationListTemplate>(`${global.GLOBAL.url}/destination/` + id, data);
   }
 
-
   public getDestinationById(id : number) {
     return this.http.get<Destination>(global.GLOBAL.url + "/destination/" + id);
   }

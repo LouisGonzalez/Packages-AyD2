@@ -32,7 +32,7 @@ export class RouteListComponent implements OnInit {
         title: 'Destino',
         type: 'string',
       },
-      packageOnRoute: {
+      packagesOnRoute: {
         title: 'Paquetes en Ruta',
         type: 'number',
       },
@@ -46,7 +46,7 @@ export class RouteListComponent implements OnInit {
       delete: false,
       custom: [
         { name: 'editRoute', title: '<i class="nb-edit"></i>' },
-        { name: 'deleteRoute', title: '<i class="	nb-close-circled"></i>' },
+        { name: 'deleteRoute', title: '<i class="nb-trash"></i>' },
       ],
       position: 'right'
     },
@@ -83,38 +83,34 @@ export class RouteListComponent implements OnInit {
   }
 
   onCustomAction(event){
-    switch (event.action) {
-      case 'editRoute':
-        break;
-      case 'deleteRoute':
-        if(parseInt(event.data['pakageOnRoute']) > 0) {
-          this.notification.showToast(4, 'Error', 'Error no se puede desactivar esta ruta debido a que tiene paquetes en cola.', 3000);
-        } else {
-          this.desactiveRoute(parseInt(event.data['id']))
-        }
-        break;
+    console.log(event.data)
+    if(parseInt(event.data['packagesOnRoute']) > 0){
+      this.notification.showToast(4, 'Error', 'No se puede realizar la accion sobre esta ruta debido a que tiene paquetes en ruta.', 3000);
+    } else{
+      switch (event.action) {
+        case 'editRoute':
+          this.router.navigate(['views', 'admin', 'edit-route', event.data['id']]);
+          break;
+        case 'deleteRoute':
+          this.deleteRoute(parseInt(event.data['id']))
+          break;
+      }
     }
   }
 
-  private desactiveRoute(id : number) {
-    this.api.getRoute(id)
-    .subscribe({
-      next:(res) => {
-        if (res.packageOnRoute > 0) {
-          this.notification.showToast(4, 'Error', 'Error no se puede desactivar esta ruta debido a que tiene paquetes en cola.', 3000);
-        } else {
-          res.active = false;
-          this.serviceUpdateRoute(res.id, res);  
+  private deleteRoute(id : number) {
+    if(window.confirm('¿Eliminar permanentemente la ruta?')){
+      this.api.deleteRoute(id).subscribe({
+        next:(res) => {
+          this.getAllRoutes();
+          this.notification.showToast(1, 'Exito', 'Ruta eliminada exitsamente.', 3000);
+        },  
+        error:(res) => {
+          this.getAllRoutes();
+          this.notification.showToast(3, 'Error', 'Hubo un error al intentar eliminar la ruta.', 3000);
         }
-      },
-      error:(err) => {
-        if (err.status = 404) {
-          this.notification.errors(404, "el destino con el id: " + id);
-        } else {
-          this.notification.errors(400, "Error mientras se obtenia el destino con el id: " + id) 
-        }
-      }
-    });
+      })
+    } 
   }
 
   private serviceUpdateRoute(id : number, data){
@@ -156,7 +152,7 @@ export class RouteListComponent implements OnInit {
         active : iterator['active'] == 1 || iterator['active'] ? 'Activo' : 'Desactivado',
         name : iterator['name'],
         destination : iterator['destinationId'],
-        packageOnRoute : iterator['packagesOnRoute']
+        packagesOnRoute : iterator['packagesOnRoute']
       }
       array.push(newRouteTemplate);
     }

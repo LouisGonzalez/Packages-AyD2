@@ -14,6 +14,7 @@ import { CheckpointListComponent } from './checkpoint-list/checkpoint-list.compo
 import { ListDestinationsComponent } from './list-destinations/list-destinations.component';
 import { EditDestinationComponent } from './edit-destination/edit-destination.component';
 import { RouteListComponent } from './route-list/route-list.component';
+import { EditRouteComponent } from './edit-route/edit-route.component';
 
 const routes: Routes = [
   {
@@ -78,6 +79,10 @@ const routes: Routes = [
         path: 'route-list',       
         component: RouteListComponent     
       },
+      {
+        path: 'edit-route/:id',
+        component: EditRouteComponent
+      }
     ]
   }
 ];
