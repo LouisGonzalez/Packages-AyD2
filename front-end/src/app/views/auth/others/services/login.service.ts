@@ -30,8 +30,24 @@ export class LoginService {
     return this.user;
   }
 
+  getTypeIdentity(type){
+    let user = JSON.parse(localStorage.getItem('user')!);
+    if(user != undefined){
+      if(user.type == type){
+        this.user = user;
+      } else {
+        this.user = null;
+      }
+    } else {
+      this.user = null;
+    }
+    return this.user;
+  }
+
+
+
   login(username: string, password: string): Observable<User[]> {
-    let a = this.httpClient.get<User[]>(`${this.url}/employees?username=${username}&password=pass123`);
+    let a = this.httpClient.get<User[]>(`${this.url}/employees?username=${username}&password=${password}`);
     return a;
   }
 }

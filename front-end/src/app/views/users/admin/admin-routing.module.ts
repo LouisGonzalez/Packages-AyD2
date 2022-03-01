@@ -11,6 +11,7 @@ import { UpdateUserComponent } from './update-user/update-user.component';
 import { EditCheckpointComponent } from './edit-checkpoint/edit-checkpoint.component';
 import { UpdateAssignamentOperatorCheckpointComponent } from './update-assignament-operator-checkpoint/update-assignament-operator-checkpoint.component';
 import { CheckpointListComponent } from './checkpoint-list/checkpoint-list.component';
+import { AdminGuard } from '../../auth/others/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -24,48 +25,54 @@ const routes: Routes = [
       },
       { // views/admin/rates
         path: 'rates',
-        component: RatesComponent
+        component: RatesComponent,
+        canActivate: [AdminGuard]
       },
       { // views/admin/create-destination
         path: 'create-destination',
-        component: CreateDestinationComponent
+        component: CreateDestinationComponent,
+        canActivate: [AdminGuard]
       },
       //Aqui iran los hijos
       {
         path: 'register',
-        component: RegisterUserComponent
+        component: RegisterUserComponent,
+        canActivate: [AdminGuard]
       },
       {
         path: 'list-users',
-        component: ListUsersComponent
+        component: ListUsersComponent,
+        canActivate: [AdminGuard]
       },
       {
         path: 'create-checkpoint',
-        component: CreateCheckpointComponent
-      },
-      {
-        path: 'list-users',
-        component: ListUsersComponent
+        component: CreateCheckpointComponent,
+        canActivate: [AdminGuard]
       },
       {
         path: 'activate-users',
-        component: ActivateUsersComponent
+        component: ActivateUsersComponent,
+        canActivate: [AdminGuard]
       },
       {
         path: 'update-user',
-        component: UpdateUserComponent
+        component: UpdateUserComponent,
+        canActivate: [AdminGuard]
       },
       {
         path: 'edit-checkpoint/:id',
-        component: EditCheckpointComponent
+        component: EditCheckpointComponent,
+        canActivate: [AdminGuard]
       },
       {
         path: 'update-assignament-operator/:id',
-        component: UpdateAssignamentOperatorCheckpointComponent
+        component: UpdateAssignamentOperatorCheckpointComponent,
+        canActivate: [AdminGuard]
       },
       { // views/admin/checkpoints
-        path: 'checkpoints',       
-        component: CheckpointListComponent     
+        path: 'checkpoints',
+        component: CheckpointListComponent,
+        canActivate: [AdminGuard]
       },
     ]
   }

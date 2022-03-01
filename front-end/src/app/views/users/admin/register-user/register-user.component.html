@@ -19,18 +19,9 @@
            placeholder="Full name"
            autofocus
            fullWidth>
-           <!-- Aqui abajo va la condicional de si el fullname no existe -->
-    <ng-container>
-      <p class="caption status-danger">
-        Nombres es un campo requerido
-      </p>
-      <p class="caption status-danger">
-        <!-- Full name should contains
-        from {{getConfigValue('forms.validation.fullName.minLength')}}
-        to {{getConfigValue('forms.validation.fullName.maxLength')}}
-        characters -->
-      </p>
-    </ng-container>
+     <div *ngIf="form.get('name')?.errors && form.get('name')?.touched || errors" >
+      <label class="label" style="color: red;" *ngIf="form.get('name').hasError('required')">{{ERROR_REQUIRED}}</label>
+    </div>
   </div>
 </div>
 
@@ -40,23 +31,15 @@
 
     <input nbInput
            formControlName="lastname"
-           id="input-name"
+           id="input-lastname"
            name="fullName"
            placeholder="Full name"
            autofocus
            fullWidth>
            <!-- Aqui abajo va la condicional de si el fullname no existe -->
-    <ng-container>
-      <p class="caption status-danger">
-        Apellidos es un campo requerido
-      </p>
-      <p class="caption status-danger">
-        <!-- Full name should contains
-        from {{getConfigValue('forms.validation.fullName.minLength')}}
-        to {{getConfigValue('forms.validation.fullName.maxLength')}}
-        characters -->
-      </p>
-    </ng-container>
+     <div *ngIf="form.get('lastname')?.errors && form.get('lastname')?.touched || errors" >
+      <label class="label" style="color: red;" *ngIf="form.get('lastname').hasError('required')">{{ERROR_REQUIRED}}</label>
+    </div>
   </div>
 </div>
 
@@ -65,21 +48,17 @@
   <div class="form-group row">
     <label class="label col-sm-3 col-form-label" for="input-email">Email:</label>
     <div class="col-sm-9">
-    <input nbInput
+      <input nbInput
            formControlName="email"
            id="input-email"
            name="email"
            placeholder="Email address"
            fullWidth>
            <!-- Abajo la condicional de si el email no existe o tiene errores -->
-    <ng-container>
-      <p class="caption status-danger">
-        Email es un campo requerido
-      </p>
-      <p class="caption status-danger">
-        Llenar el campo email de forma correcta ej: abc@correo.com
-      </p>
-    </ng-container>
+      <div *ngIf="form.get('email')?.errors && form.get('email')?.touched || errors" >
+        <label class="label" style="color: red;" *ngIf="form.get('email').hasError('required')">{{ERROR_REQUIRED}}</label>
+        <label class="label" style="color: red;" *ngIf="form.get('email').hasError('email')">Debe ser un email valido</label>
+      </div>
     </div>
   </div>
 
@@ -88,16 +67,14 @@
     <div class="col-sm-9">
     <input nbInput
             formControlName="username"
-           id="input-email"
-           name="email"
-           placeholder="Email address"
+           id="input-username"
+           name="username"
+           placeholder="Username"
            fullWidth>
            <!-- Abajo la condicional de si el email no existe o tiene errores -->
-    <ng-container>
-      <p class="caption status-danger">
-        Username es un campo requerido
-      </p>
-    </ng-container>
+      <div *ngIf="form.get('username')?.errors && form.get('username')?.touched || errors" >
+        <label class="label" style="color: red;" *ngIf="form.get('username').hasError('required')">{{ERROR_REQUIRED}}</label>
+      </div>
     </div>
   </div>
 
@@ -114,14 +91,10 @@
            placeholder="Password"
            fullWidth>
            <!-- Abajo la condicional de si el password no existe o tiene errores -->
-    <ng-container>
-      <p class="caption status-danger">
-        Password es un campo requerido
-      </p>
-      <p class="caption status-danger">
-
-      </p>
-    </ng-container>
+      <div *ngIf="form.get('password')?.errors && form.get('password')?.touched || errors" >
+        <label class="label" style="color: red;" *ngIf="form.get('password').hasError('required')">{{ERROR_REQUIRED}}</label>
+        <label class="label" style="color: red;" *ngIf="form.get('password').hasError('minLength')">La contraseña debe tener almenos 7 caracteres</label>
+      </div>
     </div>
   </div>
 
@@ -134,17 +107,17 @@
            name="rePass"
            placeholder="Confirm Password"
            fullWidth
-           [(ngModel)]="pass2">
+           formControlName="repitPassword">
            <!-- Abajo la condicional de si la verificacion de password no existe o tiene errores -->
-    <ng-container>
-      <p class="caption status-danger">
-        La validacion de contraseña es requerida
-      </p>
-      <p class="caption status-danger">
-        La contraseña previamente definida no coincide con el campo
-      </p>
-    </ng-container>
-    </div>
+         <div *ngIf="form.get('repitPassword')?.errors && form.get('repitPassword')?.touched || errors" >
+          <label class="label" style="color: red;" *ngIf="form.get('repitPassword').hasError('required')">{{ERROR_REQUIRED}}</label>
+          <label class="label" style="color: red;" *ngIf="form.get('repitPassword').hasError('minLength')">La contraseña debe tener almenos 7 caracteres</label>
+          </div>
+          <div *ngIf="form.get('repitPassword').value != form.get('password').value && form.get('repitPassword')?.touched ">
+            <label class="label" style="color: red;">El campo no coincide con la contraseña previamente definida</label>
+          </div>
+
+        </div>
   </div>
 
 
@@ -153,23 +126,15 @@
     <div class="col-sm-9">
       <input nbInput
            formControlName="CUI"
-           id="input-name"
-           name="fullName"
-           placeholder="Full name"
+           id="input-cui"
+           name="cui"
+           placeholder="CUI"
            autofocus
            fullWidth>
            <!-- Aqui abajo va la condicional de si el fullname no existe -->
-    <ng-container>
-      <p class="caption status-danger">
-        CUI es un campo requerido
-      </p>
-      <p class="caption status-danger">
-        <!-- Full name should contains
-        from {{getConfigValue('forms.validation.fullName.minLength')}}
-        to {{getConfigValue('forms.validation.fullName.maxLength')}}
-        characters -->
-      </p>
-    </ng-container>
+      <div *ngIf="form.get('CUI')?.errors && form.get('CUI')?.touched || errors" >
+        <label class="label" style="color: red;" *ngIf="form.get('CUI').hasError('required')">{{ERROR_REQUIRED}}</label>
+      </div>
     </div>
   </div>
 
@@ -190,13 +155,13 @@
     status="primary"
     [disabled]="form.invalid"
     (click)="submit()">
-Register
-</button>
+      Register
+    </button>
 
   </div>
 </form>
 </nb-card-body>
-<!-- abajo iba una condicion de si hay links -->
+
 </nb-card>
 </div>
 </div>

@@ -5,6 +5,7 @@ import { EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AdminService } from '../../others/services/admin.service';
 import { User } from '../../others/models/employee';
+import * as global from '../../../GLOBAL';
 
 @Component({
   selector: 'ngx-register-user',
@@ -13,22 +14,28 @@ import { User } from '../../others/models/employee';
 })
 export class RegisterUserComponent implements OnInit {
 
+  ERROR_REQUIRED = global.GLOBAL.ERROR_REQUIRED;
+  ERROR_MIN = global.GLOBAL.ERROR_MIN;
+  ERROR_NUMBER = global.GLOBAL.ERROR_NUMBER;
 
   form: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    name: new FormControl(''),
-    lastname: new FormControl(''),
-    password: new FormControl(''),
-    CUI: new FormControl(''),
-    type: new FormControl(''),
+    username: new FormControl('', [ Validators.required ]),
+    name: new FormControl('', [ Validators.required ]),
+    lastname: new FormControl('', [ Validators.required ]),
+    password: new FormControl('', [ Validators.required, Validators.minLength(7) ]),
+    repitPassword: new FormControl('', [ Validators.required, Validators.minLength(7) ]),
+    CUI: new FormControl('', [ Validators.required ]),
+    type: new FormControl('', [ Validators.required ]),
     active: new FormControl(''),
-    email: new FormControl(''),
+    email: new FormControl('', [ Validators.required, Validators.email ]),
 //    id: new FormControl('')
   })
   pass2: string;
   user: User;
   public identity: any;
   public token: any;
+
+  errors = false;
 
   constructor(private adminService: AdminService, private router: Router) { }
 
