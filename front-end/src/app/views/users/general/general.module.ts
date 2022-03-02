@@ -26,10 +26,12 @@ import {
   NbPopoverModule,
   NbSidebarModule
 } from '@nebular/theme';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
-    GeneralComponent
+    GeneralComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

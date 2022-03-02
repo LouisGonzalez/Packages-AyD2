@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [ { title: 'Inicio' }, { title: 'Perfil' }, { title: 'Salir' } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -51,14 +51,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
+    let user = JSON.parse(localStorage.getItem('user')!);
     this.menuService.onItemClick()
       .subscribe((event) => {
-      if(event.item.title === 'Log out'){
+      if(event.item.title === 'Salir'){
         localStorage.clear();
         this.router.navigate(['/views/auth/login']);
-      } else if(event.item.title === 'Profile'){
-        //Aqui ira la informacion de perfil
+      } else if(event.item.title === 'Perfil'){
+        this.router.navigate(['/views/general/profile']);
+      } else if(event.item.title === 'Inicio'){
+        if(user.type == 1){
+          this.router.navigate(['/views/users/admin']);
+        } else if(user.type == 2){
+          this.router.navigate(['/views/users/operator']);
+        } else if(user.type == 3){
+          this.router.navigate(['/views/users/recep']);
+        }
       }
     })
     this.currentTheme = this.themeService.currentTheme;

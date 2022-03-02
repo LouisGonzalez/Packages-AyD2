@@ -1,0 +1,92 @@
+<div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+  <nb-card>
+    <nb-card-header><h1 id="title" class="title">Mi perfil</h1></nb-card-header>
+
+    <nb-card-body>
+      <div class="form-group row">
+        <label class="label col-sm-3 col-form-label" for="input-name" >Nombres</label>
+        <div class="col-sm-9">
+
+        <input nbInput
+               id="input-name"
+               name="fullName"
+               autofocus
+               fullWidth
+               [value]="user.name"
+               readonly>
+      </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="label col-sm-3 col-form-label" for="input-name" >Apellidos</label>
+        <div class="col-sm-9">
+
+        <input nbInput
+               id="input-lastname"
+               name="fullName"
+               autofocus
+               [value]="user.lastname"
+               fullWidth
+               readonly>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="label col-sm-3 col-form-label" for="input-name" >CUI</label>
+      <div class="col-sm-9">
+
+      <input nbInput
+             id="input-cui"
+             name="fullName"
+             autofocus
+             [value]="user.CUI"
+             fullWidth
+             readonly>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label" for="input-name" >Username</label>
+    <div class="col-sm-9">
+
+    <input nbInput
+           id="input-username"
+           name="fullName"
+           autofocus
+           [value]="user.username"
+           fullWidth
+           readonly>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="label col-sm-3 col-form-label" for="input-name" >Email</label>
+  <div class="col-sm-9">
+
+  <input nbInput
+         id="input-email"
+         name="fullName"
+         autofocus
+         [value]="user.email"
+         fullWidth
+         readonly>
+</div>
+</div>
+
+<div class="form-group row">
+  <label class="label col-sm-3 col-form-label" for="input-name" >Tipo de usuario</label>
+  <div class="col-sm-9">
+
+  <input nbInput
+         id="input-type"
+         name="fullName"
+         autofocus
+         [value]="type"
+         fullWidth
+         readonly>
+</div>
+</div>
+
+  </nb-card-body>
+  </nb-card>
+</div>

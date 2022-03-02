@@ -29,6 +29,7 @@ export class EnterPackageComponent implements OnInit {
   feeByDestiny: number[] = [];
   routeSelected: number[] = [];
   unitTotal: number[] = [];
+  priority: boolean[] = [];
 
   notification: NotificationsComponent;
 
@@ -181,12 +182,16 @@ export class EnterPackageComponent implements OnInit {
           this.packages[i].retired = false;
           this.packages[i].idClient = this.client[0].id;
           this.packages[i].noInvoice = result.id;
+          if(this.priority[i] == undefined){
+            this.priority[i] = false;
+          }
+          this.packages[i].priority = this.priority[i];
           this.recepService.creaatePackage(this.packages[i]).subscribe(result => {
-            this.notification.showToast(1, 'Completado', `Factura realizada con exito`, 2500);
             console.log('proceso finalizado')
             this.cleanData();
           })
         }
+        this.notification.showToast(1, 'Completado', `Factura realizada con exito`, 2500);
      })
     } else {
       //Aqui debe ir un modal
@@ -203,6 +208,7 @@ export class EnterPackageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.notification = new NotificationsComponent(this.toastrService)
   }
 
 }

@@ -13,9 +13,9 @@ export const ADMINISTRATOR_MENU_ITEMS: NbMenuItem[] = [
                 title: 'Listado de Destinos',
                 link: '/views/users/admin/destinations'
             }
-        ], 
+        ],
     },
-    
+
     {
         title: 'Puntos de Control',
         icon: 'home-outline',
@@ -28,7 +28,7 @@ export const ADMINISTRATOR_MENU_ITEMS: NbMenuItem[] = [
                 title: 'Listado de Puntos de Control',
                 link: '/views/users/admin/checkpoints'
             }
-        ], 
+        ],
     },
     {
         title: 'Rutas',
@@ -42,7 +42,7 @@ export const ADMINISTRATOR_MENU_ITEMS: NbMenuItem[] = [
                 title: 'Listado de Rutas',
                 link: '/views/users/admin/route-list/'
             }
-        ], 
+        ],
     },
     {
         title: 'Tarifas',
@@ -60,8 +60,16 @@ export const ADMINISTRATOR_MENU_ITEMS: NbMenuItem[] = [
         children:[
             {
                 title: 'Lista de Usuarios',
-                link: '#'
-            }
+                link: '/views/users/admin/list-users'
+            },
+            {
+              title: 'Registo de usuarios',
+              link: '/views/users/admin/register'
+            },
+            {
+              title: 'Activar usuarios',
+              link: '/views/users/admin/activate-users'
+            },
             // Aca se agregan los links a cada una de las acciones de este apartado
         ]
     }
