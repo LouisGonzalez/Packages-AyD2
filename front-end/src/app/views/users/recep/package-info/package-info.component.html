@@ -1,0 +1,37 @@
+<div class="center">
+    <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+      <nb-card>
+        
+        <!-- Titulo del formulario para la creacion de Destinos  -->
+        <nb-card-header>
+          <nb-icon icon="alert-circle-outline" pack="eva"></nb-icon>
+          <nb-icon icon="cube-outline" pack="eva"></nb-icon>
+          Informacion del Paquete
+        </nb-card-header>
+        <nb-card-body>
+          
+            
+            <!-- Descripcion -->
+            <div class="form-group">
+                <label class="label">Nombre: &nbsp; {{description}}</label> 
+            </div>
+            
+            <!-- Punto de Control Actual -->
+            <div class="form-group">
+                <label class="label">Punto de Control Actual: &nbsp; {{currentCheckpoint}}</label> 
+            </div>
+
+            <!-- Tiempo en Ruta -->
+            <div class="form-group">
+                <label class="label">Tiempo en Ruta: &nbsp; {{timeOnRoute}}</label> 
+            </div>
+
+            <div class="row">
+                <button nbButton status="primary" (click)="onClose()" hero>Regresar</button>&nbsp;&nbsp;
+            </div>
+
+            
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>

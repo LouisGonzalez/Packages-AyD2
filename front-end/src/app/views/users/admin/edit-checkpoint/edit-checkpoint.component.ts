@@ -62,9 +62,9 @@ export class EditCheckpointComponent implements OnInit {
             this.location.back();
           }, 2000);
         } else {
-          this.formEditCheckpoint.controls['queueCapacity'].setValue(this.data.queueCapacity);
-          this.formEditCheckpoint.controls['operationFee'].setValue(this.data.operationFee);          
-          this.formEditCheckpoint.controls['description'].setValue(this.data.description);
+          this.formEditCheckpoint.controls['queueCapacity'].setValue(res.queueCapacity);
+          this.formEditCheckpoint.controls['operationFee'].setValue(res.operationFee);          
+          this.formEditCheckpoint.controls['description'].setValue(res.description);
         }
       }, 
       error:(err) => {

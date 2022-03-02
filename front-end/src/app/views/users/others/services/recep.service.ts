@@ -7,6 +7,7 @@ import { Destination } from '../models/destination';
 import { Route } from '../models/Route';
 import { Invoice } from '../models/Invoice';
 import { Package } from '../models/Package';
+import { PackageInformation } from '../models/PackageInformation';
 
 @Injectable({
   providedIn: 'root'
@@ -64,8 +65,24 @@ export class RecepService {
     return this.httpClient.get<Package[]>(`${this.url}/packages?atDestination=true&retired=false`);
   }
 
+//Todos los paquetes que estan en ruta
+  getAllPackages(): Observable<Package[]> {
+  return this.httpClient.get<Package[]>(`${this.url}/packages?atDestination=false&retired=false&onWay=true`);
+  }
+
   editRetiredStatePackage(pack: Package){
     return this.httpClient.put(`${this.url}/packages/${pack.id}`, pack);
+  }
+
+  /**
+   * No exite ningun recurso en el json server que permita obtener los datos
+   * requeridos, se debe de modificar la uri cuando ya se tenga la implementacion
+   * en el backen.
+   * @param packageId Id del paquete a obtener informacion.
+   * @returns 
+   */
+  public getPackageInfo(packageId: number): Observable<PackageInformation>{
+    return this.httpClient.get<PackageInformation>(`${this.url}/packages/${packageId}`);
   }
 
 }

@@ -32,6 +32,8 @@ import { EnterPackageComponent } from './enter-package/enter-package.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { DeliverPackageComponent } from './deliver-package/deliver-package.component';
 import { DeliverButtonComponent } from './deliver-package/deliver-button/deliver-button.component';
+import { TracePackageComponent } from './trace-package/trace-package.component';
+import { PackageInfoComponent } from './package-info/package-info.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { DeliverButtonComponent } from './deliver-package/deliver-button/deliver
     EnterPackageComponent,
     InvoiceComponent,
     DeliverPackageComponent,
-    DeliverButtonComponent
+    DeliverButtonComponent,
+    TracePackageComponent,
+    PackageInfoComponent
   ],
   imports: [
     CommonModule,

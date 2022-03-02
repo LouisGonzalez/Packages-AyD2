@@ -19,6 +19,14 @@ export const RECEPTIONIST_MENU_ITEMS: NbMenuItem[] = [
             {
                 title: 'Ingresar Paquete',
                 link: '/views/users/recep/enter-package'
+            },
+            {
+                title: 'Buscar Paquete en Ruta',
+                link: '/views/users/recep/trace-package'
+            },
+            {
+                title: 'Paquetes en Destino',
+                link: '/views/users/recep/'
             }
         ] 
     }
