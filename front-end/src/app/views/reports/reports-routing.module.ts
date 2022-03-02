@@ -5,6 +5,7 @@ import { PackagesOnARouteComponent } from './packages-on-a-route/packages-on-a-r
 import { Report2Component } from './report2/report2.component';
 import { Report3Component } from './report3/report3.component';
 import { ReportsComponent } from './reports.component';
+import { TopOfRoutesComponent } from './top-of-routes/top-of-routes.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
       {
         path: 'report-3',
         component: Report3Component,
+        canActivate: [AdminGuard]
+      },
+      {
+        path: 'report-4',
+        component: TopOfRoutesComponent,
         canActivate: [AdminGuard]
       }
     ]

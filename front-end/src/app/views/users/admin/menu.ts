@@ -31,6 +31,20 @@ export const ADMINISTRATOR_MENU_ITEMS: NbMenuItem[] = [
         ], 
     },
     {
+        title: 'Reportes',
+        icon: 'clipboard-outline',
+        children:[
+            {
+                title: 'Paquetes en rutas',
+                link: '/views/reports/report-1/'
+            },
+            {
+                title: 'Rutas populares',
+                link: '/views/reports/report-4/'
+            }
+        ], 
+    },
+    {
         title: 'Rutas',
         icon: 'car-outline',
         children:[

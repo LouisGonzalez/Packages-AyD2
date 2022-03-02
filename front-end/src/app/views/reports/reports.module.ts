@@ -21,6 +21,7 @@ import {
   NbSearchModule,
   NbPopoverModule,
   NbSidebarModule,
+  NbDatepickerModule
   
 } from '@nebular/theme';
 import { TablesRoutingModule, routedComponents } from '../../pages/tables/tables-routing.module';
@@ -31,7 +32,10 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { Report2Component } from './report2/report2.component';
 import { Report3Component } from './report3/report3.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { StatusCardComponent } from './status-card/status-card.component';
+import { TopOfRoutesComponent } from './top-of-routes/top-of-routes.component';
+import { ChartModule } from 'angular2-chartjs';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,7 @@ import { StatusCardComponent } from './status-card/status-card.component';
     PackagesOnARouteComponent,
     Report2Component,
     Report3Component,
-    StatusCardComponent
+    TopOfRoutesComponent
   ],
   imports: [
     CommonModule,
@@ -67,6 +71,11 @@ import { StatusCardComponent } from './status-card/status-card.component';
     TablesRoutingModule,
     ThemeModule,
     Ng2SmartTableModule,
+    NgxEchartsModule,
+    NgxChartsModule,
+    ChartModule,
+    NbCardModule,
+    NbDatepickerModule
   ]
 })
 export class ReportsModule { }
