@@ -5158,7 +5158,7 @@
 
           _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](1);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("nbContextMenu", ctx_r1.userMenu)("onlyPicture", ctx_r1.userPictureOnly)("name", ctx_r1.user == null ? null : ctx_r1.user.name);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("nbContextMenu", ctx_r1.userMenu)("onlyPicture", ctx_r1.userPictureOnly)("name", ctx_r1.user2.name);
         }
       }
 
@@ -5208,6 +5208,7 @@
             var _this31 = this;
 
             var user = JSON.parse(localStorage.getItem('user'));
+            this.user2 = JSON.parse(localStorage.getItem('user'));
             this.menuService.onItemClick().subscribe(function (event) {
               if (event.item.title === 'Salir') {
                 localStorage.clear();

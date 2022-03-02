@@ -41,8 +41,12 @@ export const ADMINISTRATOR_MENU_ITEMS: NbMenuItem[] = [
             {
                 title: 'Rutas populares',
                 link: '/views/reports/report-4/'
+            },
+            {
+                title: 'Ganancias por ruta',
+                link: '/views/reports/report-2/'
             }
-        ], 
+        ],
     },
     {
         title: 'Rutas',

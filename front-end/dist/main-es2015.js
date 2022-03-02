@@ -2833,7 +2833,7 @@ function HeaderComponent_nb_action_12_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("nbContextMenu", ctx_r1.userMenu)("onlyPicture", ctx_r1.userPictureOnly)("name", ctx_r1.user == null ? null : ctx_r1.user.name);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("nbContextMenu", ctx_r1.userMenu)("onlyPicture", ctx_r1.userPictureOnly)("name", ctx_r1.user2.name);
 } }
 const _c0 = function () { return ["view", "user"]; };
 class HeaderComponent {
@@ -2870,6 +2870,7 @@ class HeaderComponent {
     }
     ngOnInit() {
         let user = JSON.parse(localStorage.getItem('user'));
+        this.user2 = JSON.parse(localStorage.getItem('user'));
         this.menuService.onItemClick()
             .subscribe((event) => {
             if (event.item.title === 'Salir') {

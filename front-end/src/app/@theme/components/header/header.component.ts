@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+  user2: any;
 
   themes = [
     {
@@ -52,6 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     let user = JSON.parse(localStorage.getItem('user')!);
+    this.user2 = JSON.parse(localStorage.getItem('user')!);
     this.menuService.onItemClick()
       .subscribe((event) => {
       if(event.item.title === 'Salir'){
