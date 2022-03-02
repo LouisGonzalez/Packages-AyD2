@@ -1,0 +1,59 @@
+<div class="center">
+    <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+      <nb-card>
+        
+        <!-- Titulo del formulario para procesamiento de paquetes  -->
+        <nb-card-header>
+          <nb-icon icon="cube-outline" pack="eva"></nb-icon>
+          Procesar Paquete
+        </nb-card-header>
+        <nb-card-body>          
+        <form [formGroup]="formPackage">
+        
+            <!-- ID -->
+            <div class="form-group">
+                <label class="label">Identificador: &nbsp; {{id}}</label> 
+            </div>
+
+            <!-- Descripcion -->
+            <div class="form-group">
+                <label class="label">Descripcion: &nbsp; {{description}}</label> 
+            </div>
+            
+            <!-- Peso -->
+            <div class="form-group">
+                <label class="label">Peso: &nbsp; {{weight}} libras</label> 
+            </div>
+
+            <!-- Horas en punto de control -->
+            <div class="form-group">
+                <label class="required">*</label>
+                <label for="time" class="label">Tiempo</label> 
+                <input 
+                    [ngClass]="{
+                    'inp-invalid': formPackage.get('time').invalid && formPackage.get('time').touched, 
+                    'nbInput': formPackage.get('time').valid
+                    }"
+                    type="time"
+                    formControlName="time"
+                    nbInput 
+                    fullWidth 
+                    id="name" 
+                    placeholder="Ingrese la cantidad de tiempo."
+                    required
+                />
+
+                <div *ngIf="formPackage.get('time').invalid && formPackage.get('time').touched" >
+                    <label class="label required" *ngIf="formPackage.get('time').hasError('required')">{{ERROR_REQUIRED}}</label>
+                </div>  
+            </div>
+                
+            <div class="row">
+                <button type="submit" nbButton status="primary" (click)="proccessPackage()" hero>Procesar</button> &nbsp; &nbsp;
+                <button nbButton status="danger" (click)="goBack()" hero>Cancelar</button>
+            </div>  
+         </form>
+        </nb-card-body>
+     </nb-card>
+   </div>
+</div>

@@ -65,9 +65,18 @@ export class RecepService {
     return this.httpClient.get<Package[]>(`${this.url}/packages?atDestination=true&retired=false`);
   }
 
+   //Todos los paquetes que ya esten en destino
+   getPackagesInCheckpoint(checkpointId:number): Observable<Package[]> {
+    return this.httpClient.get<Package[]>(`${this.url}/package-checkpoint?checkpoint=${checkpointId}&processed=false`);
+  }
+
 //Todos los paquetes que estan en ruta
   getAllPackages(): Observable<Package[]> {
   return this.httpClient.get<Package[]>(`${this.url}/packages?atDestination=false&retired=false&onWay=true`);
+  }
+
+  getPackage(id: number): Observable<Package>{
+    return this.httpClient.get<Package>(`${this.url}/packages?id=${id}`);
   }
 
   editRetiredStatePackage(pack: Package){
