@@ -14,6 +14,7 @@ import {
   NbToastrService,
   NbToastrConfig,
 } from '@nebular/theme';
+import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class CreateClientComponent implements OnInit {
   destroyByClick = true;
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = false;
+  notification: NotificationsComponent;
 
   form:FormGroup = new FormGroup({
     name: new FormControl(''),
@@ -40,7 +42,9 @@ export class CreateClientComponent implements OnInit {
   })
 
   client: Client;
-  constructor(protected ref: NbDialogRef<CreateClientComponent>, private recepService: RecepService, private toastrService: NbToastrService) { }
+  constructor(protected ref: NbDialogRef<CreateClientComponent>, private recepService: RecepService, private toastrService: NbToastrService) {
+
+  }
 
   cancel(){
     this.ref.close();
@@ -50,15 +54,7 @@ export class CreateClientComponent implements OnInit {
     if(this.form.valid){
       this.client = this.form.value;
       this.recepService.addClient(this.client).pipe(
-        // catchError(error => {
-        //   Swal.fire({
-        //     icon: 'error',
-        //     title: ':(',
-        //     text: error
-        //   })
-        //   return EMPTY;
-        // })
-      )
+        )
       .subscribe(
         result => {
           this.ref.close(this.client);
@@ -91,7 +87,7 @@ export class CreateClientComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.notification = new NotificationsComponent(this.toastrService);
   }
 
 }

@@ -36,6 +36,11 @@ export class RouteService {
     return this.http.delete<any>(`${global.GLOBAL.url}/route/` + id);
   }
   
+  getAllRoutesStatus(status : boolean) {
+    console.log(status);
+    return this.http.get<any>(global.GLOBAL.url + `/route?active=${status}`);
+  }
+
 }
 
 

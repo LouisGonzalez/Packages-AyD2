@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { User } from '../../others/models/employee';
 import { AdminService } from '../../others/services/admin.service';
+import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 
 @Component({
   selector: 'ngx-update-user',
@@ -21,8 +23,10 @@ export class UpdateUserComponent implements OnInit {
   pass2: string;
   user: User;
 
+  notification: NotificationsComponent;
 
-  constructor(private adminService: AdminService, private router: Router) { }
+
+  constructor(private adminService: AdminService, private router: Router, private toastrService: NbToastrService) { }
 
   submit(){
     if(this.activeAux == undefined){
@@ -35,6 +39,7 @@ export class UpdateUserComponent implements OnInit {
     }
     this.adminService.updateUser(this.userReceive).subscribe(response => {
       //modal de que se actualizo al usuario
+      this.notification.showToast(1, 'Realizado', `Informacion modificada con exito`, 2500);
       this.close();
     })
   }
@@ -57,6 +62,7 @@ export class UpdateUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.notification = new NotificationsComponent(this.toastrService)
   }
 
 }

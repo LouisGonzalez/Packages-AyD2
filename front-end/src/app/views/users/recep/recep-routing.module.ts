@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RecepGuard } from '../../auth/others/guards/recep.guard';
 import { ClientListComponent } from './client-list/client-list.component';
 import { DeliverPackageComponent } from './deliver-package/deliver-package.component';
 import { EnterPackageComponent } from './enter-package/enter-package.component';
@@ -18,19 +19,28 @@ const routes: Routes = [
       },
       {
         path: 'client-list',
-        component: ClientListComponent
+        component: ClientListComponent,
+        canActivate: [RecepGuard]
       },
       {
         path: 'enter-package',
-        component: EnterPackageComponent
+        component: EnterPackageComponent,
+        canActivate: [RecepGuard]
       },
       {
         path: 'trace-package',
-        component: TracePackageComponent
+        component: TracePackageComponent,
+        canActivate: [RecepGuard]
       },
       {
         path: 'package-info/:id',
-        component: PackageInfoComponent
+        component: PackageInfoComponent,
+        canActivate: [RecepGuard]
+      },
+      {
+        path: 'deliver-package',
+        component: DeliverPackageComponent,
+        canActivate: [RecepGuard]
       }
       
     ]

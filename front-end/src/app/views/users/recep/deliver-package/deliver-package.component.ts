@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NbToastrService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Package } from '../../others/models/Package';
 import { RecepService } from '../../others/services/recep.service';
+import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 import { DeliverButtonComponent } from './deliver-button/deliver-button.component';
 
 @Component({
@@ -13,6 +15,7 @@ export class DeliverPackageComponent implements OnInit {
 
   packages: Package[];
   pack: Package;
+  notification: NotificationsComponent;
 
   settings = {
     actions: {
@@ -33,22 +36,12 @@ export class DeliverPackageComponent implements OnInit {
         title: 'Descripcion',
         type: 'number'
       },
-      // unitTotal: {
-      //   title: 'desactivar',
-      //   type: 'custom',
-      //   renderComponent: DeliverButtonComponent,
-      //   onComponentInitFunction(instance){
-      //     instance.clickOne.subscribe(row => {
-      //       console.log(row)
-      //     })
-      //   }
-      // }
     }
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private recepService: RecepService) {
+  constructor(private recepService: RecepService, private toastrService: NbToastrService) {
     this.getData();
   }
 
@@ -68,6 +61,7 @@ export class DeliverPackageComponent implements OnInit {
       this.pack = event.data;
       this.pack.retired = true;
       this.recepService.editRetiredStatePackage(this.pack).subscribe(data => {
+        this.notification.showToast(1, 'Entregado', `Paquete marcado como entregado con exito`, 2500);
         this.getData();
       })
     } else {
@@ -76,6 +70,7 @@ export class DeliverPackageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.notification = new NotificationsComponent(this.toastrService);
   }
 
 }
