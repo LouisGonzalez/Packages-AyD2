@@ -1,0 +1,20 @@
+
+  <nb-card>
+    <nb-card-header>
+      <h3>Listado de paquetes en el punto de control.</h3>
+    </nb-card-header>
+  
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="processPackage($event)">
+      </ng2-smart-table>
+      
+    </nb-card-body>
+  
+    <nb-card-footer>
+      <div class="row">
+        <button nbButton status="primary" (click)="goBack()" hero>Regresar</button>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+  
+

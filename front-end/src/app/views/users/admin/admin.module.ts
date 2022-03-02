@@ -41,6 +41,7 @@ import { CreateCheckpointComponent } from './create-checkpoint/create-checkpoint
 import { ActivateUsersComponent } from './activate-users/activate-users.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { RouteListComponent } from './route-list/route-list.component';
+import { EditRouteComponent } from './edit-route/edit-route.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { RouteListComponent } from './route-list/route-list.component';
     UpdateAssignamentOperatorCheckpointComponent,
     ListDestinationsComponent,
     EditDestinationComponent,
-    RouteListComponent
+    RouteListComponent,
+    EditRouteComponent
   ],
   imports: [
     CommonModule,

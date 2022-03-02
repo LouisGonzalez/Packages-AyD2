@@ -20,21 +20,30 @@ import {
   NbToggleModule,
   NbSearchModule,
   NbPopoverModule,
-  NbSidebarModule
+  NbSidebarModule,
+  NbDatepickerModule
+  
 } from '@nebular/theme';
 import { TablesRoutingModule, routedComponents } from '../../pages/tables/tables-routing.module';
 import { ReportsRoutingModule } from './reports-routing.module';
 import { ReportsComponent } from './reports.component';
+import { PackagesOnARouteComponent } from './packages-on-a-route/packages-on-a-route.component';
 import { ThemeModule } from '../../@theme/theme.module';
 import { Report2Component } from './report2/report2.component';
 import { Report3Component } from './report3/report3.component';
-
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { TopOfRoutesComponent } from './top-of-routes/top-of-routes.component';
+import { ChartModule } from 'angular2-chartjs';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [
     ReportsComponent,
+    PackagesOnARouteComponent,
     Report2Component,
-    Report3Component
+    Report3Component,
+    TopOfRoutesComponent
   ],
   imports: [
     CommonModule,
@@ -60,8 +69,13 @@ import { Report3Component } from './report3/report3.component';
     NbSidebarModule,
     NbTreeGridModule,
     TablesRoutingModule,
-    ThemeModule
-
+    ThemeModule,
+    Ng2SmartTableModule,
+    NgxEchartsModule,
+    NgxChartsModule,
+    ChartModule,
+    NbCardModule,
+    NbDatepickerModule
   ]
 })
 export class ReportsModule { }

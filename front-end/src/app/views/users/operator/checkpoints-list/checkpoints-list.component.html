@@ -1,0 +1,16 @@
+<div class="center">
+    <nb-card>
+      <nb-card-header>
+        <h3>Puntos de control asignados.</h3>
+      </nb-card-header>
+    
+      <nb-card-body>
+        <ng2-smart-table 
+        [settings]="settings" 
+        [source]="source"
+        (deleteConfirm)="showPackages($event)"
+        >
+        </ng2-smart-table>
+      </nb-card-body>
+    </nb-card>
+  </div>

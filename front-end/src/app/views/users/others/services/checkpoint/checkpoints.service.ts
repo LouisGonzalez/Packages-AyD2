@@ -23,6 +23,10 @@ export class CheckpointsService {
     return this.http.get<CheckpointListTemplate[]>(`${global.GLOBAL.url}/checkpoints/`)
   }
   
+  getAllCheckpointsAssignedToOperator(operatorId: number) {
+    return this.http.get<CheckpointListTemplate[]>(`${global.GLOBAL.url}/checkpoints?assignedOperator=${operatorId}`)
+  }
+
   getCheckpoint(id : number) {
     return this.http.get<CheckpointListTemplate>(`${global.GLOBAL.url}/checkpoints/` + id);
   }

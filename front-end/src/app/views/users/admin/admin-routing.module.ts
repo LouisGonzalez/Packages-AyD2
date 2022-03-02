@@ -14,6 +14,7 @@ import { CheckpointListComponent } from './checkpoint-list/checkpoint-list.compo
 import { ListDestinationsComponent } from './list-destinations/list-destinations.component';
 import { EditDestinationComponent } from './edit-destination/edit-destination.component';
 import { RouteListComponent } from './route-list/route-list.component';
+import { EditRouteComponent } from './edit-route/edit-route.component';
 import { AdminGuard } from '../../auth/others/guards/admin.guard';
 
 const routes: Routes = [
@@ -92,6 +93,10 @@ const routes: Routes = [
         component: RouteListComponent,
         canActivate: [AdminGuard]
       },
+      {
+        path: 'edit-route/:id',
+        component: EditRouteComponent
+      }
     ]
   }
 ];

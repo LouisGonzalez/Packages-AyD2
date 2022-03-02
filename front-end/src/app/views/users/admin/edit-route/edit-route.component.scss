@@ -1,0 +1,83 @@
+@import "../../../../@theme/styles/themes.scss";
+
+@include nb-install-component() {
+  nb-card {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.required {
+  color: red;
+}
+
+.black {
+  color: black;
+}
+
+.borderless {
+  border-style: none;
+}
+
+.inp-invalid {
+  background-color: rgb(255, 204, 204);
+  box-shadow: 0 0 5px red;
+}
+
+.inp-valid {
+  background-color: rgb(219, 255, 214);
+  box-shadow: 0 0 5px green;
+}
+
+.switch {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.4s;
+}
+
+.slider:before {
+  background-color: #fff;
+  bottom: 4px;
+  content: "";
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: 0.4s;
+  width: 26px;
+}
+
+input:checked + .slider {
+  background-color: #66bb6a;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
