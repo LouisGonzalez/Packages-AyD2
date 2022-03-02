@@ -32,8 +32,9 @@ export class RouteService {
     return this.http.put<any>(global.GLOBAL.url + "/route/" + id, data);
   }
 
-  getAllRoutesStatus(status) {
-    return this.http.get<any>(global.GLOBAL.url + "/route?active=" + status);
+  getAllRoutesStatus(status : boolean) {
+    console.log(status);
+    return this.http.get<any>(global.GLOBAL.url + `/route?active=${status}`);
   }
 
 }

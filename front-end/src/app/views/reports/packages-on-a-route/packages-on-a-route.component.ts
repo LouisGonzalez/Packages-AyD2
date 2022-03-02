@@ -150,8 +150,8 @@ export class PackagesOnARouteComponent implements OnInit {
   }
 
   status() {
-    this.getAllRoutesStatus();
     this.on = !this.on;
+    this.getAllRoutesStatus();
     return this.on;
   }
 
