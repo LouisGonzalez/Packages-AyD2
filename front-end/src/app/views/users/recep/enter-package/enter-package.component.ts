@@ -78,6 +78,8 @@ export class EnterPackageComponent implements OnInit {
         this.CUI = this.client[0].CUI;
         this.NIT = this.client[0].NIT;
       } else {
+        this.notification.showToast(4, 'Not Found', `El cliente con el NIT: ${this.nitParameter} no existe`, 2500);
+        this.openModalClient();
         console.log('no existe el cleinte')
       }
   })
