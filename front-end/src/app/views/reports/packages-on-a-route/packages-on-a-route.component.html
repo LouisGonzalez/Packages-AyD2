@@ -1,14 +1,36 @@
-<nb-card>
-    <nb-card-header>
-      Rutas
-    </nb-card-header>
-  
-    <nb-card-body>
-      <ng2-smart-table 
-      [settings]="settings" 
-      [source]="source"
-      (custom)="onCustomAction($event)"
-      >
-      </ng2-smart-table>
-    </nb-card-body>
-  </nb-card>
+<div class="row">
+    <div class="col-xxxl-3 col-md-6">
+        <nb-card class="card-status" (click)="status()" [ngClass]="{'off': !on}">
+            <div class="icon-container">
+              <div class="icon status-{{ statusCard.type }}">
+                <i [ngClass]="statusCard.iconClass"></i>
+              </div>
+            </div>
+            <div class="details">
+              <div class="title h5">{{ statusCard.title }}</div>
+              <div class="status paragraph-2">{{ on ? 'Activado' : 'Desactivado' }}</div>
+            </div>
+        </nb-card>
+    </div>
+</div>
+
+<div class="row">
+    <nb-card >
+        <nb-card-header>
+          Reporte de paquetes en Rutas &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button nbButton status="primary" (click)="getAllRoutes()" ghost>
+            Todos
+          </button>
+        </nb-card-header>
+      
+        <nb-card-body>
+          <ng2-smart-table 
+          [settings]="settings" 
+          [source]="source"
+          (custom)="onCustomAction($event)"
+          >
+          </ng2-smart-table>
+        </nb-card-body>
+    </nb-card>
+</div>
+

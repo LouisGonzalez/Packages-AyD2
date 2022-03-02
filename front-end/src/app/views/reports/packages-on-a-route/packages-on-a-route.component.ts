@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NbToastrService } from '@nebular/theme';
+import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
+import { takeWhile } from 'rxjs/operators' ;
 import { DestinationService } from '../../users/others/services/destination/destination.service';
 import { RouteService } from '../../users/others/services/route/route.service';
 import { NotificationsComponent } from '../../users/others/source/notifications/notifications.component';
+
+interface CardSettings {
+  title: string;
+  iconClass: string;
+  type: string;
+}
 
 @Component({
   selector: 'ngx-packages-on-a-route',
@@ -12,6 +19,8 @@ import { NotificationsComponent } from '../../users/others/source/notifications/
   styleUrls: ['./packages-on-a-route.component.scss']
 })
 export class PackagesOnARouteComponent implements OnInit {
+
+  private alive = true;
 
   settings = {
     columns: {
@@ -42,17 +51,40 @@ export class PackagesOnARouteComponent implements OnInit {
     },
     defaultStyle: false,
     actions: {
-      columnTitle: 'Acciones',
-      
       add: false,
       edit: false,
       delete: false,
-      custom: [
-        { name: 'editRoute', title: '<i class="nb-edit"></i>' },
-        { name: 'deleteRoute', title: '<i class="	nb-close-circled"></i>' },
-      ],
-      position: 'right'
     },
+  };
+
+  on = true;
+
+  statusCard: CardSettings = {
+    title: 'Estado',
+    iconClass: 'nb-checkmark',
+    type: 'success',
+  };
+  statusCards: string;
+
+  commonStatusCardsSet: CardSettings[] = [
+    this.statusCard,
+  ];
+
+  statusCardsByThemes: {
+    default: CardSettings[];
+    cosmic: CardSettings[];
+    corporate: CardSettings[];
+    dark: CardSettings[];
+  } = {
+    default: this.commonStatusCardsSet,
+    cosmic: this.commonStatusCardsSet,
+    corporate: [
+      {
+        ...this.statusCard,
+        type: 'success',
+      },
+    ],
+    dark: this.commonStatusCardsSet,
   };
 
   notification : NotificationsComponent;
@@ -63,10 +95,44 @@ export class PackagesOnARouteComponent implements OnInit {
     private api : RouteService,
     private apiDestination : DestinationService,
     private router : Router,
-    private toastrService : NbToastrService
-  ) { }
+    private toastrService : NbToastrService,
+    private themeService: NbThemeService
+  ) { 
+    this.themeService.getJsTheme()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(theme => {
+        this.statusCards = this.statusCardsByThemes[theme.name];
+    });
+  }
 
   ngOnInit(): void {
+    this.notification = new NotificationsComponent(this.toastrService);
+    this.getAllRoutes()
+  }
+
+  private getAllRoutesStatus() {
+    this.api.getAllRoutesStatus(this.on)
+    .subscribe({
+      next:(res) => {
+        this.source.reset();
+        this.source.load(this.convertRouteList(res));
+      },
+      error:(err) => {
+        this.notification.errors(400, 'Error mientras se obtenia la lista de rutas, vuelve a intentarlo')
+      }
+    });
+  }
+
+  getAllRoutes() {
+    this.api.getAllRoutes()
+    .subscribe({
+      next:(res) => {
+        this.source.load(this.convertRouteList(res));
+      },
+      error:(err) => {
+        this.notification.errors(400, 'Error mientras se obtenia la lista de rutas, vuelve a intentarlo')
+      }
+    });
   }
 
   onCustomAction(event){
@@ -81,6 +147,45 @@ export class PackagesOnARouteComponent implements OnInit {
         }
         break;
     }
+  }
+
+  status() {
+    this.getAllRoutesStatus();
+    this.on = !this.on;
+    return this.on;
+  }
+
+  private getDestination(id : number) {
+    this.apiDestination.getDestinationById(id)
+    .subscribe({
+      next:(res) => {
+        return res.name;
+      },
+      error:(err) => {
+        if (err.status = 404) {
+          this.notification.errors(404, "el destino con el id: " + id);
+        } else {
+          this.notification.errors(400, "Error mientras se obtenia el destino con el id: " + id) 
+        }
+      }
+    });
+  }
+
+  private convertRouteList(data : any) {
+    let array = [];
+    for (const iterator of data) {
+      let name = this.getDestination(parseInt(iterator['destinationId']));
+      let newRouteTemplate = {
+        id : iterator['id'],
+        active : iterator['active'] == 1 || iterator['active'] ? 'Activo' : 'Desactivado',
+        name : iterator['name'],
+        destination : iterator['destinationId'],
+        packageOnRoute : iterator['packagesOnRoute'],
+        totalPackages : iterator['totalPackages']
+      }
+      array.push(newRouteTemplate);
+    }
+    return array;
   }
 
 }

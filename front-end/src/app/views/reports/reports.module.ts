@@ -20,7 +20,8 @@ import {
   NbToggleModule,
   NbSearchModule,
   NbPopoverModule,
-  NbSidebarModule
+  NbSidebarModule,
+  
 } from '@nebular/theme';
 import { TablesRoutingModule, routedComponents } from '../../pages/tables/tables-routing.module';
 import { ReportsRoutingModule } from './reports-routing.module';
@@ -30,13 +31,15 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { Report2Component } from './report2/report2.component';
 import { Report3Component } from './report3/report3.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { StatusCardComponent } from './status-card/status-card.component';
 
 @NgModule({
   declarations: [
     ReportsComponent,
     PackagesOnARouteComponent,
     Report2Component,
-    Report3Component
+    Report3Component,
+    StatusCardComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +66,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     NbTreeGridModule,
     TablesRoutingModule,
     ThemeModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
   ]
 })
 export class ReportsModule { }
