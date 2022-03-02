@@ -47,7 +47,7 @@ export class CheckpointsListComponent implements OnInit {
       active : {
         title: 'Estado',
         type: 'string',
-      } 
+      }
     }
   };
 
@@ -56,7 +56,7 @@ export class CheckpointsListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
 
   constructor(
-    private checkpointService : CheckpointsService,  
+    private checkpointService : CheckpointsService,
     private router: Router,
     private toastrService: NbToastrService) { }
 
@@ -66,17 +66,13 @@ export class CheckpointsListComponent implements OnInit {
   }
 
   private getAllCheckpointsAssigned(){
-     //--------------------------------------DELETE---------------------------------------------------
-    //Se establece el valor user del local storage a 1 solo con fines de prueba. Borrar esta linea 
-    //al momento de implementar el backend.
-    localStorage.setItem('user', '1');
-    //----------------------------------------DELETE--------------------------------------------------
-
-    this.checkpointService.getAllCheckpointsAssignedToOperator(Number(JSON.parse(localStorage.getItem('user'))))
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.id)
+    this.checkpointService.getAllCheckpointsAssignedToOperator(user.id)
     .subscribe({
       next:(res) => {
         this.source.load(this.convertCheckpointList(res));
-      },  
+      },
       error:(res) => {
         this.notification.errors(400, 'Error mientras se obtenia la lista de puntos de control asignados.');
       }
@@ -84,6 +80,7 @@ export class CheckpointsListComponent implements OnInit {
   }
 
   showPackages(event){
+    console.log('entro aqui')
     this.router.navigate(['views', 'operator', 'packages-list', event.data['id']]);
   }
 
