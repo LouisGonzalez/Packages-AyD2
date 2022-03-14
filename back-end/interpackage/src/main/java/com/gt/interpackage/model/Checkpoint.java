@@ -42,7 +42,7 @@ public class Checkpoint {
     private Boolean active;
     
     @ManyToOne
-    @JoinColumn (name="assiged_operator", nullable = false)
+    @JoinColumn (name="assigned_operator", nullable = false)
     private Employee assignedOperator;
     
     @ManyToOne
