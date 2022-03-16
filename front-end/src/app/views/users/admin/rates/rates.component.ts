@@ -32,20 +32,20 @@ export class RatesComponent implements OnInit {
      * Segundo parametro: validators
     */  
     operatorFee : new FormControl(null, [ 
-       Validators.min(0), 
-       Validators.pattern('[0-9]+(.[0-9]+)?')
+        Validators.min(0), 
+        Validators.pattern('[0-9]+(.[0-9]+)?')
       ] 
     ),
     priorizationFee : new FormControl(null, [ 
       Validators.min(0), 
       Validators.pattern('[0-9]+(.[0-9]+)?')
-     ] 
-     ),  
+      ] 
+      ),  
     pricePerPound: new FormControl(null, [ 
       Validators.min(0), 
       Validators.pattern('[0-9]+(.[0-9]+)?')
-     ] 
-     ),  
+      ] 
+      ),  
   });
 
   constructor(
@@ -84,19 +84,19 @@ export class RatesComponent implements OnInit {
 
   private getIdRate(name) : Rate {
     return this.datarates.find( function(item){
-        return item.ratename === name;
+        return item.name === name;
     });
   }
 
   private addField(data){
     this.datarates = data;
     for (const iterator of data) {
-      if (iterator['ratename'] === 'Tarifa por operación') {
-        this.formRates.controls['operatorFee'].setValue(iterator['rate'])
-      } else if (iterator['ratename'] === 'Tarifa por priorización') {
-        this.formRates.controls['priorizationFee'].setValue(iterator['rate'])
+      if (iterator['name'] === 'Tarifa por operación') {
+        this.formRates.controls['operatorFee'].setValue(iterator['fee'])
+      } else if (iterator['name'] === 'Tarifa por priorización') {
+        this.formRates.controls['priorizationFee'].setValue(iterator['fee'])
       } else {
-        this.formRates.controls['pricePerPound'].setValue(iterator['rate'])
+        this.formRates.controls['pricePerPound'].setValue(iterator['fee'])
       }
     }
   }
@@ -107,8 +107,8 @@ export class RatesComponent implements OnInit {
     if (rateSearch != null) {
       newRate = {
         id : rateSearch.id,
-        ratename : name,
-        rate : fee == null ? 0 : parseFloat(fee)
+        name : name,
+        fee : fee == null ? 0 : parseFloat(fee)
       }
       this.api_rates.putRates(newRate, rateSearch.id)
       .subscribe({
@@ -124,14 +124,16 @@ export class RatesComponent implements OnInit {
           : console.log("");  
           this.notification.showToast(1, 'Editado', name + ', modificado correctamente.', 2500);
         },
-        error:() =>{
-          this.notification.showToast(4, 'Error', 'Error mientras se agregaba la \"' + name + '\", vuelve a intentarlo.', 2500);
+        error:(err) => {
+          err.status == 404 ?
+            this.notification.errors(404, "No se encuentra la tarifa: " + name + ", vuelve a intentarlo.") :
+            this.notification.errors(500, "Error en el servidor, vuelve a intentarlo.");
         }
       }); 
     } else {
       newRate = { 
-        ratename: name,
-        rate: fee == null ? 0 : fee
+        name: name,
+        fee: fee == null ? 0 : fee
       };
       this.api_rates.postRates(newRate)
       .subscribe({
@@ -140,15 +142,17 @@ export class RatesComponent implements OnInit {
             setTimeout(() => {
               this.formRates.reset();
               this.router.navigate(['views', 'admin']);
-            }, 2700);
+            }, 3000);
           }
           fee == null 
           ? this.notification.showToast(3, 'Precaución', 'Debido a que el campo de: ' + name + ', esta vacio, el valor por defecto sera 0.', 2500)
           : console.log("");
           this.notification.showToast(1, 'Agregado', name + ', agregado correctamente.', 2500);
         },
-        error:() =>{
-          this.notification.showToast(4, 'Error', 'Error mientras se agregaba la \"' + name + '\", vuelve a intentarlo.', 2500);
+        error:(err) =>{
+          err.status == 404 ?
+            this.notification.errors(404, "No se encuentra la tarifa: " + name + ", vuelve a intentarlo.") :
+            this.notification.errors(500, "Error en el servidor, vuelve a intentarlo.");
         }
       }); 
     }

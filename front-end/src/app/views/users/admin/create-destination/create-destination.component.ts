@@ -67,8 +67,10 @@ export class CreateDestinationComponent implements OnInit {
         this.notification.showToast(1, 'Agregado', `Destino: ${nameDestintaion}, agregado correctamente.`, 2500);
         this.formDestination.reset();
       },
-      error : () => {
-        this.notification.showToast(4, 'Error', `Error mientras se agregaba el destino: ${nameDestintaion}, vuelve a intentarlo.`, 3000);
+      error : (err) => {
+        err.status == 400 ?
+          this.notification.errors(400, "Ya se encuentra creado un destino con el nombre: " + nameDestintaion + ", vuelve a intentarlo.") :
+          this.notification.errors(500, "Error al crear el destino, vuelve a intentarlo.");
       }
     });
   }

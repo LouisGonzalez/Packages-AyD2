@@ -83,7 +83,7 @@ export class CreateCheckpointComponent implements OnInit {
     this.notification = new NotificationsComponent(this.toastService);
     this.ratesService.getOperationFee().subscribe(
       (response) => {
-        this.globalOperationFee = response[0].rate;
+        this.globalOperationFee = response[0].fee;
         this.rateInput.nativeElement.value = this.globalOperationFee;
         this.formCheckpoint.get('fee').setValue(this.globalOperationFee);
         this.notification.showToast(
