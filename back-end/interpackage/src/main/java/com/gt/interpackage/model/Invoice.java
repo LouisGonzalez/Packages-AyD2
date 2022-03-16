@@ -30,6 +30,8 @@ public class Invoice {
     @Column (nullable = false, scale = 2)
     private Double total;
 
+    public Invoice() { }
+    
     public Invoice(Long id, LocalDate date, Double total) {
         this.id = id;
         this.date = date;

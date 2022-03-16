@@ -54,6 +54,8 @@ public class Package {
     @JoinColumn (name = "id_invoice", nullable = false)
     private Invoice invoice;
 
+     public Package() { }
+    
     public Package(Long id, Boolean onWay, Boolean atDestination, Boolean retirted, Double weight, Double subTotal, Boolean priorized, String description, Client cui, Invoice invoice) {
         this.id = id;
         this.onWay = onWay;

@@ -17,6 +17,8 @@ public class PKPackageCheckpoint implements Serializable {
     private Checkpoint checkpoint;
     private com.gt.interpackage.model.Package packages;
 
+    public PKPackageCheckpoint() { }
+    
     public PKPackageCheckpoint(Checkpoint checkpoint, com.gt.interpackage.model.Package packages) {
         this.checkpoint = checkpoint;
         this.packages = packages;

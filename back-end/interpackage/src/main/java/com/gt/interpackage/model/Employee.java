@@ -37,6 +37,8 @@ public class Employee {
     @Column (nullable = false, length = 60)
     @JsonDeserialize (using = BCryptPasswordDeserializer.class)
     private String password;
+    
+     public Employee() { }
 
     public Employee(Long cui, String name, String lastName, EmployeeType employeeType, String password) {
         this.cui = cui;
