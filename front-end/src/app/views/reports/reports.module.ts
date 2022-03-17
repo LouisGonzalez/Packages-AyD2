@@ -22,7 +22,7 @@ import {
   NbPopoverModule,
   NbSidebarModule,
   NbDatepickerModule
-  
+
 } from '@nebular/theme';
 import { TablesRoutingModule, routedComponents } from '../../pages/tables/tables-routing.module';
 import { ReportsRoutingModule } from './reports-routing.module';
@@ -36,6 +36,7 @@ import { TopOfRoutesComponent } from './top-of-routes/top-of-routes.component';
 import { ChartModule } from 'angular2-chartjs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { ProfitsPerRouteComponent } from './profits-per-route/profits-per-route.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     PackagesOnARouteComponent,
     Report2Component,
     Report3Component,
-    TopOfRoutesComponent
+    TopOfRoutesComponent,
+    ProfitsPerRouteComponent,
   ],
   imports: [
     CommonModule,

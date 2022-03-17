@@ -9,4 +9,5 @@ export interface Package {
   noInvoice: number;
   unitTotal: number;
   description: string;
+  priority: boolean;
 }

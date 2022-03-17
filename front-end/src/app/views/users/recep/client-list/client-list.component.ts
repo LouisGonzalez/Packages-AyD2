@@ -59,8 +59,8 @@ export class ClientListComponent implements OnInit {
   }
 
   openModalClient(){
-    this.dialogService.open(CreateClientComponent)
-      .onClose.subscribe(name => name && this.names.push(name));
+    // this.dialogService.open(CreateClientComponent)
+    //   .onClose.subscribe(name => name && this.names.push(name));
   }
 
   getData(){
