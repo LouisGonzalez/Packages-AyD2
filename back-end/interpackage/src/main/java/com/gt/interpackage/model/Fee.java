@@ -39,6 +39,11 @@ public class Fee {
         this.fee = fee;
     }
 
+    public Fee(String name, Double fee) {
+        this.name = name;
+        this.fee = fee;
+    }
+
     public Long getId() {
         return id;
     }
