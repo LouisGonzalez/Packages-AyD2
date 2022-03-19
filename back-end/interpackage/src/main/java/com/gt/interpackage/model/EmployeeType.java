@@ -29,6 +29,8 @@ public class EmployeeType {
     @Column (nullable = true, columnDefinition = "TEXT")
     private String description;
 
+     public EmployeeType() { }
+    
     public EmployeeType(Long id, String name, String description) {
         this.id = id;
         this.name = name;

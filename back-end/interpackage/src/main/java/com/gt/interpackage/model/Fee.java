@@ -4,6 +4,7 @@
  */
 package com.gt.interpackage.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
  *
  * @author bryan
  */
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table (name = "fee")
 public class Fee {
@@ -29,8 +31,15 @@ public class Fee {
     @Column (nullable = false, scale = 2)
     private Double fee;
 
+    public Fee() {}
+    
     public Fee(Long id, String name, Double fee) {
         this.id = id;
+        this.name = name;
+        this.fee = fee;
+    }
+
+    public Fee(String name, Double fee) {
         this.name = name;
         this.fee = fee;
     }

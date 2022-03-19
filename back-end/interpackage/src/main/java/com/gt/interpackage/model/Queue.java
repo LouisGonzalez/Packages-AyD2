@@ -32,6 +32,8 @@ public class Queue {
     @JoinColumn (name = "id_package", nullable = false)
     private Package packages;
 
+    public Queue() { }
+    
     public Queue(Long queue, Package packages, Integer position) {
         this.queue = queue;
         this.packages = packages;

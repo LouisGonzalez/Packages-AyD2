@@ -1,5 +1,5 @@
 export type Rate = {
-    ratename : string;
-    rate : number;
+    name : string;
+    fee : number;
     id ?: number;
 }

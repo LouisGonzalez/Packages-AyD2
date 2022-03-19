@@ -31,6 +31,8 @@ public class Destination {
     
     @Column (scale = 2, nullable = false)
     private Double fee;
+    
+     public Destination() { }
 
     public Destination(Long id, String name, String description, Double fee) {
         this.id = id;

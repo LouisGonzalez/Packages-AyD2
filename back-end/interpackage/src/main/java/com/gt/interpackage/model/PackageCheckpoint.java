@@ -36,6 +36,8 @@ public class PackageCheckpoint {
     @Column (name = "time_on_checkpoint", nullable = false)
     private Time timeOnCheckpoint;
 
+    public PackageCheckpoint() { }
+    
     public PackageCheckpoint(Checkpoint checkpoint, Package packages, Time timeOnCheckpoint) {
         this.checkpoint = checkpoint;
         this.packages = packages;

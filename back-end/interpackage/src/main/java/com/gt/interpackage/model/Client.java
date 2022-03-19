@@ -34,7 +34,9 @@ public class Client {
     
     @Column (nullable = true, length = 250)
     private String address;
-
+    
+     public Client() { }
+    
     public Client(Long cui, String name, String lastName, Integer age, Integer nit, String address) {
         this.cui = cui;
         this.name = name;

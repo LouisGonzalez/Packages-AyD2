@@ -41,6 +41,8 @@ public class Route {
     @JoinColumn (nullable = false, name = "id_destination")
     private Destination destination;
 
+    public Route() { }
+    
     public Route(Long id, String name, Integer packagesOnRoute, Integer totalPackages, Boolean active, Destination destination) {
         this.id = id;
         this.name = name;

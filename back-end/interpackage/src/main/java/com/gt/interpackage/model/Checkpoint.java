@@ -49,6 +49,8 @@ public class Checkpoint {
     @JoinColumn (name="id_route", nullable = false)
     private Route route;
 
+    public Checkpoint() { }
+    
     public Checkpoint(Long id, String description, Double operationFee, Integer queueCapacity, Integer packagesOnQueue, Boolean active, Employee assignedOperator, Route route) {
         this.id = id;
         this.description = description;
