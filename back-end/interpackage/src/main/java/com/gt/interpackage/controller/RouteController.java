@@ -1,4 +1,4 @@
-package com.gt.interpackage.rest;
+package com.gt.interpackage.controller;
 
 import com.gt.interpackage.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.gt.interpackage.model.Route;
+import com.gt.interpackage.source.Constants;
 import java.net.URI;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author helmuth
  */
 @RestController
-@RequestMapping("/routes")
-public class RouteREST {
+@RequestMapping(Constants.API_V1 + "/route")
+public class RouteController {
     
     @Autowired
     private RouteService routeService;
