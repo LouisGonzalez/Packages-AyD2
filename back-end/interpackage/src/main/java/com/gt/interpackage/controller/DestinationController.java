@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gt.interpackage.controller;
 
 import com.gt.interpackage.model.Destination;
@@ -19,9 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 /**
- *
+ * @author helmuth
  * @author bryan
  */
 @CrossOrigin (origins = Constants.URL_FRONT_END, allowCredentials = "true")
@@ -50,6 +45,7 @@ public class DestinationController {
      * @param name
      * @return Listado de destinos encontrados | Error 400
      */
+    @CrossOrigin
     @GetMapping(value ="/search-by-name/{name}")
     public ResponseEntity<List<Destination>> getDestinationByName(@PathVariable String name){
         try{
