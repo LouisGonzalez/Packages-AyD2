@@ -3,10 +3,12 @@ package com.gt.interpackage.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.gt.interpackage.model.Destination;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 /**
- *
+ * 
  * @author helmuth
  */
+@Repository
 public interface DestinationRepository extends JpaRepository<Destination, Long>{
     
     /**

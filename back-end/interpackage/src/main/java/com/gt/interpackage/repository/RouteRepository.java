@@ -4,10 +4,12 @@ import com.gt.interpackage.model.Route;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 /**
  *
  * @author helmuth
  */
+@Repository
 public interface RouteRepository extends JpaRepository<Route, Long>{
 
     /**

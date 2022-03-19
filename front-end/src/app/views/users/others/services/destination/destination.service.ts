@@ -13,7 +13,7 @@ export class DestinationService {
   constructor(private http: HttpClient) { }
 
   public createDestination(data: any) {
-    return this.http.post<any>(global.GLOBAL.url + "/destination/", data);
+    return this.http.post<any>(global.GLOBAL.urlApi + "/destination/", data);
   }
 
   /**

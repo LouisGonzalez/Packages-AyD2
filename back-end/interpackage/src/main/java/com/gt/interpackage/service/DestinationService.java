@@ -5,9 +5,8 @@ import com.gt.interpackage.model.Destination;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 /**
- *
+ * @author bryan
  * @author helmuth
  */
 @Service
@@ -15,6 +14,11 @@ public class DestinationService {
     
     @Autowired
     private DestinationRepository destinationRepository;
+    
+    public <S extends Destination> S save(S entity) {
+        return destinationRepository.save(entity);
+    }
+    
     
      /**
      * Metodo que llama al repositorio de destinos para obtener todas aquellos 
@@ -25,5 +29,4 @@ public class DestinationService {
     public List<Destination> findByName(String name){
         return destinationRepository.findByNameStartingWith(name);
     }
-        
 }

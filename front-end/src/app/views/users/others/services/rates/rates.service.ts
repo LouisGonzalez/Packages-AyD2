@@ -13,7 +13,7 @@ export class RatesService {
   constructor(private http: HttpClient) {}
 
   postRates(data: any) {
-    return this.http.post<any>(global.GLOBAL.url + "/rates/", data);
+    return this.http.post<any>(global.GLOBAL.urlApi + "/fee/", data);
   }
 
   public getOperationFee(): Observable<Rate[]>{
@@ -21,11 +21,11 @@ export class RatesService {
   }
 
   getRates(){
-    return this.http.get<Rate[]>(global.GLOBAL.url + "/rates/");
+    return this.http.get<Rate[]>(global.GLOBAL.urlApi + "/fee/");
   }
 
   putRates(data : any, id : number) {
-    return this.http.put<any>(global.GLOBAL.url + "/rates/" + id, data);
+    return this.http.put<any>(global.GLOBAL.urlApi + "/fee/" + id, data);
   }
 }
 
