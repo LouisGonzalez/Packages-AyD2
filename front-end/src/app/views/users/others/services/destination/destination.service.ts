@@ -23,7 +23,7 @@ export class DestinationService {
    * @returns Listado de destinos que coinciden con el patron de busquda
    */
   public getDestinations(pattern: string):Observable<Destination[]>{
-    return this.http.get<Destination[]>(global.GLOBAL.querysUrl + "destination?name="+pattern);
+    return this.http.get<Destination[]>(global.GLOBAL.url + "destinations/search-by-name/"+pattern);
   }
 
   /**

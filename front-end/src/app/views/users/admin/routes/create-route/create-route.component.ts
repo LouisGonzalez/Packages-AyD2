@@ -76,18 +76,28 @@ export class CreateRouteComponent implements OnInit {
   private create(routeName: string, routeDestinationId: number){
     this.routeService.createRoute({
       name: routeName, 
-      destinationId: routeDestinationId,
-      active: false,
       packagesOnRoute: 0,
-      totalPackages: 0
+      totalPackages: 0,
+      active: false,
+      destination: {
+        id: routeDestinationId
+      } 
     }).subscribe({
       next : (res) => {
         this.notification.showToast(1, 'Exito', `Ruta ${routeName} creada exitosamente.`, 5000);
         this.formRoute.reset();
         this.router.navigate([this.ADMIN_HOME]);
       },
-      error : () => {
-        this.notification.showToast(3, 'Error', `Error en la creacion de la ruta: ${routeName}, vuelva a intentarlo.`, 5000);
+      error : (error) => {
+        switch(error.status){
+          case 400:
+            this.notification.showToast(3, 'Error', error.error , 3000);
+            break;
+
+          default:
+            this.notification.showToast(3, 'Error', `Error desconocido en la creacion de la ruta: ${routeName}. Verifique los datos ingresados y vuelva a intentarlo.`, 3000);
+            break;
+        } 
       }
     });
   }

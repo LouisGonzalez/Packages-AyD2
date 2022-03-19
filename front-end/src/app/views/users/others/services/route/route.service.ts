@@ -13,7 +13,7 @@ export class RouteService {
   constructor(private http: HttpClient) { }
 
   createRoute(routeData: any){
-    return this.http.post<any>(global.GLOBAL.url + "/route", routeData);
+    return this.http.post<any>(global.GLOBAL.url + "routes", routeData);
   }
 
   public getRoutes(pattern: string):Observable<Route[]>{

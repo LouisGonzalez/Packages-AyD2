@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gt.interpackage.model;
 
 import javax.persistence.Column;
@@ -10,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 /**
  *
  * @author bryan
@@ -32,6 +27,8 @@ public class Destination {
     @Column (scale = 2, nullable = false)
     private Double fee;
 
+    public Destination(){}
+    
     public Destination(Long id, String name, String description, Double fee) {
         this.id = id;
         this.name = name;
