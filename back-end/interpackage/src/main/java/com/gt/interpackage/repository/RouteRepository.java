@@ -26,5 +26,15 @@ public interface RouteRepository extends JpaRepository<Route, Long>{
      * @param name
      * @return True o false.
      */
-    public boolean existsRouteByName(String name); 
+    public boolean existsRouteByName(String name);
+    
+    /**
+     * Metodo que consulta desde la base de datos si existe una ruta con el nombre 
+     * que se recibe como parametro y cuyo id no sea igual al que se recibe como 
+     * segundo parametro.
+     * @param name
+     * @param id
+     * @return 
+     */
+    public boolean existsRouteByNameAndIdIsNot(String name, Long id);
 }

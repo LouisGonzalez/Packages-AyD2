@@ -95,7 +95,8 @@ const routes: Routes = [
       },
       {
         path: 'edit-route/:id',
-        component: EditRouteComponent
+        component: EditRouteComponent,
+        canActivate: [AdminGuard]
       }
     ]
   }

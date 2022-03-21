@@ -33,9 +33,7 @@ export class EditRouteComponent implements OnInit {
   data: any;
 
   routeId: number;
-  packagesOnRoute: number;
-  totalPackages: number;
-
+  
   //Fomulario reactivo
   formRoute: FormGroup = new FormGroup({
     name: new FormControl(null, Validators.required),
@@ -63,13 +61,11 @@ export class EditRouteComponent implements OnInit {
     this.routeService.getRoute(this.routeId).subscribe({
       next:(res) => {
         this.formRoute.controls['name'].setValue(res.name);
-        this.formRoute.controls['destination'].setValue(res.destinationId);          
-        this.formRoute.controls['destinationId'].setValue(res.destinationId);
+        this.formRoute.controls['destination'].setValue(res.destination.name);          
+        this.formRoute.controls['destinationId'].setValue(res.destination.id);
         this.formRoute.controls['active'].setValue(res.active);
-        this.destinationLabel.nativeElement.innerHTML = res.destinationId;
+        this.destinationLabel.nativeElement.innerHTML = res.destination.name;
         this.activeToggle.nativeElement.checked = Boolean(res.active);
-        this.totalPackages = res.totalPackages;
-        this.packagesOnRoute = res.packagesOnRoute;
       }, 
       error:(err) => {
         this.notification.showToast(3, 'Error', 'Hubo un error obteniendo los datos de la ruta.', 3000);
@@ -107,21 +103,30 @@ export class EditRouteComponent implements OnInit {
    * @param routeDestinationId  Id del destino de la ruta
    */
   private update(routeName: string, routeDestinationId: number, active: boolean){
-    let route : Route = {
-      name: routeName,
-      destinationId: routeDestinationId,
+    let route = {
+      id: this.routeId,
+      name: routeName, 
       active: active,
-      packagesOnRoute: this.packagesOnRoute,
-      totalPackages: this.totalPackages
-    };
-    this.routeService.putRoute(route, this.routeId).subscribe({
+      destination: {
+        id: routeDestinationId
+    }} 
+
+    this.routeService.patchRoute(route).subscribe({
       next : (res) => {
         this.notification.showToast(1, 'Exito', `Ruta ${routeName} modificada exitosamente.`, 5000);
         this.formRoute.reset();
         this.goBack();
       },
-      error : () => {
-        this.notification.showToast(3, 'Error', `Error en la modificacion de la ruta: ${routeName}, vuelva a intentarlo.`, 5000);
+      error : (error) => {
+        switch(error.status){
+          case 400:
+            this.notification.showToast(3, 'Error', error.error , 3000);
+            break;
+
+          default:
+            this.notification.showToast(3, 'Error', `Error desconocido en la creacion de la ruta: ${routeName}. Verifique los datos ingresados y vuelva a intentarlo.`, 3000);
+            break;
+        } 
       }
     });
   }
@@ -174,7 +179,6 @@ export class EditRouteComponent implements OnInit {
 
   public setActiveValue(){
     this.formRoute.controls['active'].setValue(!Boolean(this.formRoute.get('active').value));
-    console.log(this.formRoute.get('active').value);
   }
 
   public goBack() {
