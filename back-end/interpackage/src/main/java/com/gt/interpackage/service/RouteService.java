@@ -96,4 +96,15 @@ public class RouteService {
         routeRepository.delete(route);
     }
     
+    /**
+     * Metodo que llama al repositorio de rutas para buscar
+     * si existe una ruta cuyo id de destino sea igual al que se 
+     * recibe como parametro.
+     * @param destinationId 
+     * @return  True | False
+     */
+    public boolean routeHasDestinationAssigned(Long destinationId){
+        return routeRepository.existsRouteByDestinationId(destinationId);
+    }
+    
 }

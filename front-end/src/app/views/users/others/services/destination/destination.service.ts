@@ -4,6 +4,7 @@ import * as global from '../../../../GLOBAL';
 import { Destination } from '../../models/destination';
 import { Observable } from 'rxjs';
 import { DestinationListTemplate } from '../../models/DestinationListTemplate';
+import { CustomServerDataSource } from '../../models/CustomServerDataSource';
 
 @Injectable({
   providedIn: 'root'
@@ -34,15 +35,36 @@ export class DestinationService {
     return this.http.get<Destination[]>(global.GLOBAL.url + '/destination');
   }
 
-  public getDestination(id: number):Observable<DestinationListTemplate[]>{
-    return this.http.get<DestinationListTemplate[]>(global.GLOBAL.url + '/destination?id=' + id);
+  public getDestination(id: number):Observable<any>{
+    return this.http.get<any>(global.GLOBAL.urlApi + '/destination/' + id);
   }
 
-  setDestination(data : DestinationListTemplate, id : number) {
-    return this.http.put<DestinationListTemplate>(`${global.GLOBAL.url}/destination/` + id, data);
+  public updateDestination(destination: any) {
+    return this.http.patch<any>(`${global.GLOBAL.urlApi}/destination`, destination);
   }
 
   public getDestinationById(id : number) {
     return this.http.get<Destination>(global.GLOBAL.url + "/destination/" + id);
+  }
+
+  /**
+   * datakey: Nombre del array que contiene los datos del servidor
+   * endPoint: URI 
+   * pagerPageKey: Nombre del parametro que representa el numero de pagina en el servidor.
+   * pagerLimitKey: Nombre del parametro que representa la cantidad de elementos por pagina en el servidor.
+   * totalKey: Nombre del atributo que contiene el numero total de elementos.
+   */
+  public getAllDestinationsPaginated() {
+    return new CustomServerDataSource(this.http, {
+      dataKey: 'content',
+      endPoint: global.GLOBAL.urlApi + '/destination/list',
+      pagerPageKey: 'page', 
+      pagerLimitKey: 'size', 
+      totalKey: 'totalElements' 
+    });
+  }
+
+  public deleteDestination(id : number) {
+    return this.http.delete<any>(`${global.GLOBAL.urlApi}/destination/` + id);
   }
 }

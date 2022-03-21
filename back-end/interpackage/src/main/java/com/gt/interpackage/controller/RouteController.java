@@ -110,14 +110,13 @@ public class RouteController {
      @PatchMapping
      public ResponseEntity<Route> updateRoute(@RequestBody Route route){
         try{
-            Route updatedRoute = routeService.getRouteById(route.getId()).get();
-            
             if(route.getName().isBlank() || route.getName().isEmpty() )
                 return new ResponseEntity("Nombre de ruta no valido", HttpStatus.BAD_REQUEST);
             
             if(routeService.exists(route.getName(), route.getId()))
                 return new ResponseEntity("Nombre de ruta ya registrado en el sistema", HttpStatus.BAD_REQUEST);
             
+            Route updatedRoute = routeService.getRouteById(route.getId()).get();
             updatedRoute.setName(route.getName());
             updatedRoute.setActive(route.getActive());
             updatedRoute.setDestination(route.getDestination());

@@ -81,12 +81,12 @@ const routes: Routes = [
       {
         path: 'destinations',
         component: ListDestinationsComponent,
-        canActivate: [AdminGuard]
+        //canActivate: [AdminGuard]
       },
       {
         path: 'edit-destination/:id',
         component: EditDestinationComponent,
-        canActivate: [AdminGuard]
+        //canActivate: [AdminGuard]
       },
       { // views/admin/routes
         path: 'route-list',

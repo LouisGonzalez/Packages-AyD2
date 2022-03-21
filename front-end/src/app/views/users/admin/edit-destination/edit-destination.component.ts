@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DestinationService } from '../../others/services/destination/destination.service';
 import * as global from '../../../GLOBAL';
-import { Destination } from '../../others/models/destination';
 import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 import { NbToastrService } from '@nebular/theme';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { DestinationListTemplate } from '../../others/models/DestinationListTemplate';
 
 @Component({
@@ -53,9 +51,10 @@ export class EditDestinationComponent implements OnInit {
     this.destinationId = Number(this.route.snapshot.paramMap.get('id'));
     this.destinationService.getDestination(this.destinationId).subscribe({
       next:(res) => {
-        this.formDestination.controls['name'].setValue(res[0].name);
-        this.formDestination.controls['description'].setValue(res[0].description);          
-        this.formDestination.controls['fee'].setValue(res[0].fee);
+        console.log(res)
+        this.formDestination.controls['name'].setValue(res.name);
+        this.formDestination.controls['description'].setValue(res.description);          
+        this.formDestination.controls['fee'].setValue(res.fee);
       }, 
         error:(err) => {
           this.notification.showToast(3, 'Error', 'Hubo un error obteniendo los datos del destino seleccionado', 5000);
@@ -78,20 +77,19 @@ export class EditDestinationComponent implements OnInit {
   }
 
   private update(name, rate, description) {
-    let destination : DestinationListTemplate = {
+    let destination  = {
+      id: this.destinationId,
       name: name,
       fee: rate,
       description: description
     };
-     this.destinationService.setDestination(destination, this.destinationId)
-    .subscribe({
+     this.destinationService.updateDestination(destination).subscribe({
       next : (res) => {
         this.notification.showToast(1, 'Actualizado', `Destino ${name}, actualizado exitosamente.`, 5000);
-        this.formDestination.reset();
-        this.router.navigate(['views', 'admin' , 'destinations']);
+        this.onCancel();
       },
-      error : () => {
-        this.notification.showToast(4, 'Error', `Error mientras se actualizaba el destino ${name}, vuelve a intentarlo.`, 5000);
+      error : (error) => {
+        this.notification.showToast(3, 'Error', error.error , 4000);
       }
     });
   }
@@ -100,4 +98,5 @@ export class EditDestinationComponent implements OnInit {
     this.formDestination.reset();
     this.router.navigate(['views', 'admin' , 'destinations']);
   }
+
 }

@@ -18,4 +18,14 @@ public interface DestinationRepository extends JpaRepository<Destination, Long>{
      * @return Listado de destinos obtenidos.
      */
     List<Destination> findByNameStartingWith(String name);
+    
+    /**
+     * Metodo que consulta desde la base de datos si existe un destino con el nombre 
+     * que se recibe como parametro name  y cuyo id no sea igual al que se recibe como 
+     * segundo parametro.
+     * @param name
+     * @param id
+     * @return 
+     */
+    public boolean existsDestinationByNameAndIdIsNot(String name, Long id);
 }
