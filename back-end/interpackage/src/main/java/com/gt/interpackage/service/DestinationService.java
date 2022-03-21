@@ -19,13 +19,12 @@ public class DestinationService {
         return destinationRepository.save(entity);
     }
     
-    
-     /**
-     * Metodo que llama al repositorio de destinos para obtener todas aquellos 
-     * rutas cuyo nombre inicie con el nombre que se recibe como parametro.
-     * @param name
-     * @return Listado de destinos obtenidos. 
-     */
+    /**
+    * Metodo que llama al repositorio de destinos para obtener todas aquellos 
+    * rutas cuyo nombre inicie con el nombre que se recibe como parametro.
+    * @param name
+    * @return Listado de destinos obtenidos. 
+    */
     public List<Destination> findByName(String name){
         return destinationRepository.findByNameStartingWith(name);
     }

@@ -28,6 +28,12 @@ public class Destination {
     private Double fee;
     
     public Destination(){}
+
+    public Destination(String name, String description, Double fee) {
+        this.name = name;
+        this.description = description;
+        this.fee = fee;
+    }
     
     public Destination(Long id, String name, String description, Double fee) {
         this.id = id;
