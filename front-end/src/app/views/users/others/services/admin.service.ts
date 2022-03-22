@@ -12,27 +12,30 @@ export class AdminService {
 
 
   url = GLOBAL.url;
+  urlApi = GLOBAL.urlApi;
   public user = null;
   userSession: any;
   constructor(private httpClient: HttpClient) { }
 
 
-  getAllActivates(): Observable<User[]>{
-    let a = this.httpClient.get<User[]>(`${this.url}/employees?activo=1`);
+  getAllActivates(): Observable<any>{
+    let a = this.httpClient.get(`${this.urlApi}/employee/actives/`);
+    return a;
+  }
+
+  //Falta arreglar
+  getAllDeactivates(): Observable<any>{
+    let a = this.httpClient.get(`${this.urlApi}/employee/deactivates/`);
     return a;
   }
 
   updateUser(user: User){
-    return this.httpClient.put(`${this.url}/employees/${user.id}`, user);
+    return this.httpClient.put(`${this.urlApi}/employee/${user.cui}`, user);
   }
 
-  getAllDeactivates(){
-    let a = this.httpClient.get<User[]>(`${this.url}/employees?activo=0`);
-    return a;
-  }
 
   add(user: User): Observable<any>{
-    return this.httpClient.post(`${this.url}/employees`, user);
+    return this.httpClient.post(`${this.urlApi}/employee/`, user);
   }
 
   getAllRoutes(){

@@ -30,10 +30,6 @@ export class ActivateUsersComponent implements OnInit {
       confirmDelete: true
     },
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
       name: {
         title: 'Nombres',
         type: 'string',
@@ -50,7 +46,7 @@ export class ActivateUsersComponent implements OnInit {
         title: 'E-mail',
         type: 'string',
       },
-      CUI: {
+      cui: {
         title: 'CUI',
         type: 'number',
       },
@@ -67,6 +63,7 @@ export class ActivateUsersComponent implements OnInit {
   getData(){
     this.adminService.getAllDeactivates().subscribe(response => {
       this.users = response;
+      console.log(this.users)
       this.source.load(this.users)
     })
   }
@@ -74,7 +71,7 @@ export class ActivateUsersComponent implements OnInit {
   onDeleteConfirm(event): void {
     if(window.confirm('Estas seguro de activar a este usuario?')){
       this.user = event.data;
-      this.user.activo = 1;
+      this.user.activo = 1
       this.adminService.updateUser(this.user).subscribe(data => {
         this.notification.showToast(1, 'Activado', `Usuario activado con exito`, 2500);
         console.log('empleado desactivo')

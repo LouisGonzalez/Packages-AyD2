@@ -82,11 +82,12 @@
     <label class="label col-sm-3 col-form-label"  for="input-name" >CUI</label>
     <div class="col-sm-9">
       <input nbInput
-           [(ngModel)]="userReceive.CUI"
+           [(ngModel)]="userReceive.cui"
            id="input-cui"
            name="fullName"
            placeholder="Full name"
            autofocus
+           readonly
            fullWidth>
            <!-- Aqui abajo va la condicional de si el fullname no existe -->
       <div *ngIf="userReceive.CUI == null" >

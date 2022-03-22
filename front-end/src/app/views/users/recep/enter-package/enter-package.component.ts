@@ -37,8 +37,8 @@ export class EnterPackageComponent implements OnInit {
   generalTotal: number = 0;
   invoice: Invoice = { id:null, nitClient: null, subTotal: null, total: null, dateEmit: null};
 
-  client: Client[];
-  name: string; lastname: string;
+  client: Client;
+  name: string; lastname: string; address: string;
   age: number; CUI: number; NIT: number;
   nitParameter: number;
 
@@ -68,20 +68,28 @@ export class EnterPackageComponent implements OnInit {
 
   //Busqueda de cliente por NIT
   searchClient(){
+    this.client = null;
     this.recepService.getClient(this.nitParameter).subscribe(result => {
       console.log(this.nitParameter+' asfasdfsdfa');
       this.client = result;
-      if(this.client.length > 0){
-        this.name = this.client[0].name;
-        this.lastname = this.client[0].lastname;
-        this.age = this.client[0].age;
-        this.CUI = this.client[0].CUI;
-        this.NIT = this.client[0].NIT;
+      console.log(this.client)
+      if(this.client != null){
+        this.name = this.client.name;
+        this.lastname = this.client.lastname;
+        this.age = this.client.age;
+        this.CUI = this.client.cui;
+        this.NIT = this.client.nit;
+        this.address = this.client.address;
       } else {
         this.notification.showToast(4, 'Not Found', `El cliente con el NIT: ${this.nitParameter} no existe`, 2500);
         this.openModalClient();
         console.log('no existe el cleinte')
       }
+  },
+  (error) => {
+    this.notification.showToast(4, 'Not Found', `El cliente con el NIT: ${this.nitParameter} no existe`, 2500);
+    this.openModalClient();
+
   })
   }
 
@@ -93,9 +101,9 @@ export class EnterPackageComponent implements OnInit {
           this.name = response.name;
           this.lastname = response.lastname;
           this.age = response.age;
-          this.CUI = response.CUI;
-          this.NIT = response.NIT;
-
+          this.CUI = response.cui;
+          this.NIT = response.nit;
+          this.address = response.address;
         }
       });
   }

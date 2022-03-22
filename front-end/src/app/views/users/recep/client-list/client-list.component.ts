@@ -39,14 +39,18 @@ export class ClientListComponent implements OnInit {
         title: 'Edad',
         type: 'string',
       },
-      CUI: {
+      cui: {
         title: 'CUI',
         type: 'string',
       },
-      NIT: {
+      nit: {
         title: 'NIT',
         type: 'number',
       },
+      address: {
+        title: 'Direccion',
+        type: 'string'
+      }
 
     },
 

@@ -15,24 +15,25 @@ import { PackageInformation } from '../models/PackageInformation';
 export class RecepService {
 
   url = GLOBAL.url;
+  urlApi = GLOBAL.urlApi;
   public client = null;
 
   constructor(private httpClient: HttpClient) { }
 
 
   //Querys relacionadas a clientes
-  getAllClients(): Observable<Client[]>{
-    let a = this.httpClient.get<Client[]>(`${this.url}/clients`);
+  getAllClients(): Observable<any>{                                   //LISTO
+    let a = this.httpClient.get(`${this.urlApi}/client/`);
     return a;
   }
 
-  getClient(nit: number): Observable<Client[]>{
-    let a = this.httpClient.get<Client[]>(`${this.url}/clients?NIT=${nit}`);
+  getClient(nit: number): Observable<any>{                            //LISTO
+    let a = this.httpClient.get(`${this.urlApi}/client/${nit}`);
     return a;
   }
 
-  addClient(client: Client): Observable<any>{
-    return this.httpClient.post(`${this.url}/clients`, client);
+  addClient(client: Client): Observable<any>{                         //LISTO
+    return this.httpClient.post(`${this.urlApi}/client/`, client);
   }
 
   //Querys relacionadas a destinos
@@ -88,7 +89,7 @@ export class RecepService {
    * requeridos, se debe de modificar la uri cuando ya se tenga la implementacion
    * en el backen.
    * @param packageId Id del paquete a obtener informacion.
-   * @returns 
+   * @returns
    */
   public getPackageInfo(packageId: number): Observable<PackageInformation>{
     return this.httpClient.get<PackageInformation>(`${this.url}/packages/${packageId}`);

@@ -36,9 +36,14 @@ public class EmployeeController {
     @Autowired
     private EmployeeRepository _empRepository;
     
-    @GetMapping("/")
+    @GetMapping("/actives/")
     public ResponseEntity<List<Employee>> getAllEmployees(){
-        return ResponseEntity.ok(_employeeService.findAll());
+        return ResponseEntity.ok(_employeeService.findAllActivates());
+    }
+    
+    @GetMapping("/deactivates/")
+    public ResponseEntity<List<Employee>> getAllDeactivatesEmployess(){
+        return ResponseEntity.ok(_employeeService.findAllDeactivates());
     }
     
     @PostMapping ("/")
@@ -46,7 +51,7 @@ public class EmployeeController {
         try{
             Employee savedEmp = _employeeService.save(emp);
             return ResponseEntity.created(
-            new URI("/employee/"+savedEmp.getCui()))
+            new URI("/employee/"+savedEmp.getCUI()))
                     .body(savedEmp);
         } catch(Exception e){
             return ResponseEntity.badRequest().build(); //404 Bad Request

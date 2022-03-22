@@ -26,9 +26,9 @@ export class RegisterUserComponent implements OnInit {
     lastname: new FormControl('', [ Validators.required ]),
     password: new FormControl('', [ Validators.required, Validators.minLength(7) ]),
     repitPassword: new FormControl('', [ Validators.required, Validators.minLength(7) ]),
-    CUI: new FormControl('', [ Validators.required ]),
+    cui: new FormControl('', [ Validators.required ]),
     type: new FormControl('', [ Validators.required ]),
-    active: new FormControl(''),
+    activo: new FormControl(''),
     email: new FormControl('', [ Validators.required, Validators.email ]),
 //    id: new FormControl('')
   })
@@ -43,7 +43,7 @@ export class RegisterUserComponent implements OnInit {
   constructor(private adminService: AdminService, private router: Router, private toastrService: NbToastrService) { }
 
   submit(){
-    this.form.value.active = 1;
+    this.form.value.activo = 1;
     console.log(this.form.value)
     if(this.form.valid){
       this.user = this.form.value;
