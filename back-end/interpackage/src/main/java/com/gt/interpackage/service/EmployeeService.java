@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gt.interpackage.service;
 
 import com.gt.interpackage.repository.EmployeeRepository;
@@ -11,9 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.gt.interpackage.model.Employee;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 /**
  *
  * @author Luis
@@ -52,6 +48,17 @@ public class EmployeeService {
             emp.setPassword(entity.getPassword());
             return _empRepository.save(emp);
         } return null;
+    }
+    
+    /**
+     * Metodo que llama al repositorio de empleados para obtener todos aquellos 
+     * empleados cuyo CUI inicie con el patron que se recibe como parametro.
+     * @param cui
+     * @param employeeType
+     * @return Listado de rutas obtenidas. 
+     */
+    public Optional<List<Employee>> getAllOperatorsByCUI(String cui, Integer employeeType){
+        return _empRepository.findByCuiContainsAndEmployeeTypeIs(cui, employeeType);
     }
     
 }

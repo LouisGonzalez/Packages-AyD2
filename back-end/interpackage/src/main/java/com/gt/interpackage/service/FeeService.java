@@ -34,6 +34,7 @@ public class FeeService {
             return null;
         }
     }
+   
     
     public <S extends Fee> S save(S entity) {
         return feeRepository.save(entity);

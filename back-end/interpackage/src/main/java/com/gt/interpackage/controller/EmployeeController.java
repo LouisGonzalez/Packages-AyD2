@@ -1,16 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gt.interpackage.controller;
 
 import com.gt.interpackage.model.Employee;
 import com.gt.interpackage.repository.EmployeeRepository;
 import com.gt.interpackage.service.EmployeeService;
+import com.gt.interpackage.service.EmployeeTypeService;
 import com.gt.interpackage.source.Constants;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +33,8 @@ public class EmployeeController {
     private EmployeeService _employeeService;
     
     @Autowired
-    private EmployeeRepository _empRepository;
-    
+    private EmployeeTypeService employeeTypeService;
+        
     @GetMapping("/")
     public ResponseEntity<List<Employee>> getAllEmployees(){
         return ResponseEntity.ok(_employeeService.findAll());
@@ -65,6 +64,25 @@ public class EmployeeController {
                         .build();
         } catch(Exception e){
             return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+      /**
+     * Metodo que realiza una llamada al servicio de empleados para obtener todos los 
+     * operadores cuyo cui inicie con el nombre que se recibe como parametro.
+     * @param cui
+     * @return Listado de rutas encontradas | Error 400
+     */
+    @CrossOrigin
+    @GetMapping(value ="/search-by-cui/{cui}")
+    public ResponseEntity<List<Employee>> getOperatorsByCUI(@PathVariable String cui){
+        try{
+            Long operatorTypeId = employeeTypeService.getEmployeeType("operator").getId();
+            Optional<List<Employee>> operators = _employeeService.getAllOperatorsByCUI(cui, Integer.valueOf(operatorTypeId.toString()));
+            return  ResponseEntity.ok(operators.get());   
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
     

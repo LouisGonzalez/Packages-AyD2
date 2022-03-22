@@ -9,6 +9,7 @@ import com.gt.interpackage.model.Route;
 import com.gt.interpackage.service.CheckpointService;
 import com.gt.interpackage.source.Constants;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -154,6 +155,23 @@ public class RouteController {
         return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
       }
     }
+    
+    /**
+     * Metodo que realiza una llamada al servicio de rutas para obtener todas las 
+     * rutas cuyo nombre inicie con el nombre que se recibe como parametro.
+     * @param name
+     * @return Listado de rutas encontradas | Error 400
+     */
+    @CrossOrigin
+    @GetMapping(value ="/search-by-name/{name}")
+    public ResponseEntity<List<Route>> getRoutesByName(@PathVariable String name){
+        try{
+            return ResponseEntity.ok(routeService.getAllByName(name).get());
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+    
      
 }
     
