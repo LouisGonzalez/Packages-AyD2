@@ -51,7 +51,7 @@ const routes: Routes = [
       {
         path: 'create-checkpoint',
         component: CreateCheckpointComponent,
-        //canActivate: [AdminGuard]
+        canActivate: [AdminGuard]
       },
       {
         path: 'activate-users',
