@@ -177,7 +177,7 @@ public class DestinationController {
                         Destination savedDestination = destinationService.save(destination);
                         return ResponseEntity
                                 .created (
-                                        new URI("/fee/" + savedDestination.getId()))
+                                        new URI("/destination/" + savedDestination.getId()))
                                 .body(savedDestination);
                     }
                 }
