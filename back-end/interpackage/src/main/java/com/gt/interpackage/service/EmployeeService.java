@@ -20,8 +20,12 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository _empRepository;
     
-    public List<Employee> findAll(){
-        return _empRepository.findAll();
+    public List<Employee> findAllActivates(){
+        return _empRepository.getAllActivates();
+    }
+    
+    public List<Employee> findAllDeactivates(){
+        return _empRepository.getAllDeactivates();
     }
     
     public Employee getByCUI(Long CUI) throws Exception {
@@ -35,17 +39,23 @@ public class EmployeeService {
     }
         
     public <S extends Employee> S save(S entity){
-        return _empRepository.save(entity);
+        try {
+        return _empRepository.save(entity);            
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        return null;
     }
     
     public <S extends Employee> Employee update(S entity, Long CUI) throws Exception{
         Employee emp = getByCUI(CUI);
         if(emp != null){
             emp.setEmail(entity.getEmail());
-            emp.setEmployeeType(entity.getEmployeeType());
-            emp.setLastName(entity.getLastName());
+            emp.setType(entity.getType());
+            emp.setLastname(entity.getLastname());
             emp.setName(entity.getName());
             emp.setPassword(entity.getPassword());
+            emp.setActivo(entity.getActivo());
             return _empRepository.save(emp);
         } return null;
     }

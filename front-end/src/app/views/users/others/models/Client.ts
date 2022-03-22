@@ -5,4 +5,7 @@ export interface Client {
   CUI: number;
   NIT: number;
   id: number;
+  cui: number;
+  nit: number;
+  address: string;
 }

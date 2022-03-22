@@ -5,6 +5,7 @@ import com.gt.interpackage.service.DestinationService;
 import com.gt.interpackage.service.RouteService;
 import com.gt.interpackage.source.Constants;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +43,9 @@ public class DestinationController {
     @PostMapping ("/")
     public ResponseEntity<Destination> addDestination(@RequestBody Destination destination) {
         try { 
-            Destination savedFee = destinationService.save(destination);
-            return ResponseEntity.created(
-                    new URI("/destination/" + savedFee.getId()))
-                    .body(savedFee);
+            return service(destination, false, null);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build(); // 400 Bad Request
+            return ResponseEntity.internalServerError().build(); // 400 Bad Request
         }
     }
     
@@ -155,5 +153,36 @@ public class DestinationController {
             System.out.println(e.getMessage());
         return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
       }
+    }
+
+        
+    public ResponseEntity<Destination> service(Destination destination, boolean update, Long id) throws URISyntaxException, Exception {
+        if (destination != null) {
+            if (destination.getFee() == null || destination.getName() == null || destination.getName().isEmpty() || destination.getName().isBlank()) {
+                return ResponseEntity
+                        .badRequest()
+                        .header("Error", "Todos los campos son obligatorios.")
+                        .build();
+            } else {
+                if (destination.getFee() < 0) {
+                     return ResponseEntity
+                        .badRequest()
+                        .header("Error", "La tarifa debe de ser mayor a 0.")
+                        .build();
+                } else {
+                    if (update) {
+                        // Agregar metodo para el update
+                        return null;
+                    } else {
+                        Destination savedDestination = destinationService.save(destination);
+                        return ResponseEntity
+                                .created (
+                                        new URI("/fee/" + savedDestination.getId()))
+                                .body(savedDestination);
+                    }
+                }
+            }
+        } 
+        return ResponseEntity.badRequest().build();
     }
 }

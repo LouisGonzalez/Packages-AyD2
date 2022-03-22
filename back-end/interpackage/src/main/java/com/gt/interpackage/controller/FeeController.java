@@ -4,6 +4,7 @@ import com.gt.interpackage.model.Fee;
 import com.gt.interpackage.service.FeeService;
 import com.gt.interpackage.source.Constants;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -50,28 +51,54 @@ public class FeeController {
     @PostMapping ("/") 
     public ResponseEntity<Fee> addFee(@RequestBody Fee fee) {
         try { 
-            Fee savedFee = feeService.save(fee);
-            return ResponseEntity.created(
-                    new URI("/fee/" + savedFee.getId()))
-                    .body(savedFee);
+            return service(fee, false, null);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build(); // 400 Bad Request
+            return ResponseEntity.internalServerError().build(); // 400 Bad Request
         }
     }
     
     @PutMapping ("/{id}")
     public ResponseEntity<Fee> updateFee(@RequestBody Fee update, @PathVariable Long id) {
         try {
-            Fee fee = feeService.update(update, id);
-            return fee != null ?
-                    ResponseEntity.ok(fee) :    // 200 OK 
-                    ResponseEntity              // 404 Not Found
-                        .notFound()
-                        .header("Error", "No se encuentra registrado una tarifa con el ID: " + id)
-                        .build();
+            return service(update, true, id);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
+    }
+    
+    public ResponseEntity<Fee> service(Fee fee, boolean update, Long id) throws URISyntaxException, Exception {
+        if (fee != null) {
+            if (fee.getFee() == null || fee.getName() == null || fee.getName().isEmpty() || fee.getName().isBlank()) {
+                return ResponseEntity
+                        .badRequest()
+                        .header("Error", "Todos los campos son obligatorios.")
+                        .build();
+            } else {
+                if (fee.getFee() < 0) {
+                     return ResponseEntity
+                        .badRequest()
+                        .header("Error", "La tarifa debe de ser mayor a 0.")
+                        .build();
+                } else {
+                    if (update) {
+                        Fee updatedFee = feeService.update(fee, id);
+                        return updatedFee != null ?
+                                ResponseEntity.ok(updatedFee) :    // 200 OK 
+                                ResponseEntity              // 404 Not Found
+                                    .notFound()
+                                    .header("Error", "No se encuentra registrado una tarifa con el ID: " + id)
+                                    .build();
+                    } else {
+                        Fee savedFee = feeService.save(fee);
+                        return ResponseEntity
+                                .created (
+                                        new URI("/fee/" + savedFee.getId()))
+                                .body(savedFee);
+                    }
+                }
+            }
+        } 
+        return ResponseEntity.badRequest().build();
     }
     
 }

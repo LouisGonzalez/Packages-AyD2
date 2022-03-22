@@ -12,6 +12,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long>{
+
+    @Query(value = "SELECT * FROM employee e WHERE e.activo = true", nativeQuery = true)
+    List<Employee> getAllActivates();
     
     /**
      * Metodo que obtiene y retorna desde la base de datos todos los empleados
@@ -22,6 +25,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>{
      * @return Listado
      */
     
-    @Query(value = "SELECT * FROM Employee WHERE CAST(cui AS TEXT) LIKE ?1% AND employeetype = ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM Employee WHERE CAST(cui AS TEXT) LIKE ?1% AND type = ?2", nativeQuery = true)
     public Optional<List<Employee>> findByCuiContainsAndEmployeeTypeIs(String cui, Integer employeeType);
+
+    @Query(value = "SELECT * FROM employee e WHERE e.activo = false", nativeQuery = true)
+    List<Employee> getAllDeactivates();
+
 }

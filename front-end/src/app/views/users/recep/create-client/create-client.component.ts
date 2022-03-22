@@ -37,8 +37,9 @@ export class CreateClientComponent implements OnInit {
     name: new FormControl(''),
     lastname: new FormControl(''),
     age: new FormControl(''),
-    CUI: new FormControl(''),
-    NIT: new FormControl('')
+    cui: new FormControl(''),
+    nit: new FormControl(''),
+    address: new FormControl('')
   })
 
   client: Client;

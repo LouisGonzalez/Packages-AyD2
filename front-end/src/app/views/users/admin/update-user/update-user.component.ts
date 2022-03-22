@@ -53,7 +53,7 @@ export class UpdateUserComponent implements OnInit {
 
   updateInformation(){
     for(let i = 0; i < this.users.length; i++){
-      if(this.users[i].id == this.userReceive.id){
+      if(this.users[i].cui == this.userReceive.cui){
         this.users[i] = this.userReceive;
       }
       break;

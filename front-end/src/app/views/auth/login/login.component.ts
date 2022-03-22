@@ -6,6 +6,8 @@ import { NbLoginComponent } from '@nebular/auth'
 import { User } from '../others/models/employee';
 import { LoginService } from '../others/services/login.service';
 import * as global from '../../GLOBAL';
+import { NbToastrService } from '@nebular/theme';
+import { NotificationsComponent } from '../../users/others/source/notifications/notifications.component';
 @Component({
   selector: 'ngx-login',
   templateUrl: './login.component.html',
@@ -24,11 +26,13 @@ export class LoginComponent implements OnInit {
   })
   username: string = "";
   password: string = "";
-user: User[];
+  user: User;
   public identity: any;
   public token: any;
 
-  constructor(private router: Router, private loginService: LoginService){}
+  notification: NotificationsComponent;
+
+  constructor(private router: Router, private loginService: LoginService, private toastrService: NbToastrService){}
 
   submit(){
     if(this.form.valid){
@@ -40,20 +44,26 @@ user: User[];
 
   private validateLogin(user: User){
     this.loginService.login(user.username, user.password).subscribe(response => {
-      this.user = response;
-      if(this.user.length > 0){
-        localStorage.setItem('user', JSON.stringify(this.user[0]));
-        if(this.user[0].type == 1){
-          //Admin
-          this.router.navigate(['/views/users/admin'])
-        } else if(this.user[0].type == 2){
-          //Operario
-          this.router.navigate(['/views/users/operator'])
-        } else if(this.user[0].type == 3){
-          //Recepcionista
-          this.router.navigate(['/views/users/recep'])
-        }
+      this.token = response.token;
+      console.log(this.token);
+      this.user = response.employee;
+      console.log(this.user)
+      localStorage.setItem('user', JSON.stringify(this.user));
+      localStorage.setItem('token', this.token);
+      this.loginService.setUserSesion(true);
+      if(this.user.type == 1){
+         //Admin
+        this.router.navigate(['/views/users/admin'])
+      } else if(this.user.type == 2){
+        //Operario
+        this.router.navigate(['/views/users/operator'])
+      } else if(this.user.type == 3){
+        //Recepcionista
+        this.router.navigate(['/views/users/recep'])
       }
+    },
+    (error) => {
+      this.notification.showToast(4, 'Error', `Credenciales invalidas`, 2500);
     })
   }
 
@@ -61,6 +71,7 @@ user: User[];
 
 
   ngOnInit(): void {
+    this.notification = new NotificationsComponent(this.toastrService);
   }
 
 }

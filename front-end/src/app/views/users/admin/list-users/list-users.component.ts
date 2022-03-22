@@ -36,10 +36,6 @@ export class ListUsersComponent implements OnInit {
       confirmDelete: true,
     },
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
       name: {
         title: 'Nombres',
         type: 'string',
@@ -56,7 +52,7 @@ export class ListUsersComponent implements OnInit {
         title: 'E-mail',
         type: 'string',
       },
-      CUI: {
+      cui: {
         title: 'CUI',
         type: 'number',
       },
@@ -74,7 +70,7 @@ export class ListUsersComponent implements OnInit {
   getData(){
     this.adminService.getAllActivates().subscribe(response => {
       this.users = response;
-      console.log(this.users[0].username);
+      console.log(this.users)
       this.source.load(this.users)
     })
   }
@@ -92,17 +88,6 @@ export class ListUsersComponent implements OnInit {
   }
 
   onDeleteConfirm(event): void {
-    // if (window.confirm('Estas seguro de desactivar a este usuario?')) {
-    //   this.user = event.data;
-    //   this.user.activo = 0;
-    //   this.adminService.updateUser(this.user).subscribe(data => {
-    //     console.log('empleado desactivado')
-    //     this.getData();
-    //   })
-
-    // } else {
-    //   event.confirm.reject();
-    // }
     const dynamicComponentFactory = this.componentFactoryResolver.resolveComponentFactory(UpdateUserComponent);
     const componentRef = this.container.createComponent(dynamicComponentFactory);
     componentRef.instance.userReceive = event.data;

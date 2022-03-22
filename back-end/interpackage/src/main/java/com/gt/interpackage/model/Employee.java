@@ -20,13 +20,13 @@ import javax.persistence.Table;
 public class Employee {
     
     @Id
-    private Long cui;
+    private Long CUI;
     
     @Column (nullable = false, length = 75)
     private String name;
     
     @Column (nullable = false, length = 75)
-    private String lastName;
+    private String lastname;
     
     @Column (nullable = false, length = 75)
     private String username;
@@ -35,34 +35,45 @@ public class Employee {
     private String email;
     
     @Column (nullable = false)
-    private Integer employeeType;
+    private Integer type;
     
     @Column (nullable = false, length = 60)
-    @JsonDeserialize (using = BCryptPasswordDeserializer.class)
+    //@JsonDeserialize (using = BCryptPasswordDeserializer.class)
     private String password;
     
     public Employee() { }
 
     @Column (nullable = false)
-    private Boolean active;
+    private Boolean activo;
     
-    public Employee(Long cui, String name, String lastName, Integer employeeType, String password, String email, String username, Boolean active) {
-        this.cui = cui;
+    public Employee(Long CUI, String name, String lastname, Integer type, String password, String email, String username, Boolean activo) {
+        this.CUI = CUI;
         this.name = name;
-        this.lastName = lastName;
-        this.employeeType = employeeType;
+        this.lastname = lastname;
+        this.type = type;
         this.password = password;
         this.username = username;
         this.email = email;
-        this.active = active;
+        this.activo = activo;
     }
     
-    public Long getCui() {
-        return cui;
+    public Employee(String name, String lastname, Integer type, String password, String email, String username, Boolean activo) {
+        this.name = name;
+        this.lastname = lastname;
+        this.type = type;
+        this.password = password;
+        this.username = username;
+        this.email = email;
+        this.activo = activo;
+    }
+    
+    
+    public Long getCUI() {
+        return CUI;
     }
 
-    public void setCui(Long cui) {
-        this.cui = cui;
+    public void setCUI(Long CUI) {
+        this.CUI = CUI;
     }
 
     public String getName() {
@@ -73,20 +84,20 @@ public class Employee {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public Integer getEmployeeType() {
-        return employeeType;
+    public Integer getType() {
+        return type;
     }
 
-    public void setEmployeeType(Integer employeeType) {
-        this.employeeType = employeeType;
+    public void setType(Integer employeeType) {
+        this.type = employeeType;
     }
 
     public String getPassword() {
@@ -113,12 +124,12 @@ public class Employee {
         this.email = email;
     }
 
-    public Boolean getActive(){
-        return active;
+    public Boolean getActivo(){
+        return activo;
     }
     
-    public void setActive(Boolean active){
-        this.active = active;
+    public void setActivo(Boolean activo){
+        this.activo = activo;
     }
     
 }
