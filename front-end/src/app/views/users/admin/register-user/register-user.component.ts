@@ -43,7 +43,8 @@ export class RegisterUserComponent implements OnInit {
   constructor(private adminService: AdminService, private router: Router, private toastrService: NbToastrService) { }
 
   submit(){
-    this.form.value.active = 1;
+    console.log(this.form.value)
+    /*this.form.value.active = 1;
     console.log(this.form.value)
     if(this.form.valid){
       this.user = this.form.value;
@@ -61,7 +62,7 @@ export class RegisterUserComponent implements OnInit {
       )
     } else {
       console.log('error form no valido');
-    }
+    }*/
   }
 
   pruebas(){

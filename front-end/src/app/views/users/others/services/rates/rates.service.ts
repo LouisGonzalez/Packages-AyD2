@@ -17,7 +17,7 @@ export class RatesService {
   }
 
   public getOperationFee(): Observable<Rate[]>{
-    return this.http.get<Rate[]>(global.GLOBAL.url + "/rates?id=1")
+    return this.http.get<Rate[]>(global.GLOBAL.urlApi + "/fee/")
   }
 
   getRates(){

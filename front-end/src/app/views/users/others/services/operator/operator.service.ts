@@ -12,7 +12,7 @@ export class OperatorService {
   constructor(private http: HttpClient) { }
 
   public getOperators(pattern: string):Observable<Operator[]>{
-    return this.http.get<Operator[]>(global.GLOBAL.querysUrl + "operator?cui="+pattern);
+    return this.http.get<Operator[]>(global.GLOBAL.urlApi + "/employee/search-by-cui/"+pattern);
   }
 
   public processPackage(packageCheckpointId, data: any ){

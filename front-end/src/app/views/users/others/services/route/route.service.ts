@@ -18,7 +18,7 @@ export class RouteService {
   }
 
   public getRoutes(pattern: string):Observable<Route[]>{
-    return this.http.get<Route[]>(global.GLOBAL.querysUrl + "route?name="+pattern);
+    return this.http.get<Route[]>(global.GLOBAL.urlApi + "/route/search-by-name/"+pattern);
   }
 
   getAllRoutes() {

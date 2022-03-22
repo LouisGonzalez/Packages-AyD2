@@ -5,10 +5,7 @@ import { RouteService } from '../../others/services/route/route.service';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import {
-  NbComponentStatus,
-  NbGlobalPhysicalPosition,
   NbToastrService,
-  NbToastrConfig
 } from '@nebular/theme';
 import { OperatorService } from '../../others/services/operator/operator.service';
 import { RatesService } from '../../others/services/rates/rates.service';
@@ -83,7 +80,7 @@ export class CreateCheckpointComponent implements OnInit {
     this.notification = new NotificationsComponent(this.toastService);
     this.ratesService.getOperationFee().subscribe(
       (response) => {
-        this.globalOperationFee = response[0].fee;
+        this.setGlobalOperationFee(response)
         this.rateInput.nativeElement.value = this.globalOperationFee;
         this.formCheckpoint.get('fee').setValue(this.globalOperationFee);
         this.notification.showToast(
@@ -98,6 +95,13 @@ export class CreateCheckpointComponent implements OnInit {
       } 
     );
   }    
+
+  private setGlobalOperationFee(fees){
+    for (const iterator of fees) {
+      if (iterator['name'] === 'Tarifa por operación') 
+        this.globalOperationFee = iterator['fee']
+    }
+  }
 
   /**
    * Procedimiento que valida que el form sea valido, de ser 
