@@ -24,7 +24,7 @@ public class Client {
     private String name;
     
     @Column (nullable = false, length = 75)
-    private String lastName;
+    private String lastname;
     
     @Column (nullable = true)
     private Integer age;
@@ -37,10 +37,10 @@ public class Client {
     
      public Client() { }
     
-    public Client(Long cui, String name, String lastName, Integer age, Integer nit, String address) {
+    public Client(Long cui, String name, String lastname, Integer age, Integer nit, String address) {
         this.cui = cui;
         this.name = name;
-        this.lastName = lastName;
+        this.lastname = lastname;
         this.age = age;
         this.nit = nit;
         this.address = address;
@@ -62,12 +62,12 @@ public class Client {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public Integer getAge() {

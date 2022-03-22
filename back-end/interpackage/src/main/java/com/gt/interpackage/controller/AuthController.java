@@ -50,7 +50,7 @@ public class AuthController {
             System.out.println("Hola mundo");
             empLogg = _authService.login(empRequest.getUsername(), empRequest.getPassword());
             if(empLogg != null){
-                String tokenJwt = _jwtUtil.create(String.valueOf(empLogg.getCui()), empLogg.getUsername());
+                String tokenJwt = _jwtUtil.create(String.valueOf(empLogg.getCUI()), empLogg.getUsername());
                 Auth authUser = new Auth(tokenJwt, empLogg);
                 return authUser != null ?
                         ResponseEntity.ok(authUser) :

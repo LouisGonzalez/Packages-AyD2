@@ -15,7 +15,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuthRepository extends JpaRepository<Employee, Long>{
     
-    @Query(value = "SELECT e FROM Employee e WHERE e.username = ?1 AND e.password = ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM employee e WHERE e.username = ?1 AND e.password = ?2", nativeQuery = true)
+   // @Query(value = "SELECT * FROM employee e WHERE e.username = 'luis123'", nativeQuery = true)
     Employee findByLogin(String username, String password);
     
 }
