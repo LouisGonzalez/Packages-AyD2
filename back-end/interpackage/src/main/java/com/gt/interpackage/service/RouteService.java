@@ -43,8 +43,18 @@ public class RouteService {
      * @param name
      * @return True o False. 
      */
-    public boolean exists(String name){
+    public boolean existsById(String name){
         return routeRepository.existsRouteByName(name);
+    }
+    
+    /**
+     * Metodo que llama al repositorio de rutas para consultar si existe una
+     * ruta cuyo id sea el  parametro que se recibe.
+     * @param id
+     * @return True o False. 
+     */
+    public boolean existsById(Long id){
+        return routeRepository.existsById(id);
     }
     
     /**
@@ -54,7 +64,7 @@ public class RouteService {
      * @param name
      * @return True o False. 
      */
-    public boolean exists(String name, Long id){
+    public boolean existsAndIdIsNot(String name, Long id){
         return routeRepository.existsRouteByNameAndIdIsNot(name, id);
     }
     

@@ -47,16 +47,16 @@ public class RouteController {
      */
     @CrossOrigin
     @PostMapping
-    private ResponseEntity<Route> createRoute(@RequestBody Route route){
+    public ResponseEntity<Route> createRoute(@RequestBody Route route){
         try{
-            if(routeService.exists(route.getName()))
+            if(routeService.existsById(route.getName()))
                 return new ResponseEntity("Nombre de ruta ya registrado en el sistema", HttpStatus.BAD_REQUEST);
                 
             if(route.getName().isBlank() || route.getName().isEmpty() )
                 return new ResponseEntity("Nombre de ruta no valido", HttpStatus.BAD_REQUEST);
                 
             Route tempRoute = routeService.create(route);
-            return ResponseEntity.created(new URI("/routes/"+tempRoute.getId())).body(tempRoute);
+            return ResponseEntity.created(new URI("/route/"+tempRoute.getId())).body(tempRoute);
         } catch(Exception e){
             return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -114,10 +114,13 @@ public class RouteController {
             if(route.getName().isBlank() || route.getName().isEmpty() )
                 return new ResponseEntity("Nombre de ruta no valido", HttpStatus.BAD_REQUEST);
             
-            if(routeService.exists(route.getName(), route.getId()))
+            if(routeService.existsAndIdIsNot(route.getName(), route.getId()))
                 return new ResponseEntity("Nombre de ruta ya registrado en el sistema", HttpStatus.BAD_REQUEST);
             
-            Route updatedRoute = routeService.getRouteById(route.getId()).get();
+           Route updatedRoute = routeService.getRouteById(route.getId()).get();
+            if(updatedRoute.getPackagesOnRoute() > 0)
+                return new ResponseEntity("No se puede eliminar una ruta que contiene paquetes en ruta.", HttpStatus.BAD_REQUEST);
+            
             updatedRoute.setName(route.getName());
             updatedRoute.setActive(route.getActive());
             updatedRoute.setDestination(route.getDestination());

@@ -18,4 +18,6 @@ public interface CheckpointRepository extends JpaRepository<Checkpoint, Long>{
      */
     public boolean existsCheckpointByRouteId(Long routeId);
     
+    public boolean existsCheckpointByRouteIdAndDescription(Long routeId, String description);
+    
 }
