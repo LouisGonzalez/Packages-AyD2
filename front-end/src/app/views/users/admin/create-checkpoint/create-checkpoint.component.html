@@ -120,11 +120,11 @@
               size="small">
                 <nb-list>
                   <nb-list-item 
-                    (click)="setOperator(item.cui, item.name, item.surname)" 
+                    (click)="setOperator(item.cui, item.name, item.lastname)" 
                     *ngFor="let item of operatorsData | async"
                     (mouseenter)="setHoverBorder($event)"
                     (mouseleave)="setHoverBorder($event)">
-                      {{item.name +' ' +item.surname}}
+                      {{item.name +' ' +item.lastname}}
                       <br>
                       {{item.cui}}
                   </nb-list-item>

@@ -135,18 +135,23 @@ export class CreateCheckpointComponent implements OnInit {
       description: checkpointName, 
       queueCapacity: queueCapacity,
       operationFee: fee,
-      packageOnQueue: 0,
-      assignedOperator: operatorCUI,
-      route: routeId,
-      active: true
+      packagesOnQueue: 0,
+      active: true,
+      assignedOperator: {
+        cui: operatorCUI
+      },
+      route: {
+        id: routeId
+      }
+      
     }).subscribe({
       next : (res) => {
         this.notification.showToast(1, 'Exito', `Punto de Control ${checkpointName} creado exitosamente.`, 5000);
         this.formCheckpoint.reset();
         this.router.navigate([this.ADMIN_HOME]);
       },
-      error : () => {
-        this.notification.showToast(3, 'Error', `Error en la creacion del Punto de Control ${checkpointName}, vuelva a intentarlo.`, 5000);
+      error : (error) => {
+        this.notification.showToast(3, 'Error', error.error, 5000);
       }
     });
   }
