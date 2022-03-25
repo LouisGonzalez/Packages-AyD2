@@ -16,10 +16,6 @@ export class CheckpointsService {
     return this.http.get<User[]>(`${global.GLOBAL.url}/employees?activo=1&type=2`)
   }
 
-  getOperator(id : number) {
-    return this.http.get<any>(`${global.GLOBAL.url}/employees?activo=1&type=2&id=${id}`)
-  }
-
   getAllCheckpoints() {
     return this.http.get<CheckpointListTemplate[]>(`${global.GLOBAL.url}/checkpoints/`)
   }
@@ -50,7 +46,11 @@ export class CheckpointsService {
   }
 
   putCheckpoint(data : CheckpointListTemplate, id : number) {
-    return this.http.put<any>(`${global.GLOBAL.urlApi}/checkpoint/` + id, data);
+    return this.http.put<any>(`${global.GLOBAL.urlApi}/checkpoint/update/` + id, data);
+  }
+
+  putOperatorCheckpoint(data : CheckpointListTemplate, id : number) {
+    return this.http.put<any>(`${global.GLOBAL.urlApi}/checkpoint/operator/` + id, data);
   }
 
   public deleteCheckpoint(id : number) {

@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 import { NbToastrService } from '@nebular/theme';
 import { CheckpointsService } from '../../others/services/checkpoint/checkpoints.service';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import * as global from '../../../GLOBAL';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LocalDataSource }from 'ng2-smart-table';
+import { OperatorService } from '../../others/services/operator/operator.service';
 
 @Component({
   selector: 'ngx-update-assignament-operator-checkpoint',
@@ -16,6 +18,8 @@ import { LocalDataSource }from 'ng2-smart-table';
 })
 
 export class UpdateAssignamentOperatorCheckpointComponent implements OnInit {
+
+  @ViewChild("operatorsSearchInput") operatorsSearchInput: ElementRef;
 
   ERROR_REQUIRED = global.GLOBAL.ERROR_REQUIRED;
   ERROR_MIN = global.GLOBAL.ERROR_MIN;
@@ -26,62 +30,34 @@ export class UpdateAssignamentOperatorCheckpointComponent implements OnInit {
   data;
   selected;
 
+  //Variables para busqueda de operadores
+  operatorsSrc: string;
+  operatorsData: any = null;
+  operatorsLoading: boolean = false;
+
   formOperatorAssigment : FormGroup = new FormGroup ({
     currentOperator : new FormControl ({ 
       value: '', 
       disabled: true 
     }, null),
-    selectedOperator : new FormControl (null, [
+    operatorCUI: new FormControl(null, null),
+    selectedOperator : new FormControl (null, 
       Validators.required
-    ])
+    )
   });
-
-  settings = {
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
-      name: {
-        title: 'Nombre',
-        type: 'string',
-      },
-      lastname: {
-        title: 'Apellido',
-        type: 'string',
-      },
-      CUI: {
-        title: 'CUI',
-        type: 'number',
-      }
-    },
-    defaultStyle: false,
-    actions: {
-      columnTitle: 'Acciones',
-      add: false,
-      edit: false,
-      delete: false,
-      custom: [
-        { name: 'selected', title: '<i class="nb-checkmark"></i>' }
-      ],
-      position: 'right'
-    },
-  };
-
-  source: LocalDataSource = new LocalDataSource();
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private toastrService: NbToastrService,
     private api : CheckpointsService,
+    private operatorService: OperatorService,
     private router : Router
   ) { }
 
   ngOnInit(): void {
     this.notification = new NotificationsComponent(this.toastrService);
     this.getCheckpoint();
-    this.getAllOperators();
   }
 
   private getCheckpoint() {
@@ -96,7 +72,7 @@ export class UpdateAssignamentOperatorCheckpointComponent implements OnInit {
             this.location.back();
           }, 2000);
         } else {
-          this.getOperator();
+          this.formOperatorAssigment.controls['currentOperator'].setValue(this.data.assignedOperator.cui + ' - '+ this.data.assignedOperator.name);
         }
       }, 
       error:(err) => {
@@ -112,56 +88,36 @@ export class UpdateAssignamentOperatorCheckpointComponent implements OnInit {
     });
   }
 
-  onCustomAction(event){
-    this.selected = event.data;
-    this.formOperatorAssigment.controls['selectedOperator'].setValue(this.selected.name);
-  }
-
-  private getOperator() {
-    this.api.getOperator(this.data.assignedOperator)
-    .subscribe({
-      next:(res) => {
-        if (res[0] == null) {
-          this.notification.errors(404, 'no se puede encontrar un operador activo con el ID: ' + this.data.assignedOperator );
-        } else {
-          this.formOperatorAssigment.controls['currentOperator'].setValue(res[0].name);
-        }
-        
-      }, 
-      error:(err) => {
-        if (err.status == 404) {
-          this.notification.errors(404, 'no existe un operador con el ID: ' + this.data.assignedOperator);
-        } else {
-          this.notification.errors(400, 'Mientras se obtenian los datos del operador asignado, vuelve a intentarlo.');
-        }
-      }
-    });
-  }
-
-  private getAllOperators() {
-    this.api.getAllOperators()
-    .subscribe({
-      next:(res) => {
-        this.source.load(res);
-      },  
-      error:(res) => {
-        this.notification.errors(400, 'Error mientras se obtenia la lista de operadores.');
-      }
-    });
-  }
-
   modify_operator() { 
     if (this.formOperatorAssigment.valid) {
-      this.data.assignedOperator = this.selected.id;
+      this.data.assignedOperator = {
+        cui: this.selected.cui
+      }
       this.service_edit(this.data);
     } else {
       this.errors = true;
       return;
     }
   }
-  
+
+  /**
+   * Procedimiento que llama a la funcion getOperators del servicio
+   * OperatorService para obtener todas la rutas que coinciden con 
+   * el patron de busqueda que se recibe como parametro. Los datos
+   * obtenidos se almacenan en la variable routesData.
+   * @param pattern Patron de busqueda
+   */
+  public searchOperators(pattern: string){
+    if(pattern != ''){
+      this.operatorsLoading = true;
+      this.operatorsData = this.operatorService.getOperators(pattern).pipe(
+        finalize(() => this.operatorsLoading = false)
+      );
+    } else this.operatorsData = null;
+  }
+
   service_edit(dataEdit) {
-    this.api.putCheckpoint(dataEdit, dataEdit.id)
+    this.api.putOperatorCheckpoint(dataEdit, dataEdit.id)
     .subscribe({
       next : (res) => {
         this.notification.showToast(1, 'Modificado', `El operador fue asignado con exito.`, 2000);
@@ -176,9 +132,31 @@ export class UpdateAssignamentOperatorCheckpointComponent implements OnInit {
     });
   }
 
+  public setOperator(cui: number, name: string, surname: string){
+    this.formOperatorAssigment.controls['selectedOperator'].setValue(cui + ' - ' + name);
+    this.selected = {
+      cui: cui,
+    };
+    this.operatorsData = null;
+    this.operatorsSearchInput.nativeElement.value = '';
+  }
+
   onCancel() {
     this.formOperatorAssigment.reset();
     this.router.navigate(['views', 'admin', 'checkpoints'])
   }
 
+  /**
+   * Procedimiento que se encarga de establecer el tipo de borde
+   * del elemento html que se recibe como parametro.
+   * @param event Evento disparado
+   */
+  public setHoverBorder(event: MouseEvent) {
+    const newsImage: HTMLDivElement = <HTMLDivElement>event.target;
+    if (event.type === 'mouseenter') {
+      newsImage.style.border = 'ridge';
+    } else if (event.type === 'mouseleave') {
+      newsImage.style.border = 'none';
+    }
+}
 }

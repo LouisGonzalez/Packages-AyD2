@@ -1,6 +1,7 @@
 package com.gt.interpackage.controller;
 
 import com.gt.interpackage.model.Checkpoint;
+import com.gt.interpackage.model.Destination;
 import com.gt.interpackage.service.CheckpointService;
 import com.gt.interpackage.service.EmployeeService;
 import com.gt.interpackage.service.RouteService;
@@ -10,6 +11,9 @@ import com.gt.interpackage.model.Employee;
 import com.gt.interpackage.service.EmployeeTypeService;
 import com.gt.interpackage.service.PackageCheckpointService;
 import java.net.URI;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,7 +64,7 @@ public class CheckpointController {
     @CrossOrigin
     @PostMapping
     public ResponseEntity<Checkpoint> createCheckpoint(@RequestBody Checkpoint checkpoint){
-        return execute(checkpoint, RequestType.SAVE, null);
+        return execute(checkpoint, RequestType.SAVE, null, false);
     }
     
     /**
@@ -115,7 +120,67 @@ public class CheckpointController {
       }
     }
     
-    private ResponseEntity<Checkpoint> execute(Checkpoint checkpoint, RequestType type, Long id){
+    /**
+     * Metodo que recibe una peticion GET para obtener un punto de control
+     * en base al id que se recibe como parametro.
+     * @param id Id del destino a obtener.
+     * @return 
+     */
+    @CrossOrigin
+    @GetMapping(value ="/{id}")
+    public ResponseEntity<Checkpoint> getCheckpoint(@PathVariable Long id){
+        try{
+            Checkpoint checkpoint = checkpointService.getCheckpointById(id).get();
+            return checkpoint != null 
+                    ? ResponseEntity.ok(checkpoint)
+                    : ResponseEntity
+                            .notFound()
+                            .build();
+        } catch(Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+    @CrossOrigin
+    @PutMapping (value ="update/{id}")
+    public ResponseEntity<Checkpoint> updateCheckpoint(@RequestBody Checkpoint update, @PathVariable Long id) {
+        Checkpoint checkpoint = checkpointService.getCheckpointById(id).get();
+        if (checkpoint == null) {
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+        update.setActive(checkpoint.getActive());
+        update.setAssignedOperator(checkpoint.getAssignedOperator());
+        update.setRoute(checkpoint.getRoute());
+        return execute(update, RequestType.UPDATE, id, update.getDescription().equalsIgnoreCase(checkpoint.getDescription()));
+    }
+     
+    @CrossOrigin
+    @PutMapping (value ="operator/{id}")
+    public ResponseEntity<Checkpoint> updateAssignamentOperatorCheckpoint(@RequestBody Checkpoint update, @PathVariable Long id) {
+        Checkpoint checkpoint = checkpointService.getCheckpointById(id).get();
+        if (checkpoint == null) {
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+        Employee operator;
+        try {
+            operator = employeeService.getByCUI(update.getAssignedOperator().getCUI());
+            if (operator == null) {
+                 return new ResponseEntity ("El operador seleccionado no existe en el sistema.", HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError().build();
+        }
+        update.setAssignedOperator(operator);
+        update.setActive(checkpoint.getActive());
+        update.setRoute(checkpoint.getRoute());
+        return execute(update, RequestType.UPDATE, id, update.getDescription().equalsIgnoreCase(checkpoint.getDescription()));
+    }
+    
+    private ResponseEntity<Checkpoint> execute(Checkpoint checkpoint, RequestType type, Long id, boolean check){
         try{
             if(checkpoint.getDescription() == null || checkpoint.getQueueCapacity() == null || checkpoint.getAssignedOperator().getCUI() == null
             || checkpoint.getActive() == null || checkpoint.getRoute().getId() == null || checkpoint.getOperationFee() == null)
@@ -123,14 +188,17 @@ public class CheckpointController {
             
             if(checkpoint.getDescription().isEmpty() || checkpoint.getDescription().isBlank())
                 return new ResponseEntity("Nombre de punto de control no valido.", HttpStatus.BAD_REQUEST);
-
-            if(checkpointService.routeAlreadyHasACheckpointWithName(checkpoint.getRoute().getId(), checkpoint.getDescription()))
+            
+            
+            if(!check && checkpointService.routeAlreadyHasACheckpointWithName(checkpoint.getRoute().getId(), checkpoint.getDescription()))
                 return new ResponseEntity("Nombre de punto de control ya registrado en la ruta seleccionada.", HttpStatus.BAD_REQUEST);
-
+            
             if(!routeService.existsById(checkpoint.getRoute().getId()))
                 return new ResponseEntity("La ruta seleccionada no existe en el sistema.", HttpStatus.BAD_REQUEST);
 
+            
             Employee employee = employeeService.getByCUI(checkpoint.getAssignedOperator().getCUI());
+            
             if(employee == null)
                 return new ResponseEntity("El operador seleccionada no existe en el sistema.", HttpStatus.BAD_REQUEST);
 
@@ -140,7 +208,10 @@ public class CheckpointController {
             if(type == RequestType.SAVE){
                 Checkpoint tempCheckpoint = checkpointService.create(checkpoint);
                 return ResponseEntity.created(new URI("/checkpoint/"+tempCheckpoint.getId())).body(tempCheckpoint);
-            } 
+            } else if (type == RequestType.UPDATE){
+                Checkpoint tempCheckpoint = checkpointService.create(checkpoint);
+                return  ResponseEntity.ok(tempCheckpoint);
+            }
                 
             //Agregar la parte de actualizacion y retornar el valor correspodiente
             return null;

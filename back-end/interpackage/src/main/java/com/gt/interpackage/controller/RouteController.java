@@ -90,6 +90,22 @@ public class RouteController {
         }
     }
     
+    @GetMapping("list/{active}")
+    public ResponseEntity<Page<Route>> getRoutesByActive (
+        @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @PathVariable Boolean active
+    ){
+        try{
+            Page<Route> routes = routeService.getRoutesByActive(
+               PageRequest.of(page, size, Sort.by("name")), active
+            );
+            return new ResponseEntity<Page<Route>>(routes, HttpStatus.OK);
+        } catch(Exception e){
+            return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     /**
      * Metodo que recibe una peticion GET para obtener una ruta en base al id que se 
      * recibe como parametro.
