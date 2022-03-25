@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.gt.interpackage.repository.CheckpointRepository;
 import com.gt.interpackage.model.Checkpoint;
+import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 /**
  *
  * @author helmuth
@@ -44,6 +47,35 @@ public class CheckpointService {
      */
     public boolean routeAlreadyHasACheckpointWithName(Long routeId, String description){
         return checkpointRepository.existsCheckpointByRouteIdAndDescription(routeId, description);
+    }
+    
+     /**
+     * Metodo que llama al repositorio de puntos de control para obtener todos 
+     * los puntos de control y retornarlas en una paginacion. 
+     * @param pageable
+     * @return 
+     */
+    public Page<Checkpoint> getAll(Pageable pageable){
+        return checkpointRepository.findAll(pageable);
+    }
+    
+     /**
+     * Metodo que llama al repositorio de puntos de control para obtener un
+     * punto de control cuyo id sea igual al que se recibe como parametro. 
+     * @param id
+     * @return 
+     */
+    public Optional<Checkpoint> getCheckpointById(Long id){
+        return checkpointRepository.findById(id);
+    }
+    
+    /**
+     * Metodo que llama al repositorio de puntod de control para eliminar 
+     * el punto de control que se recibe como parametro. 
+     * @param checkpoint 
+     */
+    public void delete(Checkpoint checkpoint){
+        checkpointRepository.delete(checkpoint);
     }
     
 }

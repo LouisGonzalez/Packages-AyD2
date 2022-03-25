@@ -5,6 +5,7 @@ import { CheckpointListTemplate } from '../../others/models/checkpoint-list-temp
 import { Router } from '@angular/router';
 import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 import { NbToastrService } from '@nebular/theme';
+import { CustomServerDataSource } from '../../others/models/CustomServerDataSource';
 
 @Component({
   selector: 'ngx-checkpoint-list',
@@ -13,41 +14,56 @@ import { NbToastrService } from '@nebular/theme';
 })
 export class CheckpointListComponent implements OnInit {
 
+  notification : NotificationsComponent;
+  source: CustomServerDataSource;
+  showPerPage = 10;
+
   settings = {
-    delete: {
-      deleteButtonContent: '<i class="nb-edit"></i>',
-      confirmDelete: true,
+    mode: 'external', 
+    noDataMessage: 'No exite ningun punto de control en el sistema.',
+    pager:{
+      display: true,
+      perPage: this.showPerPage,
     },
     columns: {
       id: {
         title: 'ID',
         type: 'number',
       },
+      description: {
+        title: 'Nombre',
+        type: 'string'
+      },
       queueCapacity: {
         title: 'Capacidad de cola',
-        type: 'number',
+        type: 'number'
       },
       operationFee: {
         title: 'Tarifa de operación',
-        type: 'number',
+        type: 'number'
       },
-      packageOnQueue: {
+      packagesOnQueue: {
         title: 'Paquetes en cola',
-        type: 'number',
+        type: 'number'
       },
       route: {
         title: 'Ruta',
-        type: 'number',
+        type: 'string',
+        valuePrepareFunction: (route) => {
+          return `${route.name}`;
+        }
       },
       active : {
         title: 'Estado',
         type: 'string',
+        valuePrepareFunction: (active) => {
+          return `${active == 1 ? 'Activa' : 'Desactivada'}`;
+        }
       } 
     },
     defaultStyle: false,
     actions: {
       columnTitle: 'Acciones',
-      columnTitle2: 'Borrar',
       add: false,
       edit: false,
       delete: false,
@@ -60,10 +76,6 @@ export class CheckpointListComponent implements OnInit {
     },
   };
 
-  notification : NotificationsComponent;
-
-  source: LocalDataSource = new LocalDataSource();
-
   constructor(
     private api : CheckpointsService,  
     private router: Router,
@@ -71,19 +83,7 @@ export class CheckpointListComponent implements OnInit {
 
   ngOnInit(): void {
     this.notification = new NotificationsComponent(this.toastrService);
-    this.getAllCheckpints();
-  }
-
-  private getAllCheckpints(){
-    this.api.getAllCheckpoints()
-    .subscribe({
-      next:(res) => {
-        this.source.load(this.convertCheckpointList(res));
-      },  
-      error:(res) => {
-        this.notification.errors(400, 'Error mientras se obtenia la lista de puntos de control');
-      }
-    });
+    this.source = this.api.getAllCheckpointsPaginated();
   }
 
   onCustomAction(event){
@@ -98,38 +98,24 @@ export class CheckpointListComponent implements OnInit {
           this.router.navigate(['views', 'admin', 'update-assignament-operator', event.data['id']]);
           break;
         case 'removeCheckpoint':   
-          if(window.confirm('¿Eliminar permanentemente el punto de control?')){
-            this.api.deleteCheckpoint(event.data['id']).subscribe({
-              next:(res) => {
-                this.notification.showToast(1, 'Exito', 'Punto de control eliminado exitosamente.', 3000);
-                this.getAllCheckpints();
-              },  
-              error:(res) => {
-                this.notification.showToast(3, 'Error', 'No se pudo eliminar el punto de control seleccionado.', 3000);
-              }
-            })
-          } else {
-            event.confirm.reject();
-          } 
+          this.deleteCheckpoint(event.data['id']);
           break;
       }
     }
   }
 
-  private convertCheckpointList(data : any) {
-    let array = [];
-    for (const iterator of data) {
-      let newCheckpointTemplate : CheckpointListTemplate = {
-        id : iterator['id'],
-        queueCapacity : iterator['queueCapacity'],
-        packageOnQueue : iterator['packageOnQueue'],
-        operationFee : iterator['operationFee'],
-        route : iterator['route'],
-        active : iterator['active'] == 1 || iterator['active'] ? 'Activo' : 'Desactivado'
-      }
-      array.push(newCheckpointTemplate);
-    }
-    return array;
+  private deleteCheckpoint(id : number) {
+    if(window.confirm('¿Eliminar permanentemente el punto de control?')){
+      this.api.deleteCheckpoint(id).subscribe({
+        next:(res) => {
+          this.notification.showToast(1, 'Exito', 'Punto de control eliminado exitosamente.', 3000);
+          this.source.remove(id);
+        },  
+        error:(error) => {
+          this.notification.showToast(3, 'Error', error.error , 4000);
+        }
+      })
+    } 
   }
 
 }

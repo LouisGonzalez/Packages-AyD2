@@ -133,9 +133,8 @@ public class RouteController {
     
     /**
      * Metodo que recibe una peticion DELETE para eliminar la ruta cuyo id se 
-     * recibe como parametro. Valida que la ruta no tenga paquetes en ruta y eliminar
-     * todos los puntos de control asignados a esa ruta para poder realizar la 
-     * eliminacion de la ruta.
+     * recibe como parametro. Valida que la ruta no tenga paquetes en ruta, que 
+     * no tenga puntos de control asignados y que esta exista.
      * @param id
      * @return 
      */
@@ -148,6 +147,9 @@ public class RouteController {
                 return new ResponseEntity("No se puede eliminar la ruta ya que tiene puntos de control asignados.", HttpStatus.BAD_REQUEST);
             
             Route tempRoute = routeService.getRouteById(id).get();
+            if(tempRoute == null)
+                return new ResponseEntity("La ruta que se desea eliminar no existe en el sistema.", HttpStatus.BAD_REQUEST);
+            
             if(tempRoute.getPackagesOnRoute() > 0)
                 return new ResponseEntity("No se puede eliminar una ruta que contiene paquetes en ruta.", HttpStatus.BAD_REQUEST);
          

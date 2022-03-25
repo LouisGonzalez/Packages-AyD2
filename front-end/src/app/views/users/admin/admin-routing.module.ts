@@ -73,10 +73,10 @@ const routes: Routes = [
         component: UpdateAssignamentOperatorCheckpointComponent,
         canActivate: [AdminGuard]
       },
-      { // views/admin/checkpoints
+      { 
         path: 'checkpoints',
         component: CheckpointListComponent,
-        canActivate: [AdminGuard]
+        //canActivate: [AdminGuard]
       },
       {
         path: 'destinations',

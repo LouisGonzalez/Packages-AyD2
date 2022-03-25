@@ -62,6 +62,7 @@ public class RouteService {
      * ruta cuyo nombre sea el  parametro que se recibe y cuyo id no sea el 
      * parametro que se recibe.
      * @param name
+     * @param id
      * @return True o False. 
      */
     public boolean existsAndIdIsNot(String name, Long id){

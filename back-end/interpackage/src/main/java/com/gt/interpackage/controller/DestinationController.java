@@ -35,10 +35,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class DestinationController {
     
     @Autowired
-    private DestinationService destinationService;
+    private RouteService routeService;
     
     @Autowired
-    private RouteService routeService;
+    private DestinationService destinationService;
     
     @PostMapping ("/")
     public ResponseEntity<Destination> addDestination(@RequestBody Destination destination) {
