@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.gt.interpackage.model.Destination;
 /**
  *
  * @author helmuth
@@ -24,7 +25,12 @@ public class RouteService {
      * @return Ruta creada.
      */
     public Route create(Route route){
+        try{            
         return routeRepository.save(route);
+        } catch(Exception e){
+            System.out.println(e);
+            return null;
+        }
     }
     
     /**
@@ -43,8 +49,18 @@ public class RouteService {
      * @param name
      * @return True o False. 
      */
-    public boolean exists(String name){
+    public boolean existsById(String name){
         return routeRepository.existsRouteByName(name);
+    }
+    
+    /**
+     * Metodo que llama al repositorio de rutas para consultar si existe una
+     * ruta cuyo id sea el  parametro que se recibe.
+     * @param id
+     * @return True o False. 
+     */
+    public boolean existsById(Long id){
+        return routeRepository.existsById(id);
     }
     
     /**
@@ -52,9 +68,10 @@ public class RouteService {
      * ruta cuyo nombre sea el  parametro que se recibe y cuyo id no sea el 
      * parametro que se recibe.
      * @param name
+     * @param id
      * @return True o False. 
      */
-    public boolean exists(String name, Long id){
+    public boolean existsAndIdIsNot(String name, Long id){
         return routeRepository.existsRouteByNameAndIdIsNot(name, id);
     }
     
@@ -110,5 +127,12 @@ public class RouteService {
     public List<Route> getThreeRouteMostPopular() {
         return routeRepository.getThreeMostPopularRoute();
     }
-    
+
+    /*
+     * Metodo que llama al repositorio de rutas para buscar
+     * si existen rutas hacia un destino especifico
+    */
+    public List<Route> findRouteByDestination(Integer id_destination){
+        return routeRepository.findRouteByDestination(id_destination);
+    }
 }

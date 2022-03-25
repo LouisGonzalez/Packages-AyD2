@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import com.gt.interpackage.model.Destination;
 /**
  *
  * @author helmuth
@@ -46,22 +47,25 @@ public class RouteController {
      * @param route Ruta a crear.
      * @return 
      */
-    @CrossOrigin
     @PostMapping
-    private ResponseEntity<Route> createRoute(@RequestBody Route route){
+    public ResponseEntity<Route> createRoute(@RequestBody Route route){
         try{
-            if(routeService.exists(route.getName()))
+            if(routeService.existsById(route.getName()))
                 return new ResponseEntity("Nombre de ruta ya registrado en el sistema", HttpStatus.BAD_REQUEST);
                 
             if(route.getName().isBlank() || route.getName().isEmpty() )
                 return new ResponseEntity("Nombre de ruta no valido", HttpStatus.BAD_REQUEST);
-                
+
             Route tempRoute = routeService.create(route);
-            return ResponseEntity.created(new URI("/routes/"+tempRoute.getId())).body(tempRoute);
+            return ResponseEntity.created(new URI("/route/"+tempRoute.getId())).body(tempRoute);
         } catch(Exception e){
+            System.out.println(e);
             return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    
+    
     
     /**
      * Metodo que recibe una peticion GET para obtener un listado paginado de rutas.
@@ -76,6 +80,7 @@ public class RouteController {
         @RequestParam(defaultValue = "10") int size
     ){
         try{          
+            System.out.println(routeService);
             Page<Route> routes = routeService.getAll(
                PageRequest.of(page, size, Sort.by("name"))
             );
@@ -115,10 +120,13 @@ public class RouteController {
             if(route.getName().isBlank() || route.getName().isEmpty() )
                 return new ResponseEntity("Nombre de ruta no valido", HttpStatus.BAD_REQUEST);
             
-            if(routeService.exists(route.getName(), route.getId()))
+            if(routeService.existsAndIdIsNot(route.getName(), route.getId()))
                 return new ResponseEntity("Nombre de ruta ya registrado en el sistema", HttpStatus.BAD_REQUEST);
             
-            Route updatedRoute = routeService.getRouteById(route.getId()).get();
+           Route updatedRoute = routeService.getRouteById(route.getId()).get();
+            if(updatedRoute.getPackagesOnRoute() > 0)
+                return new ResponseEntity("No se puede eliminar una ruta que contiene paquetes en ruta.", HttpStatus.BAD_REQUEST);
+            
             updatedRoute.setName(route.getName());
             updatedRoute.setActive(route.getActive());
             updatedRoute.setDestination(route.getDestination());
@@ -131,9 +139,8 @@ public class RouteController {
     
     /**
      * Metodo que recibe una peticion DELETE para eliminar la ruta cuyo id se 
-     * recibe como parametro. Valida que la ruta no tenga paquetes en ruta y eliminar
-     * todos los puntos de control asignados a esa ruta para poder realizar la 
-     * eliminacion de la ruta.
+     * recibe como parametro. Valida que la ruta no tenga paquetes en ruta, que 
+     * no tenga puntos de control asignados y que esta exista.
      * @param id
      * @return 
      */
@@ -146,6 +153,9 @@ public class RouteController {
                 return new ResponseEntity("No se puede eliminar la ruta ya que tiene puntos de control asignados.", HttpStatus.BAD_REQUEST);
             
             Route tempRoute = routeService.getRouteById(id).get();
+            if(tempRoute == null)
+                return new ResponseEntity("La ruta que se desea eliminar no existe en el sistema.", HttpStatus.BAD_REQUEST);
+            
             if(tempRoute.getPackagesOnRoute() > 0)
                 return new ResponseEntity("No se puede eliminar una ruta que contiene paquetes en ruta.", HttpStatus.BAD_REQUEST);
          
@@ -177,6 +187,16 @@ public class RouteController {
     public ResponseEntity<List<Route>> getAllFees() {
         return ResponseEntity.ok(routeService.getThreeRouteMostPopular());
     }
+    
+    /*
+     * Metodo que realiza una llamada al servicio de rutas para obtener el listado
+     * de rutas hacia un destino especifico
+    */
+    @GetMapping("/destination/{id_destination}")
+    public ResponseEntity<List<Route>> getRoutesByDestination(@PathVariable Integer id_destination){
+        return ResponseEntity.ok(routeService.findRouteByDestination(id_destination));
+    }
+
 }
     
 

@@ -22,10 +22,10 @@ public class Checkpoint {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
     
-    @Column (columnDefinition = "TEXT", nullable = true)
+    @Column (columnDefinition = "TEXT", nullable = false)
     private String description;
     
-    @Column (scale = 2, nullable = false)
+    @Column (name ="operation_fee", nullable = false)
     private Double operationFee;
     
     @Column (name = "queue_capacity", nullable = false)

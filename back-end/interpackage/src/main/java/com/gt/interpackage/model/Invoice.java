@@ -24,18 +24,28 @@ public class Invoice {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
     
-    @Column (nullable = false)
-    private LocalDate date;
+    @Column (nullable = false, name ="date_emit")
+    private LocalDate dateEmit;
     
     @Column (nullable = false, scale = 2)
     private Double total;
+    
+    @Column (nullable = false)
+    private Integer nit;
 
     public Invoice() { }
     
-    public Invoice(Long id, LocalDate date, Double total) {
+    public Invoice(Long id, LocalDate dateEmit, Double total, Integer nit) {
         this.id = id;
-        this.date = date;
+        this.dateEmit = dateEmit;
         this.total = total;
+        this.nit = nit;
+    }
+
+    public Invoice(LocalDate dateEmit, Double total, Integer nit) {
+        this.dateEmit = dateEmit;
+        this.total = total;
+        this.nit = nit;
     }
 
     public Long getId() {
@@ -46,12 +56,12 @@ public class Invoice {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getDateEmit() {
+        return dateEmit;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDateEmit(LocalDate dateEmit) {
+        this.dateEmit = dateEmit;
     }
 
     public Double getTotal() {
@@ -61,5 +71,15 @@ public class Invoice {
     public void setTotal(Double total) {
         this.total = total;
     }
+
+    public Integer getNit() {
+        return nit;
+    }
+
+    public void setNit(Integer nit) {
+        this.nit = nit;
+    }
+    
+    
     
 }

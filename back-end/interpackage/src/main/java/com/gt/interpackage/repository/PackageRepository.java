@@ -4,23 +4,19 @@
  */
 package com.gt.interpackage.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import com.gt.interpackage.model.Client;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+import com.gt.interpackage.model.Package;
 
 /**
  *
  * @author Luis
  */
 @Repository
-public interface ClientRepository extends JpaRepository<Client, Long>{
+public interface PackageRepository extends JpaRepository<Package, Long> {
     
-    /*
-    * Metodo que busca un cliente con NIT especifico 
-    * @param nit
-    * @return Client
-    */
-    @Query(value = "SELECT * FROM client e WHERE e.nit = ?1", nativeQuery = true)
-    Client findByNit(Integer nit);
+    @Query(value = "SELECT * FROM package p WHERE p.at_destination = true AND p.retired = false", nativeQuery = true)
+    List<Package> getInDestination();
 }

@@ -1,0 +1,42 @@
+/*Empleado*/
+
+{
+    "cui": 3,
+    "name": "Pedro Andres",
+    "lastname": "Martinez",
+    "username": "pedro1",
+    "email": "pedro@gmail.com",
+    "type": 3,
+    "password": "12345678",
+    "activo": true
+}
+
+/*Cliente*/
+{
+    "cui": 1,
+    "name": "Carlos Fernando",
+    "lastname": "Hernandez",
+    "age": 22,
+    "nit": 555,
+    "address": "Quetzaltenango"
+}
+
+/*Destinos*/
+{
+    "id": 1,
+    "name": "Paris",
+    "description": "De guate a paris",
+    "fee": 200   
+}
+
+/*Rutas*/
+{
+    "id": 8,
+    "name": "Ruta 3",
+    "packagesOnRoute": 0,
+    "totalPackages": 0,
+    "active": false,
+    "destination": {
+        "id": 1
+    }
+}

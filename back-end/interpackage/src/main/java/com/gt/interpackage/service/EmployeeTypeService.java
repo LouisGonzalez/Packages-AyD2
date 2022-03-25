@@ -20,7 +20,8 @@ public class EmployeeTypeService {
      * @param name
      * @return 
      */
-    public EmployeeType getEmployeeType(String name){
+    public EmployeeType getEmployeeTypeByName(String name){
         return employeeTypeRepository.findByName(name).get();
     }
+    
 }

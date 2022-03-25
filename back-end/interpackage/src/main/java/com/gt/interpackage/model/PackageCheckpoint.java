@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gt.interpackage.model;
 
 import com.gt.interpackage.pk.PKPackageCheckpoint;
 import java.sql.Time;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,7 +21,7 @@ import javax.persistence.Table;
 public class PackageCheckpoint {
     
     @Id
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn (name = "id_checkpoint", nullable = false)
     private Checkpoint checkpoint;
     

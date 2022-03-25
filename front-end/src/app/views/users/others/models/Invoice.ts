@@ -4,4 +4,5 @@ export interface Invoice {
   subTotal: number;
   total: number;
   dateEmit: string;
+  nit: number;
 }

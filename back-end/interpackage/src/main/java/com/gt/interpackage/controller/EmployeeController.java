@@ -85,11 +85,10 @@ public class EmployeeController {
     @GetMapping(value ="/search-by-cui/{cui}")
     public ResponseEntity<List<Employee>> getOperatorsByCUI(@PathVariable String cui){
         try{
-            Long operatorTypeId = employeeTypeService.getEmployeeType("operator").getId();
+            Long operatorTypeId = employeeTypeService.getEmployeeTypeByName("operator").getId();
             Optional<List<Employee>> operators = _employeeService.getAllOperatorsByCUI(cui, Integer.valueOf(operatorTypeId.toString()));
             return  ResponseEntity.ok(operators.get());   
         } catch(Exception e){
-            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
