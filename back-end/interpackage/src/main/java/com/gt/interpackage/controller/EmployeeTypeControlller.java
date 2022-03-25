@@ -16,6 +16,12 @@ public class EmployeeTypeControlller {
     @Autowired
     private EmployeeTypeService employeeTypeService;
     
+    /**
+     * Metodo que se ejecuta al momento de iniciar la aplicacion.
+     * Establece y hace uso del servicio de tipos de empleado para
+     * crear los tipos de empleados de la aplicacion.
+     * @param event 
+     */
     @EventListener
     public void insertEmployeeTypes(ApplicationReadyEvent event){
         employeeTypeService.deleteAllTypes();
