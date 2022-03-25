@@ -66,6 +66,7 @@ export class CreateDestinationComponent implements OnInit {
       next : (res) => {
         this.notification.showToast(1, 'Agregado', `Destino: ${nameDestintaion}, agregado correctamente.`, 2500);
         this.formDestination.reset();
+        this.errors = false;
       },
       error : (err) => {
         err.status == 400 ?

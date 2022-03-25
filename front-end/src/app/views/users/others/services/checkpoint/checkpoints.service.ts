@@ -31,7 +31,7 @@ export class CheckpointsService {
    * pagerLimitKey: Nombre del parametro que representa la cantidad de elementos por pagina en el servidor.
    * totalKey: Nombre del atributo que contiene el numero total de elementos.
    */
-     public getAllCheckpointsPaginated() {
+    public getAllCheckpointsPaginated() {
       return new CustomServerDataSource(this.http, {
         dataKey: 'content',
         endPoint: global.GLOBAL.urlApi + '/checkpoint/list',
@@ -46,11 +46,11 @@ export class CheckpointsService {
   }
 
   getCheckpoint(id : number) {
-    return this.http.get<CheckpointListTemplate>(`${global.GLOBAL.url}/checkpoints/` + id);
+    return this.http.get<any>(`${global.GLOBAL.urlApi}/checkpoint/` + id);
   }
 
   putCheckpoint(data : CheckpointListTemplate, id : number) {
-    return this.http.put<CheckpointListTemplate>(`${global.GLOBAL.url}/checkpoints/` + id, data);
+    return this.http.put<any>(`${global.GLOBAL.urlApi}/checkpoint/` + id, data);
   }
 
   public deleteCheckpoint(id : number) {

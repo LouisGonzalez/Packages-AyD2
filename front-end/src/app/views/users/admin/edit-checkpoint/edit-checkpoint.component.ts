@@ -34,7 +34,9 @@ export class EditCheckpointComponent implements OnInit {
       Validators.min(0), 
       Validators.pattern('[0-9]+(.[0-9]+)?')
     ]),
-    description : new FormControl(null, null)
+    description : new FormControl(null, [
+      Validators.required
+    ])
   });
 
   constructor( 
@@ -60,7 +62,7 @@ export class EditCheckpointComponent implements OnInit {
           this.notification.showToast(4, "Error", "Error no se puede editar el punto de control porque tiene paquetes en cola", 3000);
           setTimeout(() => {
             this.location.back();
-          }, 2000);
+          }, 2500);
         } else {
           this.formEditCheckpoint.controls['queueCapacity'].setValue(res.queueCapacity);
           this.formEditCheckpoint.controls['operationFee'].setValue(res.operationFee);          
@@ -97,14 +99,14 @@ export class EditCheckpointComponent implements OnInit {
     this.api.putCheckpoint(dataEdit, dataEdit.id)
     .subscribe({
       next : (res) => {
-        this.notification.showToast(1, 'Editado', `El punto de control se a modificado con exito.`, 2000);
+        this.notification.showToast(1, 'Editado', `El punto de control se a modificado con exito.`, 3500);
         setTimeout(() => {
           this.formEditCheckpoint.reset();
           this.router.navigate(['views', 'admin' , 'checkpoints'])
-        }, 2300);
+        }, 2600);
       },
       error : (err) => {
-        this.notification.errors(400, "Error mientras se editaba el punto de control, vuelve a intentarlo.");
+        this.notification.errors(err.status, err.error);
       }
     });
   }
