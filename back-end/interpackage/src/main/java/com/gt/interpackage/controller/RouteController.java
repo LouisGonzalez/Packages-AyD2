@@ -55,9 +55,8 @@ public class RouteController {
                 
             if(route.getName().isBlank() || route.getName().isEmpty() )
                 return new ResponseEntity("Nombre de ruta no valido", HttpStatus.BAD_REQUEST);
-            System.out.println(routeService);
-            Route tempRoute = routeService.create(route);
 
+            Route tempRoute = routeService.create(route);
             return ResponseEntity.created(new URI("/route/"+tempRoute.getId())).body(tempRoute);
         } catch(Exception e){
             System.out.println(e);
