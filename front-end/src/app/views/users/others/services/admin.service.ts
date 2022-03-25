@@ -15,7 +15,7 @@ export class AdminService {
   urlApi = GLOBAL.urlApi;
   public user = null;
   userSession: any;
-  constructor(private httpClient: HttpClient) { }
+constructor(private httpClient: HttpClient) { }
 
 
   getAllActivates(): Observable<any>{

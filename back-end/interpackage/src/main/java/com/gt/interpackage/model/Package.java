@@ -32,41 +32,42 @@ public class Package {
     private Boolean atDestination;
     
     @Column (nullable = false)
-    private Boolean retirted;
+    private Boolean retired;
     
     @Column (scale = 2, nullable = false)
     private Double weight;
-    
-    @Column (name = "sub_total", scale = 2, nullable = false)
-    private Double subTotal;
+        
+    @Column (name = "unit_total", nullable = false)
+    private Double unitTotal;
     
     @Column (nullable = false)
-    private Boolean priorized;
+    private Boolean priority;
     
     @Column (columnDefinition = "TEXT", nullable = true)
     private String description;
     
-    @ManyToOne
-    @JoinColumn (name = "cui_client", nullable = false)
-    private Client cui;
 
+    @ManyToOne
+    @JoinColumn (name="route", nullable = false)
+    private Route route;
+    
     @ManyToOne
     @JoinColumn (name = "id_invoice", nullable = false)
     private Invoice invoice;
 
      public Package() { }
     
-    public Package(Long id, Boolean onWay, Boolean atDestination, Boolean retirted, Double weight, Double subTotal, Boolean priorized, String description, Client cui, Invoice invoice) {
+    public Package(Long id, Boolean onWay, Boolean atDestination, Boolean retired, Double weight, Double subTotal, Boolean priority, String description, Invoice invoice, Double unitTotal, Route route) {
         this.id = id;
         this.onWay = onWay;
         this.atDestination = atDestination;
-        this.retirted = retirted;
+        this.retired = retired;
         this.weight = weight;
-        this.subTotal = subTotal;
-        this.priorized = priorized;
+        this.unitTotal = unitTotal;
+        this.priority = priority;
         this.description = description;
-        this.cui = cui;
         this.invoice = invoice;
+        this.route = route;
     }
 
     public Long getId() {
@@ -93,12 +94,12 @@ public class Package {
         this.atDestination = atDestination;
     }
 
-    public Boolean getRetirted() {
-        return retirted;
+    public Boolean getRetired() {
+        return retired;
     }
 
-    public void setRetirted(Boolean retirted) {
-        this.retirted = retirted;
+    public void setRetired(Boolean retired) {
+        this.retired = retired;
     }
 
     public Double getWeight() {
@@ -109,20 +110,20 @@ public class Package {
         this.weight = weight;
     }
 
-    public Double getSubTotal() {
-        return subTotal;
+    public Double getUnitTotal() {
+        return unitTotal;
     }
 
-    public void setSubTotal(Double subTotal) {
-        this.subTotal = subTotal;
+    public void setUnitTotal(Double unitTotal) {
+        this.unitTotal = unitTotal;
     }
 
-    public Boolean getPriorized() {
-        return priorized;
+    public Boolean getPriority() {
+        return priority;
     }
 
-    public void setPriorized(Boolean priorized) {
-        this.priorized = priorized;
+    public void setPriority(Boolean priority) {
+        this.priority = priority;
     }
 
     public String getDescription() {
@@ -133,20 +134,20 @@ public class Package {
         this.description = description;
     }
 
-    public Client getCui() {
-        return cui;
-    }
-
-    public void setCui(Client cui) {
-        this.cui = cui;
-    }
-
     public Invoice getInvoice() {
         return invoice;
     }
 
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
     
 }

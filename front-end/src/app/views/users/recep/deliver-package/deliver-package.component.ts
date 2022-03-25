@@ -52,6 +52,9 @@ export class DeliverPackageComponent implements OnInit {
   getData(){
     this.recepService.getPackagesInDest().subscribe(response => {
       this.packages = response;
+      for(let i = 0; i < this.packages.length; i++){
+        this.packages[i].noInvoice = this.packages[i].invoice.id;
+      }
       this.source.load(this.packages);
     })
   }

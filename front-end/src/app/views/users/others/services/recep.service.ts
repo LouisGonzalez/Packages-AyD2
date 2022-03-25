@@ -37,33 +37,33 @@ export class RecepService {
   }
 
   //Querys relacionadas a destinos
-  getAllDestinys(): Observable<Destination[]>{
-    let a = this.httpClient.get<Destination[]>(`${this.url}/destination`);
+  getAllDestinys(): Observable<any>{                                  //LISTO
+    let a = this.httpClient.get(`${this.urlApi}/destination/`);
     return a;
   }
 
   //busca de rutas segun destino
-  getRouteByDestiny(idDestiny: number): Observable<Route[]>{
-    let a = this.httpClient.get<Route[]>(`${this.url}/route?destinationId=${idDestiny}`);
+  getRouteByDestiny(idDestiny: number): Observable<any>{              //LISTO
+    let a = this.httpClient.get<any>(`${this.urlApi}/route/destination/${idDestiny}`);
     return a;
   }
 
-  getDestinyById(idDestiny: number): Observable<Destination[]>{
-    let a = this.httpClient.get<Destination[]>(`${this.url}/destination?id=${idDestiny}`);
+  getDestinyById(idDestiny: number): Observable<any>{                 //LISTO
+    let a = this.httpClient.get(`${this.urlApi}/destination/${idDestiny}`);
     return a;
   }
 
-  createInvoice(invoice: Invoice): Observable<any>{
-    return this.httpClient.post(`${this.url}/invoice`, invoice);
+  createInvoice(invoice: Invoice): Observable<any>{                   //LISTO
+    return this.httpClient.post(`${this.urlApi}/invoice/`, invoice);
   }
 
-  creaatePackage(pack: Package): Observable<any>{
-    return this.httpClient.post(`${this.url}/packages`, pack);
+  creaatePackage(pack: Package): Observable<any>{                     //LISTO
+    return this.httpClient.post(`${this.urlApi}/package/`, pack);
   }
 
   //Todos los paquetes que ya esten en destino
-  getPackagesInDest(): Observable<Package[]> {
-    return this.httpClient.get<Package[]>(`${this.url}/packages?atDestination=true&retired=false`);
+  getPackagesInDest(): Observable<any> {                              //LISTO
+    return this.httpClient.get(`${this.urlApi}/package/in-destination/`);
   }
 
    //Todos los paquetes que ya esten en destino
@@ -81,7 +81,7 @@ export class RecepService {
   }
 
   editRetiredStatePackage(pack: Package){
-    return this.httpClient.put(`${this.url}/packages/${pack.id}`, pack);
+    return this.httpClient.put(`${this.urlApi}/package/${pack.id}`, pack);
   }
 
   /**

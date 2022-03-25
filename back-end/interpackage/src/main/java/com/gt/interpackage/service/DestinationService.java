@@ -71,5 +71,9 @@ public class DestinationService {
     public boolean exists(String name, Long id){
         return destinationRepository.existsDestinationByNameAndIdIsNot(name, id);
     }
-    
+
+    public List<Destination> findAll(){
+        return destinationRepository.findAll();
+    }
+
 }

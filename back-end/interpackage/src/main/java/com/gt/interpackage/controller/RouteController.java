@@ -24,10 +24,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import com.gt.interpackage.model.Destination;
 /**
  *
  * @author helmuth
  */
+@CrossOrigin (origins = Constants.URL_FRONT_END, allowCredentials = "true")
 @RestController
 @RequestMapping(Constants.API_V1 + "/route")
 public class RouteController {
@@ -45,7 +47,6 @@ public class RouteController {
      * @param route Ruta a crear.
      * @return 
      */
-    @CrossOrigin
     @PostMapping
     public ResponseEntity<Route> createRoute(@RequestBody Route route){
         try{
@@ -54,13 +55,18 @@ public class RouteController {
                 
             if(route.getName().isBlank() || route.getName().isEmpty() )
                 return new ResponseEntity("Nombre de ruta no valido", HttpStatus.BAD_REQUEST);
-                
+            System.out.println(routeService);
             Route tempRoute = routeService.create(route);
+
             return ResponseEntity.created(new URI("/route/"+tempRoute.getId())).body(tempRoute);
         } catch(Exception e){
+            System.out.println(e);
             return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    
+    
     
     /**
      * Metodo que recibe una peticion GET para obtener un listado paginado de rutas.
@@ -75,6 +81,7 @@ public class RouteController {
         @RequestParam(defaultValue = "10") int size
     ){
         try{          
+            System.out.println(routeService);
             Page<Route> routes = routeService.getAll(
                PageRequest.of(page, size, Sort.by("name"))
             );
@@ -175,6 +182,15 @@ public class RouteController {
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+    
+    /*
+     * Metodo que realiza una llamada al servicio de rutas para obtener el listado
+     * de rutas hacia un destino especifico
+    */
+    @GetMapping("/destination/{id_destination}")
+    public ResponseEntity<List<Route>> getRoutesByDestination(@PathVariable Integer id_destination){
+        return ResponseEntity.ok(routeService.findRouteByDestination(id_destination));
     }
     
      
