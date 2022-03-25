@@ -86,7 +86,6 @@ public class EmployeeController {
             Optional<List<Employee>> operators = _employeeService.getAllOperatorsByCUI(cui, Integer.valueOf(operatorTypeId.toString()));
             return  ResponseEntity.ok(operators.get());   
         } catch(Exception e){
-            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

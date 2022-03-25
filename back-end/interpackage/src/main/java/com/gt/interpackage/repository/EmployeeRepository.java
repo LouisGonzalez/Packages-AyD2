@@ -25,7 +25,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>{
      * @return Listado
      */
     
-    @Query(value = "SELECT * FROM Employee WHERE CAST(cui AS TEXT) LIKE ?1% AND type = ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM Employee WHERE CAST(cui AS TEXT) LIKE ?1% AND type = ?2 AND activo=true", nativeQuery = true)
     public Optional<List<Employee>> findByCuiContainsAndEmployeeTypeIs(String cui, Integer employeeType);
 
     @Query(value = "SELECT * FROM employee e WHERE e.activo = false", nativeQuery = true)

@@ -26,10 +26,6 @@ export class CheckpointListComponent implements OnInit {
       perPage: this.showPerPage,
     },
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
       description: {
         title: 'Nombre',
         type: 'string'
@@ -57,9 +53,14 @@ export class CheckpointListComponent implements OnInit {
         title: 'Estado',
         type: 'string',
         valuePrepareFunction: (active) => {
-          return `${active == 1 ? 'Activa' : 'Desactivada'}`;
-        }
-      } 
+          return `${active == 1 ? 'Activo' : 'Desactivado'}`;}
+      },
+      assignedOperator: {
+        title: 'Operador Asignado',
+        type: 'string',
+        valuePrepareFunction: (assignedOperator) => {
+          return `${assignedOperator.cui} ${assignedOperator.name} ${assignedOperator.lastname}`;}
+      }  
     },
     defaultStyle: false,
     actions: {
