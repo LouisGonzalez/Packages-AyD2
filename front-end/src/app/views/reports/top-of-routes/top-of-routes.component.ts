@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProgressInfo, StatsProgressBarData } from '../../../@core/data/stats-progress-bar';
-import { takeWhile } from 'rxjs/operators';
-import { NbThemeService } from '@nebular/theme';
+import { ProgressInfo} from '../../../@core/data/stats-progress-bar';
+import { NbThemeService, NbToastrService } from '@nebular/theme';
+import { RouteService } from '../../users/others/services/route/route.service';
+import { NotificationsComponent } from '../../users/others/source/notifications/notifications.component';
 
 @Component({
   selector: 'ngx-top-of-routes',
@@ -12,9 +13,9 @@ export class TopOfRoutesComponent implements OnInit {
 
   private alive = true;
 
-  progressInfoData: ProgressInfo[];
+  progressInfoData: ProgressInfo [];
 
-  results = [ ];
+  results = [];
   showLegend = true;
   showXAxis = true;
   showYAxis = true;
@@ -23,21 +24,21 @@ export class TopOfRoutesComponent implements OnInit {
   colorScheme: any;
   themeSubscription: any;
 
+  notification : NotificationsComponent;
+
   constructor(
-    private statsProgressBarService: StatsProgressBarData,
-    private theme: NbThemeService
+    private theme: NbThemeService,
+    private routeService: RouteService,
+    private toastrService: NbToastrService
     ) {
-      this.statsProgressBarService.getProgressInfoData()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((data) => {
-        this.progressInfoData = data;
-      });
       this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
         const colors: any = config.variables;
         this.colorScheme = {
           domain: [colors.primaryLight, colors.infoLight, colors.successLight, colors.warningLight, colors.dangerLight],
         };
       });
+      this.progressInfoData = [];
+      this.getTop();
   }
 
   ngOnDestroy() {
@@ -46,29 +47,43 @@ export class TopOfRoutesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.progressInfoData = [];
-    this.getTop();
+    this.notification = new NotificationsComponent(this.toastrService);
   }
 
   getTop() {
-    this.addNewTop('Ruta 1', 500, 'Guatemala');
-    this.addNewTop('Ruta 2', 350, 'Quetzaltenango');
-    this.addNewTop('Ruta 3', 100, 'San Marcos');
+    this.routeService.getMostPopularRoute()
+    .subscribe(
+        (res) => {
+          if (res == null || res.length == 0) {
+            this.notification.showToast(3, "No hay rutas", "No se encuentran rutas registradas", 3500);
+          } else {
+            for (const iterator of res) {
+              this.addNewTop(iterator.name, Number(iterator.totalPackages), iterator.destination.name);
+            }
+            this.results = [...this.results];
+          }
+        }
+    );
+    
+    
+    setTimeout(() => {console.log('joal');}, 8500);
   }
 
-  addNewTop(title, value, description) {
+  addNewTop(title, value, destination) {
     this.results.push({
-      name: title, value : value
-    })
+        name: title, 
+        value : value
+    });
     this.progressInfoData.push({
       title: title,
       value: value,
-      description: description,
+      description: destination,
       activeProgress: null
     });
   }
 
   range(date){
+    this.addNewTop('Prueba', 85, 'Prueba');
     console.log(date.queue);
   }
 

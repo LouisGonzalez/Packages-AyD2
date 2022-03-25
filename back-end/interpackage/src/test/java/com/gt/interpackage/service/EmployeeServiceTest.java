@@ -75,4 +75,26 @@ public class EmployeeServiceTest {
         assertNotNull(empUpdated);
         assertEquals(updated.getLastname(), empUpdated.getLastname());
     }
+    
+    @Test
+    public void testGetUserByUsernameOrEmail() throws Exception {
+        System.out.println("EmployeeServiceTest - getUserByUsernameOrEmail");
+        Mockito
+                .when(_empRepository.getByUsernameOrEmail(ArgumentMatchers.any(String.class), ArgumentMatchers.any(String.class)))
+                .thenReturn(emp);
+        Employee searched = _empService.getUserByUsernameOrEmail("prueba@gmail.com");
+        Assertions.assertThat(searched.getEmail()).isEqualTo("prueba@gmail.com");
+    }
+    
+    @Test
+    public void testGetUserByTokenPassword() throws Exception {
+        System.out.println("EmployeeServiceTest - getUserByTokenPassword");
+        String tokenPassword = "asdf123asdf564asdf321a65sd";
+        emp.setTokenPassword(tokenPassword);
+        Mockito
+                .when(_empRepository.findByTokenPassword(ArgumentMatchers.any(String.class)))
+                .thenReturn(emp);
+        Employee searched = _empService.getUserByTokenPassword(tokenPassword);
+        Assertions.assertThat(searched.getTokenPassword()).isEqualTo(tokenPassword);
+    }
 }

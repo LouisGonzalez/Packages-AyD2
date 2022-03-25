@@ -1,11 +1,14 @@
 package com.gt.interpackage.controller;
 
+import com.gt.interpackage.dto.ChangePasswordDTO;
 import com.gt.interpackage.model.Employee;
 import com.gt.interpackage.service.EmployeeService;
 import com.gt.interpackage.service.EmployeeTypeService;
 import com.gt.interpackage.source.Constants;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -90,5 +93,55 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+ 
+    @GetMapping (value = "/search-by-email/{email}")
+    public ResponseEntity<Employee> getUserByEmail(@PathVariable String email) {
+        try {
+            Employee employee = _employeeService.getUserByUsernameOrEmail(email);
+            return employee != null ? 
+                    ResponseEntity.ok(employee) :   // 200 OK 
+                    ResponseEntity                  // 404 Not Found
+                        .notFound()
+                        .header("Error", "No se encuentra registrado un empleado con el correo electrónico: " + email)
+                        .build();
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError().build(); // 500 Internal Server Error
+        }
+    }
     
+    @PostMapping ("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
+        if (changePasswordDTO.isValidateFields()) {
+            if (!changePasswordDTO.getPassword().equals(changePasswordDTO.getConfirmPassword())) {
+                return ResponseEntity
+                        .badRequest()
+                        .header("errorMessage", "Las contraseñas no coinciden")
+                        .build();
+            } else {
+                try {
+                    Employee employee = _employeeService.getUserByTokenPassword(changePasswordDTO.getTokenPassword());
+                    if (employee == null) {
+                        return ResponseEntity                  // 404 Not Found
+                            .notFound()
+                            .header("errorMessage", "No se encuentra registrado un empleado con las credenciales indicadas.")
+                            .build();
+                    } else {
+                        employee.setPassword(changePasswordDTO.getPassword());
+                        employee.setTokenPassword(null);
+                        _employeeService.save(employee);
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("message", "Contraseña actualizada con exito.");
+                        return ResponseEntity.ok(map);
+                    }
+                } catch (Exception e) {
+                     return ResponseEntity.internalServerError().build(); // 500 Internal Server Error
+                }
+            }
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .header("errorMessage", "Todos los camopos son obligatorios.")
+                    .build();
+        }
+    }
 }

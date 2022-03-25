@@ -30,5 +30,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>{
 
     @Query(value = "SELECT * FROM employee e WHERE e.activo = false", nativeQuery = true)
     List<Employee> getAllDeactivates();
+    
+    public Employee getByUsernameOrEmail(String username, String email);
+    
+    public Employee findByTokenPassword(String tokenPassword);
 
 }

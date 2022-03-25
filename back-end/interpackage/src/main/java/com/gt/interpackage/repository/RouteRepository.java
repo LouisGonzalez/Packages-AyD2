@@ -4,6 +4,7 @@ import com.gt.interpackage.model.Route;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 /**
  *
@@ -45,5 +46,8 @@ public interface RouteRepository extends JpaRepository<Route, Long>{
      * @return True | False
      */
     public boolean existsRouteByDestinationId(Long destinationId);
+
+    @Query(value = "SELECT * FROM route r ORDER BY r.total_packages DESC LIMIT 3", nativeQuery = true)
+    public List<Route> getThreeMostPopularRoute();
     
 }

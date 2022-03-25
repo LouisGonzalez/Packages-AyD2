@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  *
  * @author helmuth
  */
+@CrossOrigin (origins = Constants.URL_FRONT_END, allowCredentials = "true")
 @RestController
 @RequestMapping(Constants.API_V1 + "/route")
 public class RouteController {
@@ -172,7 +173,10 @@ public class RouteController {
         }
     }
     
-     
+    @GetMapping ("/most-popular-route")
+    public ResponseEntity<List<Route>> getAllFees() {
+        return ResponseEntity.ok(routeService.getThreeRouteMostPopular());
+    }
 }
     
 

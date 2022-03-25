@@ -37,6 +37,9 @@ public class Employee {
     @Column (nullable = false)
     private Integer type;
     
+    @Column (nullable = true)
+    private String tokenPassword;
+    
     @Column (nullable = false, length = 60)
     //@JsonDeserialize (using = BCryptPasswordDeserializer.class)
     private String password;
@@ -130,6 +133,14 @@ public class Employee {
     
     public void setActivo(Boolean activo){
         this.activo = activo;
+    }
+
+    public String getTokenPassword() {
+        return tokenPassword;
+    }
+
+    public void setTokenPassword(String tokenPassword) {
+        this.tokenPassword = tokenPassword;
     }
     
 }

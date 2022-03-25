@@ -28,6 +28,7 @@ public class FeeService {
     public Fee getById(Long id) throws Exception {
         try {
             Fee fee = feeRepository.getById(id);
+            if (fee == null) return null; 
             if (fee.getName() != null) { }
             return fee;
         } catch (EntityNotFoundException e) {

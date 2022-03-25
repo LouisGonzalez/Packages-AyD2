@@ -59,6 +59,10 @@ export class RouteService {
     return this.http.get<any>(global.GLOBAL.url + `/route?active=${status}`);
   }
 
+  public getMostPopularRoute() {
+    return this.http.get<any>(global.GLOBAL.urlApi + "/route/most-popular-route")
+  }
+
 }
 
 

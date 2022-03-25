@@ -5,9 +5,9 @@
 package com.gt.interpackage.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gt.interpackage.controller.DestinationController;
 import com.gt.interpackage.model.Destination;
 import com.gt.interpackage.service.DestinationService;
+import com.gt.interpackage.service.RouteService;
 import com.gt.interpackage.source.Constants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +35,9 @@ public class DestinationControllerTest {
     @MockBean
     private DestinationService destinationService;
     
+    @MockBean 
+    private RouteService routeService;
+    
     private Destination destination;
     private ObjectMapper objectMapper;
     
@@ -48,7 +51,9 @@ public class DestinationControllerTest {
     @Test
     public void testAddDestination() throws Exception {
         System.out.println("DestinationControllerTest - save");
-        Mockito.when(destinationService.save(ArgumentMatchers.any(Destination.class))).thenReturn(destination);
+        Mockito.when(destinationService
+                .save(ArgumentMatchers.any(Destination.class)))
+                .thenReturn(destination);
         mockMvc.perform(MockMvcRequestBuilders.post(Constants.API_V1 + "/destination/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(destination)))

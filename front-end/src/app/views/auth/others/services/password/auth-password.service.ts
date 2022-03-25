@@ -10,11 +10,14 @@ export class AuthPasswordService {
   constructor(private http: HttpClient) { }
 
   sendEmail(data : any) {
-    console.log(global.GLOBAL);
-    return this.http.post<any>(global.GLOBAL.url +"/sendEmail/", data);
+    return this.http.post<any>(global.GLOBAL.urlApi +"/email/send-email-forgot-password/", data);
   }
 
-  changePassword(data : any, id : number) {
-    return this.http.put<any>(`${global.GLOBAL.url}/employees/` + id, data);
+  searchUserByEmail(email : any) {
+    return this.http.get<any>(global.GLOBAL.urlApi +"/employee/search-by-email/" + email);
+  }
+
+  changePassword(data : any) {
+    return this.http.post<any>(`${global.GLOBAL.urlApi}/employee/change-password/`, data);
   }
 }

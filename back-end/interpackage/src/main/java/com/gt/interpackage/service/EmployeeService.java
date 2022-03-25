@@ -2,10 +2,7 @@ package com.gt.interpackage.service;
 
 import com.gt.interpackage.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
 import com.gt.interpackage.model.Employee;
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
@@ -31,6 +28,7 @@ public class EmployeeService {
     public Employee getByCUI(Long CUI) throws Exception {
         try {
             Employee emp = _empRepository.getById(CUI);
+            if (emp == null) return null; 
             if(emp.getName() != null){  }
             return emp;
         } catch(EntityNotFoundException e){
@@ -38,6 +36,28 @@ public class EmployeeService {
         }
     }
         
+    public Employee getUserByUsernameOrEmail(String usernameOrEmail) throws Exception {
+        try {
+            Employee employee = _empRepository.getByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
+            if (employee == null) return null; 
+            if (employee.getName() != null) { }
+            return employee;
+        } catch (EntityNotFoundException e) {
+            return null;
+        }
+    }
+    
+    public Employee getUserByTokenPassword(String tokenPassword) throws Exception {
+        try {
+            Employee employee = _empRepository.findByTokenPassword(tokenPassword);
+            if (employee == null) return null;
+            if (employee.getName() != null) { }
+            return employee;
+        } catch (EntityNotFoundException e) {
+            return null;
+        }
+    }
+    
     public <S extends Employee> S save(S entity){
         try {
         return _empRepository.save(entity);            

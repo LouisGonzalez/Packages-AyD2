@@ -107,4 +107,8 @@ public class RouteService {
         return routeRepository.existsRouteByDestinationId(destinationId);
     }
     
+    public List<Route> getThreeRouteMostPopular() {
+        return routeRepository.getThreeMostPopularRoute();
+    }
+    
 }
