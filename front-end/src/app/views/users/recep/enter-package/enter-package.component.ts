@@ -35,7 +35,7 @@ export class EnterPackageComponent implements OnInit {
 
   actualDate: any;
   generalTotal: number = 0;
-  invoice: Invoice = { id:null, nitClient: null, subTotal: null, total: null, dateEmit: null};
+  invoice: Invoice = { id:null, nitClient: null, subTotal: null, total: null, dateEmit: null, nit: null};
 
   client: Client;
   name: string; lastname: string; address: string;
@@ -131,7 +131,8 @@ export class EnterPackageComponent implements OnInit {
   findRoutes(event, i){
     console.log(this.destinySelected[i])
     this.recepService.getDestinyById(this.destinySelected[i]).subscribe( result => {
-      this.feeByDestiny[i] = result[0].fee;
+      this.feeByDestiny[i] = result.fee;
+      console.log(this.feeByDestiny[i])
       this.calculateUnitTotal(i);
       this.recepService.getRouteByDestiny(this.destinySelected[i]).subscribe(response => {
         this.routes = response;
@@ -180,18 +181,23 @@ export class EnterPackageComponent implements OnInit {
       aproved = false;
     }
     if(aproved){
-      this.invoice.nitClient = this.NIT;
+      this.invoice.nit = this.NIT;
       this.invoice.subTotal = this.generalTotal;
       this.invoice.total = this.generalTotal;
       this.invoice.dateEmit = this.actualDate;
+      console.log(this.invoice)
       this.recepService.createInvoice(this.invoice).subscribe(result => {
         for(let i = 0; i < this.packages.length; i++){
-          this.packages[i].route = this.routeSelected[i];
+          this.packages[i].route = {
+            id: this.routeSelected[i]
+          }
           this.packages[i].onWay = false;
           this.packages[i].atDestination = false;
           this.packages[i].retired = false;
-          this.packages[i].idClient = this.client[0].id;
+          this.packages[i].idClient = this.client.id;
           this.packages[i].noInvoice = result.id;
+          this.packages[i].invoice = result;
+
           if(this.priority[i] == undefined){
             this.priority[i] = false;
           }
@@ -214,7 +220,8 @@ export class EnterPackageComponent implements OnInit {
   cleanData(){
     this.cleanPackages();
     this.generalTotal = 0;
-    this.name = ""; this.lastname = ""; this.CUI = 0; this.NIT=0;
+    this.name = ""; this.lastname = ""; this.CUI = 0; this.NIT=0; this.address = "", this.age=0;
+    this.nitParameter = 0;
   }
 
   ngOnInit(): void {

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.gt.interpackage.model.Destination;
 /**
  *
  * @author helmuth
@@ -24,7 +25,12 @@ public class RouteService {
      * @return Ruta creada.
      */
     public Route create(Route route){
+        try{            
         return routeRepository.save(route);
+        } catch(Exception e){
+            System.out.println(e);
+            return null;
+        }
     }
     
     /**
@@ -107,4 +113,11 @@ public class RouteService {
         return routeRepository.existsRouteByDestinationId(destinationId);
     }
     
+    /*
+     * Metodo que llama al repositorio de rutas para buscar
+     * si existen rutas hacia un destino especifico
+    */
+    public List<Route> findRouteByDestination(Integer id_destination){
+        return routeRepository.findRouteByDestination(id_destination);
+    }
 }

@@ -45,6 +45,14 @@ public class Client {
         this.nit = nit;
         this.address = address;
     }
+    
+    public Client(String name, String lastname, Integer age, Integer nit, String address){
+        this.name = name;
+        this.lastname = lastname;
+        this.age = age;
+        this.nit = nit;
+        this.address = address;
+    }
 
     public Long getCui() {
         return cui;
