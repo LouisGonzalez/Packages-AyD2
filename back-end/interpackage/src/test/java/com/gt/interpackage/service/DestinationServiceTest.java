@@ -41,10 +41,23 @@ public class DestinationServiceTest {
     @Test
     public void testSave() {
         System.out.println("DestinationServiceTest - save");
-        Mockito.when(destinationRepository.save(ArgumentMatchers.any(Destination.class))).thenReturn(destination);
+        Mockito.when(
+                destinationRepository
+                        .save(ArgumentMatchers.any(Destination.class)))
+                .thenReturn(destination);
         assertNotNull(destinationService.save(new Destination("GUATEMALA-PETEN", "De Gautemala a Peten", 52.50)));
     }
 
+    @Test
+    public void testExistsDestinationByName() {
+        System.out.println("DestinationServiceTest - existsDestinationByName");
+        Mockito.when(
+                destinationRepository
+                        .existsDestinationByName(ArgumentMatchers.any(String.class)))
+                .thenReturn(false);
+        assertFalse(destinationRepository.existsDestinationByName("Guatemala-Quetzaltenango"));
+    }
+    
     /**
      * Test of findByName method, of class DestinationService.
      */

@@ -200,7 +200,7 @@ public class RouteController {
     }
     
     @GetMapping ("/most-popular-route")
-    public ResponseEntity<List<Route>> getAllFees() {
+    public ResponseEntity<List<Route>> getMostPopularRoute() {
         return ResponseEntity.ok(routeService.getThreeRouteMostPopular());
     }
     
