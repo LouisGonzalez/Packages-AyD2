@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NbToastrService } from '@nebular/theme';
-import { LocalDataSource } from 'ng2-smart-table';
+import { CustomServerDataSource } from '../../others/models/CustomServerDataSource';
 import { Package } from '../../others/models/Package';
 import { RecepService } from '../../others/services/recep.service';
 import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
-import { DeliverButtonComponent } from './deliver-button/deliver-button.component';
+
 
 @Component({
   selector: 'ngx-deliver-package',
@@ -13,24 +13,35 @@ import { DeliverButtonComponent } from './deliver-button/deliver-button.componen
 })
 export class DeliverPackageComponent implements OnInit {
 
-  packages: Package[];
+  notification : NotificationsComponent;
+  source: CustomServerDataSource;
+  showPerPage = 10;
   pack: Package;
-  notification: NotificationsComponent;
 
   settings = {
+    mode: 'external', 
+    noDataMessage: 'No hay paquetes en destino actualmente.',
+    pager:{
+      display: true,
+      perPage: this.showPerPage,
+    },
     actions: {
       columnTitle:'Entregar',
       add: false,
-      edit: false
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-checkmark"></i>',
-      confirmDelete: true
+      edit: false,
+      delete: false,
+      custom: [
+        { name: 'removeCheckpoint', title: '<i class="nb-checkmark"></i>' }
+      ],
+      position: 'left'
     },
     columns: {
-      noInvoice: {
+      invoice: {
         title: 'No. Factura',
-        type: 'number'
+        type: 'number',
+        valuePrepareFunction: (invoice) => {
+          return `${invoice.id}`;
+        }
       },
       description: {
         title: 'Descripcion',
@@ -39,25 +50,12 @@ export class DeliverPackageComponent implements OnInit {
     }
   };
 
-  source: LocalDataSource = new LocalDataSource();
 
   constructor(private recepService: RecepService, private toastrService: NbToastrService) {
-    this.getData();
+    this.source = recepService.getAllPackagesAtDestinationPaginated();
   }
 
-  startTest(){
-    console.log('hola mundooo');
-  }
 
-  getData(){
-    this.recepService.getPackagesInDest().subscribe(response => {
-      this.packages = response;
-      for(let i = 0; i < this.packages.length; i++){
-        this.packages[i].noInvoice = this.packages[i].invoice.id;
-      }
-      this.source.load(this.packages);
-    })
-  }
 
   deliverPackage(event): void{
     if(window.confirm('¿El paquete ha sido entregado?')){
@@ -65,7 +63,7 @@ export class DeliverPackageComponent implements OnInit {
       this.pack.retired = true;
       this.recepService.editRetiredStatePackage(this.pack).subscribe(data => {
         this.notification.showToast(1, 'Entregado', `Paquete marcado como entregado con exito`, 2500);
-        this.getData();
+        this.source.remove(event.data['id'])
       })
     } else {
       event.confirm.reject();

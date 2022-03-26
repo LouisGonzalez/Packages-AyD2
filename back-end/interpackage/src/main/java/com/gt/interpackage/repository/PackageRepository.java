@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gt.interpackage.repository;
 
 import java.util.List;
@@ -9,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import com.gt.interpackage.model.Package;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  *
@@ -19,4 +17,12 @@ public interface PackageRepository extends JpaRepository<Package, Long> {
     
     @Query(value = "SELECT * FROM package p WHERE p.at_destination = true AND p.retired = false", nativeQuery = true)
     List<Package> getInDestination();
+    
+    /**
+     * Metodo que retorna desde la base de datos paginacion con todos aquellos
+     * paquetes que se encuentran en destino y que aun no han sido retirados.
+     * @param pageable
+     * @return 
+     */
+    public Page<Package> findAllByAtDestinationTrueAndRetiredFalse(Pageable pageable);
 }

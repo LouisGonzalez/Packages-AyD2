@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import com.gt.interpackage.model.Destination;
 /**
  *
  * @author helmuth
@@ -64,9 +63,7 @@ public class RouteController {
         }
     }
     
-    
-    
-    
+   
     /**
      * Metodo que recibe una peticion GET para obtener un listado paginado de rutas.
      * @param page Numero de pagina actual. Por defecto 1.
@@ -80,11 +77,10 @@ public class RouteController {
         @RequestParam(defaultValue = "10") int size
     ){
         try{          
-            System.out.println(routeService);
             Page<Route> routes = routeService.getAll(
                PageRequest.of(page, size, Sort.by("name"))
             );
-            return new ResponseEntity<Page<Route>>(routes, HttpStatus.OK);
+            return new ResponseEntity<>(routes, HttpStatus.OK);
         } catch(Exception e){
             return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
         }

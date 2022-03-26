@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gt.interpackage.controller;
 
 import com.gt.interpackage.service.PackageService;
@@ -14,12 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.gt.interpackage.model.Package;
+import com.gt.interpackage.repository.PackageRepository;
 import java.net.URI;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 /**
  *
  * @author Luis
@@ -37,8 +38,17 @@ public class PackageController {
      * paquetes en destino y que aun no han sido entregados
     */
     @GetMapping("/in-destination/")
-    public ResponseEntity<List<Package>> getInDestination(){
-        return ResponseEntity.ok(_packageService.findInDestination());
+    public ResponseEntity<Page<Package>> getInDestination(
+        @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "10") int size
+    ){
+        try{          
+            Page<Package> packages = _packageService.getAllAtDestination(
+                PageRequest.of(page, size));
+            return new ResponseEntity<>(packages, HttpStatus.OK);
+        } catch(Exception e){
+            return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
     /*

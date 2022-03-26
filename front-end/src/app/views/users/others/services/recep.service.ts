@@ -8,6 +8,7 @@ import { Route } from '../models/Route';
 import { Invoice } from '../models/Invoice';
 import { Package } from '../models/Package';
 import { PackageInformation } from '../models/PackageInformation';
+import { CustomServerDataSource } from '../models/CustomServerDataSource';
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +95,23 @@ export class RecepService {
   public getPackageInfo(packageId: number): Observable<PackageInformation>{
     return this.httpClient.get<PackageInformation>(`${this.url}/packages/${packageId}`);
   }
+
+      /**
+   * datakey: Nombre del array que contiene los datos del servidor
+   * endPoint: URI 
+   * pagerPageKey: Nombre del parametro que representa el numero de pagina en el servidor.
+   * pagerLimitKey: Nombre del parametro que representa la cantidad de elementos por pagina en el servidor.
+   * totalKey: Nombre del atributo que contiene el numero total de elementos.
+   */
+       public getAllPackagesAtDestinationPaginated() {
+        return new CustomServerDataSource(this.httpClient, {
+          dataKey: 'content',
+          endPoint: this.urlApi + '/package/in-destination/',
+          pagerPageKey: 'page', 
+          pagerLimitKey: 'size', 
+          totalKey: 'totalElements' 
+        });
+      }
 
 }
 
