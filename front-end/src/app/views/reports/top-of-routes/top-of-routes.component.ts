@@ -83,7 +83,6 @@ export class TopOfRoutesComponent implements OnInit {
   }
 
   range(date){
-    this.addNewTop('Prueba', 85, 'Prueba');
     console.log(date.queue);
   }
 

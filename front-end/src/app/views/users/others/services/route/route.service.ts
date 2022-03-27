@@ -42,7 +42,7 @@ export class RouteService {
     });
   }
 
-   /**
+  /**
    * datakey: Nombre del array que contiene los datos del servidor
    * endPoint: URI 
    * pagerPageKey: Nombre del parametro que representa el numero de pagina en el servidor.
