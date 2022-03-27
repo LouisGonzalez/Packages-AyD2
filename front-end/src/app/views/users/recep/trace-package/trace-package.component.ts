@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { disableDebugTools } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { LocalDataSource } from 'ng2-smart-table';
+import { NbSearchService, NbToastrService } from '@nebular/theme';
+import { CustomServerDataSource } from '../../others/models/CustomServerDataSource';
 import { Package } from '../../others/models/Package';
 import { RecepService } from '../../others/services/recep.service';
+import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 
 @Component({
   selector: 'ngx-trace-package',
@@ -12,23 +15,36 @@ import { RecepService } from '../../others/services/recep.service';
 
 export class TracePackageComponent implements OnInit {
 
-  packages: Package[];
+  notification : NotificationsComponent;
+  source: CustomServerDataSource;
+  showPerPage = 10;
   pack: Package;
 
   settings = {
-    actions: {
-      columnTitle:'Ver',
-      add: false,
-      edit: false
+    hideSubHeader: disableDebugTools,
+    mode: 'external', 
+    noDataMessage: 'No se encontraron paquetes en ruta.',
+    pager:{
+      display: true,
+      perPage: this.showPerPage,
     },
-    delete: {
-      deleteButtonContent: '<i class="nb-search"></i>',
-      confirmDelete: true
+    actions: {
+      columnTitle:'Localizar',
+      add: false,
+      edit: false,
+      delete: false,
+      custom: [
+        { name: 'search', title: '<i class="nb-location"></i>' }
+      ],
+      position: 'left'
     },
     columns: {
-      noInvoice: {
+      invoice: {
         title: 'No. Factura',
-        type: 'number'
+        type: 'number',
+        valuePrepareFunction: (invoice) => {
+          return `${invoice.id}`;
+        }
       },
       description: {
         title: 'Descripcion',
@@ -37,23 +53,28 @@ export class TracePackageComponent implements OnInit {
     }
   };
 
-  source: LocalDataSource = new LocalDataSource();
-
   constructor(
     private receptionistService: RecepService,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.getPackages();
-  }
-
-  public getPackages(){
-    this.receptionistService.getAllPackages().subscribe(response => {
-      this.packages = response;
-      this.source.load(this.packages);
+    private router: Router,
+    private searchService: NbSearchService,
+    private toastrService: NbToastrService
+  ) {
+    this.searchService.onSearchSubmit().subscribe((data: any) => {
+      this.receptionistService.getPackageByInvoiceId(data.term).subscribe({
+        next:(res) => {
+          this.source = res;
+        }, 
+        error:(err) => {
+          this.notification.showToast(3,'Error', 'Hubo un error realizando la busqueda.', 3000);
+        }
+      })
     })
   }
+
+  ngOnInit(): void {
+    this.source = this.receptionistService.getAllPackagesOnRoutePaginated();
+  }
+
 
   public tracePackage(event): void{
     this.router.navigate(['views', 'recep', 'package-info', event.data['id']]);  

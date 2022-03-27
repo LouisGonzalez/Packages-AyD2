@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.gt.interpackage.model.Package;
-import com.gt.interpackage.repository.PackageRepository;
 import java.net.URI;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +42,24 @@ public class PackageController {
     ){
         try{          
             Page<Package> packages = _packageService.getAllAtDestination(
+                PageRequest.of(page, size));
+            return new ResponseEntity<>(packages, HttpStatus.OK);
+        } catch(Exception e){
+            return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+     /*
+     * Metodo que recibe una peticion GET para obtener el listado de
+     * paquetes en ruta.
+    */
+    @GetMapping("/on-route")
+    public ResponseEntity<Page<Package>> getOnRoute(
+        @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "10") int size
+    ){
+        try{          
+            Page<Package> packages = _packageService.getAllOnRoute(
                 PageRequest.of(page, size));
             return new ResponseEntity<>(packages, HttpStatus.OK);
         } catch(Exception e){
@@ -82,6 +98,15 @@ public class PackageController {
                         .build();
         } catch(Exception e){
             return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+    @GetMapping("invoice/{id}")
+    public ResponseEntity<List<Package>> getPackagesOnRouteByInvoiceId(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(_packageService.getPackagesOnRouteByInoviceId(id));
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 }

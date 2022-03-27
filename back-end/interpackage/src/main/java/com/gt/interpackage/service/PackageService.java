@@ -4,6 +4,7 @@ import com.gt.interpackage.repository.PackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.gt.interpackage.model.Package;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +39,15 @@ public class PackageService {
         return _packageRepository.findAllByAtDestinationTrueAndRetiredFalse(pageable);
     }
     
+    
+    /*
+     * Metodo que llama al repositorio de paquetes para obtener una paginacion 
+     * con todos los paquetes que se encuentran en ruta.
+    */
+    public Page<Package> getAllOnRoute(Pageable pageable){
+        return _packageRepository.findAllByOnWayTrue(pageable);
+    }
+    
     /*
      * Metodo que llama al repositorio de paquetes para agregar
      * un nuevo paquete a la bse de datos
@@ -62,6 +72,17 @@ public class PackageService {
             pack.setWeight(entity.getWeight());
             return _packageRepository.save(pack);
         } return null;
+    }
+    
+    /**
+     * Metodo que hace uso del repositorio de paquetes para obtener 
+     * un listado de paquetes cuyo id de factura sea igual al parametro que se
+     * recibe.
+     * @param id
+     * @return 
+     */
+    public List<Package> getPackagesOnRouteByInoviceId(Long id){
+        return _packageRepository.findAllByInvoiceIdAndOnWayTrue(id);
     }
     
     

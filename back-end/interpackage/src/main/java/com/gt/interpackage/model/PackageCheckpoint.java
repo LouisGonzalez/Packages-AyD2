@@ -2,7 +2,6 @@ package com.gt.interpackage.model;
 
 import com.gt.interpackage.pk.PKPackageCheckpoint;
 import java.sql.Time;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -30,8 +29,11 @@ public class PackageCheckpoint {
     @JoinColumn (name = "id_package", nullable = false)
     private Package packages;
     
-    @Column (name = "time_on_checkpoint", nullable = false)
+    @Column (name = "time_on_checkpoint", nullable = true)
     private Time timeOnCheckpoint;
+    
+    @Column(name = "current_checkpoint", nullable = false)
+    private Boolean currentCheckpoint;
 
     public PackageCheckpoint() { }
     
@@ -63,6 +65,14 @@ public class PackageCheckpoint {
 
     public void setTimeOnCheckpoint(Time timeOnCheckpoint) {
         this.timeOnCheckpoint = timeOnCheckpoint;
+    }
+
+    public Boolean getCurrentCheckpoint() {
+        return currentCheckpoint;
+    }
+
+    public void setCurrentCheckpoint(Boolean currentCheckpoint) {
+        this.currentCheckpoint = currentCheckpoint;
     }
     
 }

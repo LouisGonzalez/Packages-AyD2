@@ -25,4 +25,20 @@ public interface PackageRepository extends JpaRepository<Package, Long> {
      * @return 
      */
     public Page<Package> findAllByAtDestinationTrueAndRetiredFalse(Pageable pageable);
+    
+    /**
+     * Metodo que retorna desde la base de datos paginacion con todos aquellos
+     * paquetes que se encuentran en ruta.
+     * @param pageable
+     * @return 
+     */
+    public Page<Package> findAllByOnWayTrue(Pageable pageable);
+    
+    /**
+     * Metodo que retorna desde la base de datos el paquete cuyo id
+     * de factura sea igual al parametro que se recibe.
+     * @param id
+     * @return 
+     */
+    public List<Package> findAllByInvoiceIdAndOnWayTrue(Long id);
 }

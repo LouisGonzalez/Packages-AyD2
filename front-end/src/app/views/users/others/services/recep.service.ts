@@ -92,8 +92,8 @@ export class RecepService {
    * @param packageId Id del paquete a obtener informacion.
    * @returns
    */
-  public getPackageInfo(packageId: number): Observable<PackageInformation>{
-    return this.httpClient.get<PackageInformation>(`${this.url}/packages/${packageId}`);
+  public getPackageInfo(packageId: number): Observable<any>{
+    return this.httpClient.get<any>(`${this.urlApi}/package-checkpoint/${packageId}`);
   }
 
       /**
@@ -103,16 +103,29 @@ export class RecepService {
    * pagerLimitKey: Nombre del parametro que representa la cantidad de elementos por pagina en el servidor.
    * totalKey: Nombre del atributo que contiene el numero total de elementos.
    */
-       public getAllPackagesAtDestinationPaginated() {
-        return new CustomServerDataSource(this.httpClient, {
-          dataKey: 'content',
-          endPoint: this.urlApi + '/package/in-destination/',
-          pagerPageKey: 'page', 
-          pagerLimitKey: 'size', 
-          totalKey: 'totalElements' 
-        });
-      }
+  public getAllPackagesAtDestinationPaginated() {
+    return new CustomServerDataSource(this.httpClient, {
+      dataKey: 'content',
+      endPoint: this.urlApi + '/package/in-destination/',
+      pagerPageKey: 'page', 
+      pagerLimitKey: 'size', 
+      totalKey: 'totalElements' 
+    });
+  }
 
+  public getAllPackagesOnRoutePaginated() {
+    return new CustomServerDataSource(this.httpClient, {
+      dataKey: 'content',
+      endPoint: this.urlApi + '/package/on-route',
+      pagerPageKey: 'page', 
+      pagerLimitKey: 'size', 
+      totalKey: 'totalElements' 
+    });
+  }
+
+  public getPackageByInvoiceId(id: number){
+    return this.httpClient.get<any>(`${this.urlApi}/package/invoice/${id}`);
+  }
 }
 
 
