@@ -67,5 +67,9 @@ public class PackageService {
         } return null;
     }
     
+    public List<Package> getPackagesByInvoice(Long id_invoice){
+        return _packageRepository.getPackagesByInvoice(id_invoice);
+    }
+    
     
 }

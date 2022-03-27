@@ -6,6 +6,7 @@ package com.gt.interpackage.controller;
 
 import com.gt.interpackage.model.Client;
 import com.gt.interpackage.repository.EmployeeRepository;
+import com.gt.interpackage.request.ClientReport;
 import com.gt.interpackage.service.ClientService;
 import com.gt.interpackage.service.EmployeeService;
 import com.gt.interpackage.source.Constants;
@@ -63,5 +64,13 @@ public class ClientController {
         } catch(Exception e){
             return ResponseEntity.badRequest().build(); //400 Bad Request
         }
+    }
+    
+    /*      REPORT      */
+    
+    @GetMapping("/report-3/")
+    public ResponseEntity<List<ClientReport>> getClientReport(){
+        System.out.println("Entro aqui");
+        return ResponseEntity.ok(_clientService.getClientReport());
     }
 }

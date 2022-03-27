@@ -37,6 +37,8 @@ import { ChartModule } from 'angular2-chartjs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ProfitsPerRouteComponent } from './profits-per-route/profits-per-route.component';
+import { InvoiceComponent } from './report3/invoice/invoice.component';
+import { PackagesComponent } from './report3/packages/packages.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { ProfitsPerRouteComponent } from './profits-per-route/profits-per-route.
     Report3Component,
     TopOfRoutesComponent,
     ProfitsPerRouteComponent,
+    InvoiceComponent,
+    PackagesComponent,
   ],
   imports: [
     CommonModule,

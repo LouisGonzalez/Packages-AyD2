@@ -35,7 +35,7 @@ export class EnterPackageComponent implements OnInit {
 
   actualDate: any;
   generalTotal: number = 0;
-  invoice: Invoice = { id:null, nitClient: null, subTotal: null, total: null, dateEmit: null, nit: null};
+  invoice: Invoice = { id:null, nitClient: null, subTotal: null, total: null, dateEmit: null, nit: null, myPackages: null};
 
   client: Client;
   name: string; lastname: string; address: string;

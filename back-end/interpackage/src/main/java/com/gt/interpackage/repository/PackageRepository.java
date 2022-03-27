@@ -19,4 +19,7 @@ public interface PackageRepository extends JpaRepository<Package, Long> {
     
     @Query(value = "SELECT * FROM package p WHERE p.at_destination = true AND p.retired = false", nativeQuery = true)
     List<Package> getInDestination();
+    
+    @Query(value = "SELECT * FROM package p WHERE p.id_invoice = ?1", nativeQuery = true)
+    List<Package> getPackagesByInvoice(Long id_invoice);
 }

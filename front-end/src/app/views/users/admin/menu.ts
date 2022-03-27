@@ -45,6 +45,10 @@ export const ADMINISTRATOR_MENU_ITEMS: NbMenuItem[] = [
             {
                 title: 'Ganancias por ruta',
                 link: '/views/reports/report-2/'
+            },
+            {
+                title: 'Ganancias por cliente',
+                link: '/views/reports/report-3/'
             }
         ],
     },
