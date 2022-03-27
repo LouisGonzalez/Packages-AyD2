@@ -74,4 +74,10 @@ public class PackageController {
             return ResponseEntity.internalServerError().build();
         }
     }
+    
+    @GetMapping("/invoice/{id_invoice}")
+    public ResponseEntity<List<Package>> getPackagesByInvoice(@PathVariable Long id_invoice){
+        return ResponseEntity.ok(_packageService.getPackagesByInvoice(id_invoice));
+    }
+    
 }

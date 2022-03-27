@@ -1,3 +1,5 @@
+import { Package } from "./Package";
+
 export interface Invoice {
   id: number;
   nitClient: number;
@@ -5,4 +7,5 @@ export interface Invoice {
   total: number;
   dateEmit: string;
   nit: number;
+  myPackages: Package;
 }

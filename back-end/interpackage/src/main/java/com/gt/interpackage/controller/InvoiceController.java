@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.gt.interpackage.model.Invoice;
 import java.net.URI;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
@@ -44,6 +47,11 @@ public class InvoiceController {
         } catch(Exception e){
             return ResponseEntity.badRequest().build();
         }
+    }
+    
+    @GetMapping("/client/{nit}")
+    public ResponseEntity<List<Invoice>> getInvoicesByClient(@PathVariable Integer nit){
+        return ResponseEntity.ok(_invoiceService.getInvoicesByClient(nit));
     }
     
 }

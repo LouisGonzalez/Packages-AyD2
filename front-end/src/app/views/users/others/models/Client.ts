@@ -1,3 +1,5 @@
+import { Invoice } from "./Invoice";
+
 export interface Client {
   name: string;
   lastname: string;
@@ -8,4 +10,8 @@ export interface Client {
   cui: number;
   nit: number;
   address: string;
+  myInvoices: Invoice[];
+
+  /*Variables especificamente para reportes*/
+  totalIngresos: number;
 }
