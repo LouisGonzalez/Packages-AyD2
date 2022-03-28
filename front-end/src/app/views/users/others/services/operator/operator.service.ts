@@ -15,8 +15,8 @@ export class OperatorService {
     return this.http.get<Operator[]>(global.GLOBAL.urlApi + "/employee/search-by-cui/"+pattern);
   }
 
-  public processPackage(packageCheckpointId, data: any ){
-    return this.http.patch<any>(`${global.GLOBAL.url}/package-checkpoint/${packageCheckpointId}`, data);
+  public processPackage(data: any ){
+    return this.http.patch<any>(`${global.GLOBAL.urlApi}/package-checkpoint`, data);
   }
 
 }

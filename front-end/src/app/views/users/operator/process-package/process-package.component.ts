@@ -17,8 +17,8 @@ export class ProcessPackageComponent implements OnInit {
   id: number;
   description: string;
   weight: number;
+  packageId: number;
   checkpointId: number;
-  packageCheckpointId: number;
 
   ERROR_REQUIRED = GLOBAL.ERROR_REQUIRED;
   notification : NotificationsComponent;
@@ -42,27 +42,34 @@ export class ProcessPackageComponent implements OnInit {
   }
 
   public getPackage(){
-    this.checkpointId = Number(this.route.snapshot.paramMap.get('id'));
-    this.receptionistService.getPackage(this.checkpointId).subscribe(response => {
-      this.id = response[0].packageId;
-      this.description = response[0].description;
-      this.weight = response[0].weight
-      this.packageCheckpointId = response[0].id
+    this.packageId = Number(this.route.snapshot.paramMap.get('id'));
+    this.receptionistService.getPackage(this.packageId).subscribe(response => {
+      this.id = response.packages.id;
+      this.description = response.packages.description;
+      this.weight = response.packages.weight;
+      this.checkpointId = response.checkpoint.id;
+      console.log(response.checkpoint.route.id)
     })
   }
 
   public proccessPackage(){
     if(this.formPackage.valid){
-      this.operatorService.processPackage(this.packageCheckpointId, {
+      this.operatorService.processPackage({
+        checkpoint: {
+          id: this.checkpointId
+        },
+        packages: {
+          id: this.packageId
+        },
         timeOnCheckpoint: this.formPackage.get('time').value,
-        processed: Boolean(true)
+        currentCheckpoint: Boolean(false)
       }).subscribe({
         next : (res) => {
           this.notification.showToast(1, 'Exito', `Paquete procesado exitosamente.`, 3000);
           this.goBack();
         },
-        error : () => {
-          this.notification.showToast(4, 'Error', `Error al procesar el paquete.`, 3000);
+        error : (error) => {
+          this.notification.showToast(4, 'Error', error.error, 5000);
         }
       });
     }else{

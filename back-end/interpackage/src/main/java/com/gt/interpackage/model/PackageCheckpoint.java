@@ -36,13 +36,14 @@ public class PackageCheckpoint {
     private Boolean currentCheckpoint;
 
     public PackageCheckpoint() { }
-    
-    public PackageCheckpoint(Checkpoint checkpoint, Package packages, Time timeOnCheckpoint) {
+
+    public PackageCheckpoint(Checkpoint checkpoint, Package packages, Time timeOnCheckpoint, Boolean currentCheckpoint) {
         this.checkpoint = checkpoint;
         this.packages = packages;
         this.timeOnCheckpoint = timeOnCheckpoint;
+        this.currentCheckpoint = currentCheckpoint;
     }
-
+    
     public Checkpoint getCheckpoint() {
         return checkpoint;
     }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.gt.interpackage.repository.CheckpointRepository;
 import com.gt.interpackage.model.Checkpoint;
-import com.gt.interpackage.model.Employee;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -81,6 +80,6 @@ public class CheckpointService {
     }
     
     public List<Checkpoint> getAllByAssignedOperator(Long cui){
-        return checkpointRepository.findAllByAssignedOperatorCUIAndActiveTrue(cui);
+        return checkpointRepository.findAllByAssignedOperatorCUIAndActiveTrueOrderByRouteId(cui);
     }
 }

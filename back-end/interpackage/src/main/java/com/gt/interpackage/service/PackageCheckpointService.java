@@ -2,6 +2,7 @@ package com.gt.interpackage.service;
 
 import com.gt.interpackage.repository.PackageCheckpointRepository;
 import com.gt.interpackage.model.PackageCheckpoint;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,40 @@ public class PackageCheckpointService {
      */
     public String getTimeOnRouteByPackageId(Long id){
         return packageCheckpointRepository.getTimeOnRouteByPackageId(id);
+    }
+    
+    /**
+     * Metodo que utliza el repositorio de paquetes-puntos de control para obtener 
+     * todos los  objetos de tipo PackageCheckpoint en base al id del punto de control
+     * que se recibe como parametro y cuya columna current_chekpoint sea true.
+     * @param id
+     * @return 
+     */
+    public List<PackageCheckpoint> getAllPackageCheckpointOnCheckpoint(Long id){
+        return packageCheckpointRepository.findAllByCheckpointIdAndCurrentCheckpointTrue(id);
+    }
+ 
+    public void update(PackageCheckpoint packageCheckpoint){
+        packageCheckpointRepository.update(
+            packageCheckpoint.getCurrentCheckpoint(),
+            packageCheckpoint.getTimeOnCheckpoint(),
+            packageCheckpoint.getPackages().getId(),
+            packageCheckpoint.getCheckpoint().getId());
+    }
+    
+    public PackageCheckpoint getByCheckpointIdPackageId(Long checkpointId, Long packageId){
+        return packageCheckpointRepository.findByCheckpointIdAndPackagesId(checkpointId, packageId);
+    }
+    
+    public Long getNextCheckpointId(Long packageId, Long routeId){
+        return packageCheckpointRepository.getNextCheckpointId(packageId, routeId);
+    }
+    
+    public void create(PackageCheckpoint packageCheckpoint){
+        packageCheckpointRepository.create(
+            packageCheckpoint.getCurrentCheckpoint(),
+            packageCheckpoint.getPackages().getId(),
+            packageCheckpoint.getCheckpoint().getId());
     }
     
 }

@@ -22,10 +22,9 @@ public class PackageService {
      * Metodo que llama al repositorio de paquetes para obtener
      * los datos del paquete que se recibe como parametro
     */
-    public Package getById(Long id) throws Exception {
+    public Package getById(Long id)   {
         try {
-            Package pack = _packageRepository.getById(id);
-            return pack;
+            return  _packageRepository.findById(id).get();
         } catch(EntityNotFoundException e){
             return null;
         }
