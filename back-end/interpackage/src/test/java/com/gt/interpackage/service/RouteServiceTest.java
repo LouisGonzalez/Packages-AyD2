@@ -8,6 +8,8 @@ package com.gt.interpackage.service;
 import com.gt.interpackage.model.Destination;
 import com.gt.interpackage.model.Route;
 import com.gt.interpackage.repository.RouteRepository;
+import java.text.ParseException;
+import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,7 +29,7 @@ public class RouteServiceTest {
 
     @Mock
     private RouteRepository routeRepository;
-    
+        
     private Route route;
     private Destination destination;
     
@@ -50,5 +52,15 @@ public class RouteServiceTest {
                 .thenReturn(Page.empty());
         Page<Route> page =routeService.getRoutesByActive(ArgumentMatchers.any(Pageable.class), ArgumentMatchers.any(Boolean.class));
         assertNotNull(Page.empty());
+    }
+    
+    @Test
+    public void testGetTopRoute() throws ParseException{
+         System.out.println("RouteServiceTest - getTopRoute");
+         Mockito.when(
+                 routeRepository
+                         .getThreeMostPopularRoute())
+                 .thenReturn(Arrays.asList(route));
+         assertNotNull(routeService.getThreeRouteMostPopular());
     }
 }

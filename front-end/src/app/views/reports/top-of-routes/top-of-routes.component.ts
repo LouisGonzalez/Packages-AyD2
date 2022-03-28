@@ -3,6 +3,7 @@ import { ProgressInfo} from '../../../@core/data/stats-progress-bar';
 import { NbThemeService, NbToastrService } from '@nebular/theme';
 import { RouteService } from '../../users/others/services/route/route.service';
 import { NotificationsComponent } from '../../users/others/source/notifications/notifications.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'ngx-top-of-routes',
@@ -29,7 +30,8 @@ export class TopOfRoutesComponent implements OnInit {
   constructor(
     private theme: NbThemeService,
     private routeService: RouteService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private datepipe: DatePipe
     ) {
       this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
         const colors: any = config.variables;
@@ -38,7 +40,7 @@ export class TopOfRoutesComponent implements OnInit {
         };
       });
       this.progressInfoData = [];
-      this.getTop();
+      this.getTop(null, null);
   }
 
   ngOnDestroy() {
@@ -50,23 +52,39 @@ export class TopOfRoutesComponent implements OnInit {
     this.notification = new NotificationsComponent(this.toastrService);
   }
 
-  getTop() {
-    this.routeService.getMostPopularRoute()
+  getTop(start, end) {
+    let filter;
+    if (start == null && end == null) {
+      filter = {}
+    } else if (end == null) {
+      filter = {
+        start: start
+      }
+    } else {
+      filter = {
+        start: start,
+        end: end
+      }
+    }
+    this.routeService.getMostPopularRoute(filter)
     .subscribe(
         (res) => {
-          if (res == null || res.length == 0) {
-            this.notification.showToast(3, "No hay rutas", "No se encuentran rutas registradas", 3500);
+          if (res == null || res.length === 0) {
+            this.notification.showToast(3, "No hay rutas", "No se encuentran paquetes registrados en el inteervalo inidicado rutas registradas", 3500);
+            this.results = []
+            this.results = [...this.results]
+            this.progressInfoData = []
           } else {
+            this.results = []
+            this.results = [...this.results]
+            this.progressInfoData = []
             for (const iterator of res) {
-              this.addNewTop(iterator.name, Number(iterator.totalPackages), iterator.destination.name);
+              this.addNewTop(iterator[1], Number(iterator[0]), iterator[2]);
             }
             this.results = [...this.results];
           }
         }
     );
-    
-    
-    setTimeout(() => {console.log('joal');}, 8500);
   }
 
   addNewTop(title, value, destination) {
@@ -83,7 +101,16 @@ export class TopOfRoutesComponent implements OnInit {
   }
 
   range(date){
-    console.log(date.queue);
+    if (date.queue == null){
+      this.getTop(null, null);
+    } else if (date.queue.end == null) {
+      let latest_date =this.datepipe.transform(date.queue.start, 'yyyy-MM-dd');
+      this.getTop(latest_date, null)
+    } else {
+      let latest_date_start =this.datepipe.transform(date.queue.start, 'yyyy-MM-dd');
+      let latest_date_end =this.datepipe.transform(date.queue.end, 'yyyy-MM-dd');
+      this.getTop(latest_date_start, latest_date_end)
+    }
   }
 
 }

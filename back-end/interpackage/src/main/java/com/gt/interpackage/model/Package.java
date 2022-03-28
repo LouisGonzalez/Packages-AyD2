@@ -4,6 +4,7 @@
  */
 package com.gt.interpackage.model;
 
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,7 +47,12 @@ public class Package {
     @Column (columnDefinition = "TEXT", nullable = true)
     private String description;
     
+    @Column (nullable = true, name="start_date")
+    private LocalDate dateStart;
 
+    @Column (nullable = true, name="end_date")
+    private LocalDate dateEnd;
+    
     @ManyToOne
     @JoinColumn (name="route", nullable = false)
     private Route route;
@@ -55,7 +61,7 @@ public class Package {
     @JoinColumn (name = "id_invoice", nullable = false)
     private Invoice invoice;
 
-     public Package() { }
+    public Package() { }
     
     public Package(Long id, Boolean onWay, Boolean atDestination, Boolean retired, Double weight, Double subTotal, Boolean priority, String description, Invoice invoice, Double unitTotal, Route route) {
         this.id = id;
@@ -68,6 +74,22 @@ public class Package {
         this.description = description;
         this.invoice = invoice;
         this.route = route;
+    }
+
+    public LocalDate getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(LocalDate dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public LocalDate getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public Long getId() {
