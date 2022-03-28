@@ -179,7 +179,7 @@ export class CreateCheckpointComponent implements OnInit {
    * obtenidos se almacenan en la variable routesData.
    * @param pattern Patron de busqueda
    */
-     public searchOperators(pattern: string){
+    public searchOperators(pattern: string){
       if(pattern != ''){
         this.operatorsLoading = true;
         this.operatorsData = this.operatorService.getOperators(pattern).pipe(

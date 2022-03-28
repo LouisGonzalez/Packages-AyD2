@@ -1,1 +1,13 @@
-<p>report3 works!</p>
+<nb-card id="table-clients">
+  <nb-card-header>
+    Reporte de Clientes
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (custom)="onCustomAction($event)">
+    </ng2-smart-table>
+
+
+  </nb-card-body>
+</nb-card>
+<ng-container #containerA></ng-container>

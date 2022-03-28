@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 /**
  *
  * @author helmuth
@@ -54,4 +56,6 @@ public interface RouteRepository extends JpaRepository<Route, Long>{
     @Query(value = "SELECT * FROM route r WHERE r.id_destination = ?1", nativeQuery = true)
     List<Route> findRouteByDestination(Integer id_destination);
     
+    
+    public Page<Route> findAllByActive(Pageable pageable, Boolean active);
 }

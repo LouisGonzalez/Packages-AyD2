@@ -92,7 +92,7 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
- 
+    
     @GetMapping (value = "/search-by-email/{email}")
     public ResponseEntity<Employee> getUserByEmail(@PathVariable String email) {
         try {

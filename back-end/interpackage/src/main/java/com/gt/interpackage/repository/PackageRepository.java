@@ -41,4 +41,8 @@ public interface PackageRepository extends JpaRepository<Package, Long> {
      * @return 
      */
     public List<Package> findAllByInvoiceIdAndOnWayTrue(Long id);
+
+    @Query(value = "SELECT * FROM package p WHERE p.id_invoice = ?1", nativeQuery = true)
+    List<Package> getPackagesByInvoice(Long id_invoice);
+
 }

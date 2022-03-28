@@ -48,6 +48,46 @@
                     </div>
                 </div>
             
+                <div class="col-sm-12">
+                    <!-- Seleccionado -->
+                    <label for="operator" class="label">Buscar Operador por CUI: &nbsp;</label>
+                    <br>   
+
+                    <input
+                    [class.inp-invalid]="formOperatorAssigment.get('selectedOperator')?.errors && formOperatorAssigment.get('selectedOperator')?.touched || errors" 
+                    #operatorsSearchInput
+                    nbInput
+                    fullWidth
+                    [ngClass]="{'loading': operatorsLoading}"
+                    [spellcheck]="false"
+                    placeholder="Buscar el operador por CUI."
+                    type="text"
+                    (ngModelChange)="searchOperators($event)"
+                    [(ngModel)]="operatorsSrc"
+                    [ngModelOptions]="{standalone: true}">
+                </div>
+
+                <br>
+
+                <!-- Lista con los operadores obtenidos tras la busqueda -->
+                <nb-card 
+                    [hidden]="operatorsData == null ? true : false"
+                    [nbSpinner]="operatorsLoading" nbSpinnerStatus="primary"
+                    class="list-card"
+                    size="small">
+                    <nb-list>
+                        <nb-list-item 
+                        (click)="setOperator(item.cui, item.name, item.lastname)" 
+                        *ngFor="let item of operatorsData | async"
+                        (mouseenter)="setHoverBorder($event)"
+                        (mouseleave)="setHoverBorder($event)">
+                            {{item.name + ' ' + item.lastname}}
+                            <br>
+                            {{item.cui}}
+                        </nb-list-item>
+                    </nb-list>
+                </nb-card>
+
                 <div class="row">
                     <button type="submit" nbButton status="primary" (click)="modify_operator()" hero>Editar</button>&nbsp;&nbsp;
                     <button nbButton status="danger" (click)="onCancel()" hero>Cancelar</button>        
@@ -55,17 +95,7 @@
 
                 <br>
 
-                <!-- Tabla de operadores -->
-                <div class="form-group">
-                    <label for="operators" class="label">Operadores Disponibles</label>
-                    <ng2-smart-table 
-                    [settings]="settings" 
-                    [source]="source"
-                    (custom)="onCustomAction($event)"
-                    (userRowSelect)="onCustomAction($event)"
-                    >
-                    </ng2-smart-table>
-                </div>
+                
         </form>
         </nb-card-body>
     </nb-card>

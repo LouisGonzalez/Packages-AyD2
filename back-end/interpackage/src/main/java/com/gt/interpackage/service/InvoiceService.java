@@ -6,6 +6,7 @@ package com.gt.interpackage.service;
 
 import com.gt.interpackage.model.Invoice;
 import com.gt.interpackage.repository.InvoiceRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 /**
@@ -24,6 +25,10 @@ public class InvoiceService {
         } catch(Exception e){
             return null;
         }
+    }
+    
+    public List<Invoice> getInvoicesByClient(Integer nit){
+        return _invRepository.getInvoicesByClient(nit);
     }
     
 }

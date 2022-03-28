@@ -84,6 +84,10 @@ public class RouteService {
         return routeRepository.findAll(pageable);
     }
     
+    public Page<Route> getRoutesByActive(Pageable pageable, Boolean active) {
+        return routeRepository.findAllByActive(pageable, active);
+    }
+    
     /**
      * Metodo que llama al repositorio de rutas para obtener una ruta 
      * cuyo id sea igual al que se recibe como parametro. 

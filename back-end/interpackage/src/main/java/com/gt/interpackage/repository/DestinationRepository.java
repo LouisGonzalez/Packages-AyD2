@@ -28,4 +28,6 @@ public interface DestinationRepository extends JpaRepository<Destination, Long>{
      * @return 
      */
     public boolean existsDestinationByNameAndIdIsNot(String name, Long id);
+    
+    public boolean existsDestinationByName(String name);
 }

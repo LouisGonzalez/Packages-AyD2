@@ -1,5 +1,6 @@
 package com.gt.interpackage.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,6 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table (name = "employee")
+@JsonIgnoreProperties (value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Employee {
     
     @Id

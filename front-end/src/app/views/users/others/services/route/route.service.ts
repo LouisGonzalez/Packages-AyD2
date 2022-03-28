@@ -42,6 +42,23 @@ export class RouteService {
     });
   }
 
+  /**
+   * datakey: Nombre del array que contiene los datos del servidor
+   * endPoint: URI 
+   * pagerPageKey: Nombre del parametro que representa el numero de pagina en el servidor.
+   * pagerLimitKey: Nombre del parametro que representa la cantidad de elementos por pagina en el servidor.
+   * totalKey: Nombre del atributo que contiene el numero total de elementos.
+   */
+    public getRoutesByActivePaginated(active : boolean) {
+      return new CustomServerDataSource(this.http, {
+        dataKey: 'content',
+        endPoint: global.GLOBAL.urlApi + '/route/list/' + active,
+        pagerPageKey: 'page', 
+        pagerLimitKey: 'size', 
+        totalKey: 'totalElements' 
+      });
+    }
+
   public getRoute(id : number) {
     return this.http.get<any>(global.GLOBAL.urlApi + "/route/" + id);
   }

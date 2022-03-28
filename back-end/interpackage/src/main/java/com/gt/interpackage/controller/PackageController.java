@@ -101,7 +101,7 @@ public class PackageController {
         }
     }
     
-    @GetMapping("invoice/{id}")
+    @GetMapping("trace-by-invoice/{id}")
     public ResponseEntity<List<Package>> getPackagesOnRouteByInvoiceId(@PathVariable Long id){
         try{
             return ResponseEntity.ok(_packageService.getPackagesOnRouteByInoviceId(id));
@@ -111,4 +111,9 @@ public class PackageController {
     }
     
 
+    @GetMapping("/invoice/{id_invoice}")
+    public ResponseEntity<List<Package>> getPackagesByInvoice(@PathVariable Long id_invoice){
+        return ResponseEntity.ok(_packageService.getPackagesByInvoice(id_invoice));
+    }
+    
 }

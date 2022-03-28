@@ -30,7 +30,10 @@ export class TreeGridComponent {
   sortDirection: NbSortDirection = NbSortDirection.NONE;
 
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>) {
-    this.dataSource = this.dataSourceBuilder.create(this.data);
+
+//    this.data2.push(this.cl);
+    this.method();
+    this.dataSource = this.dataSourceBuilder.create(this.data2);
   }
 
   updateSort(sortRequest: NbSortRequest): void {
@@ -70,6 +73,27 @@ export class TreeGridComponent {
       ],
     },
   ];
+
+  private data2: TreeNode<FSEntry>[] =[];
+  private cl: TreeNode<FSEntry> = { data: { name: 'Other', kind: 'dir', size: '109 MB', items: 2 }};
+
+  private c3: TreeNode<FSEntry>[] = [{ data: { name: 'Otasdfasdf', kind: 'dir', size: '109 MB', items: 2 }} ,
+  { data: { name: 'Oxdddddd', kind: 'dir', size: '109 MB', items: 2 }}];
+
+
+  method(){
+//    c2: TreeNode<FSEntry> = { data: { name: 'Other', kind: 'dir', size: '109 MB', items: 2 }};
+    let a = "asfd";
+
+
+
+    this.data2.push({ data: { name: 'Other', kind: 'dir', size: '109 MB', items: 2 },
+                      children: this.c3});
+  }
+
+
+
+
 
   getShowOn(index: number) {
     const minWithForMultipleColumns = 400;

@@ -29,7 +29,7 @@ public class EmployeeService {
         try {
             Employee emp = _empRepository.getById(CUI);
             if (emp == null) return null; 
-            if(emp.getName() != null){  }
+            if(emp.getName() != null){ }
             return emp;
         } catch(EntityNotFoundException e){
             return null;

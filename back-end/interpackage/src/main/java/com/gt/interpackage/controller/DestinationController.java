@@ -181,7 +181,12 @@ public class DestinationController {
                         return null;
                     } else {
                         Destination savedDestination = destinationService.save(destination);
-                        return ResponseEntity
+                        return savedDestination == null 
+                                ? ResponseEntity
+                                        .badRequest()
+                                        .header("errorMessage", "Ya exuiste un destino con el nombre: " + destination.getName())
+                                        .build()
+                                : ResponseEntity
                                 .created (
                                         new URI("/destination/" + savedDestination.getId()))
                                 .body(savedDestination);

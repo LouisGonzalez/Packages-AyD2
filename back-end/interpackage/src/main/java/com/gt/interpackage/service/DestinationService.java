@@ -19,6 +19,7 @@ public class DestinationService {
     private DestinationRepository destinationRepository;
     
     public <S extends Destination> S save(S entity) {
+        if (destinationRepository.existsDestinationByName(entity.getName())) return null;
         return destinationRepository.save(entity);
     }
     
@@ -74,6 +75,10 @@ public class DestinationService {
 
     public List<Destination> findAll(){
         return destinationRepository.findAll();
+    }
+    
+    public boolean existsDestinationByName(String name) {
+        return destinationRepository.existsDestinationByName(name);
     }
 
 }

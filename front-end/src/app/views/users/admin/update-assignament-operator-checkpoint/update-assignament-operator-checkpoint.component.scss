@@ -51,6 +51,18 @@ nb-card.inline-form-card nb-card-body {
     padding-bottom: 0;
 }
 
+.black {
+  color: black;
+}
+
+.required {
+  color: red;
+}
+
+.borderless {
+  border-style: none;
+}
+
 .inp-invalid {
     background-color: rgb(255, 204, 204);
     box-shadow: 0 0 5px red;

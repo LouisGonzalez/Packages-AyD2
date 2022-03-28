@@ -84,5 +84,9 @@ public class PackageService {
         return _packageRepository.findAllByInvoiceIdAndOnWayTrue(id);
     }
     
+    public List<Package> getPackagesByInvoice(Long id_invoice){
+        return _packageRepository.getPackagesByInvoice(id_invoice);
+    }
+    
     
 }

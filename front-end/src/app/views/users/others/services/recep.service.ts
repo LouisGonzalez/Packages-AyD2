@@ -112,7 +112,7 @@ export class RecepService {
   }
 
   public getPackageByInvoiceId(id: number){
-    return this.httpClient.get<any>(`${this.urlApi}/package/invoice/${id}`);
+    return this.httpClient.get<any>(`${this.urlApi}/package/trace-by-invoice/${id}`);
   }
 
   public getPackagesOnCheckpoint(checkpointId : number): Observable<any> {
