@@ -57,6 +57,7 @@ public class PackageCheckpointService {
         packageCheckpointRepository.update(
             packageCheckpoint.getCurrentCheckpoint(),
             packageCheckpoint.getTimeOnCheckpoint(),
+            packageCheckpoint.getDate(),
             packageCheckpoint.getPackages().getId(),
             packageCheckpoint.getCheckpoint().getId());
     }
