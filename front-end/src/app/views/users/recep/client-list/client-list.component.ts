@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NbDialogService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
-import { DialogNamePromptComponent } from '../../../../pages/modal-overlays/dialog/dialog-name-prompt/dialog-name-prompt.component';
 import { Client } from '../../others/models/Client';
 import { RecepService } from '../../others/services/recep.service';
-import { CreateClientComponent } from '../create-client/create-client.component';
 @Component({
   selector: 'ngx-client-list',
   templateUrl: './client-list.component.html',
@@ -58,7 +55,7 @@ export class ClientListComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private recepService: RecepService, private dialogService: NbDialogService) {
+  constructor(private recepService: RecepService) {
     this.getData();
   }
 

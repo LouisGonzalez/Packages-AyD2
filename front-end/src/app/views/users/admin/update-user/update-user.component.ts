@@ -19,12 +19,12 @@ export class UpdateUserComponent implements OnInit {
   @Input() source: LocalDataSource;
 
   activeAux: boolean;
+  userAux: User;
 
   pass2: string;
   user: User;
 
   notification: NotificationsComponent;
-
 
   constructor(private adminService: AdminService, private router: Router, private toastrService: NbToastrService) { }
 
@@ -40,13 +40,16 @@ export class UpdateUserComponent implements OnInit {
     this.adminService.updateUser(this.userReceive).subscribe(response => {
       //modal de que se actualizo al usuario
       this.notification.showToast(1, 'Realizado', `Informacion modificada con exito`, 2500);
-      this.close();
+      this.userAux = this.userReceive;
+      this.close(1);
     })
   }
 
-  close(){
+  close(param){
     document.getElementById('update-user')?.remove();
-    this.updateInformation();
+    if(param == 1){
+      this.updateInformation();
+    }
     this.router.navigate(['/views/users/admin/list-users']);
     document.getElementById('table-employeers').style.display = "block";
   }

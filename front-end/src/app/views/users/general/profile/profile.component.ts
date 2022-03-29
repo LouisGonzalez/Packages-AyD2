@@ -13,12 +13,14 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('user'));
-    if(this.user.type == 1){
-      this.type = 'Administrador';
-    } else if(this.user.type == 2){
-      this.type = 'Operador'
-    } else if(this.user.type == 3){
-      this.type = 'Recepcionista'
+    if(this.user != null){
+      if(this.user.type == 1){
+        this.type = 'Administrador';
+      } else if(this.user.type == 2){
+        this.type = 'Operador'
+      } else if(this.user.type == 3){
+        this.type = 'Recepcionista'
+      }
     }
   }
 

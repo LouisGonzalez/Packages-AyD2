@@ -3,6 +3,7 @@
     <nb-card-header><h1 id="title" class="title">Mi perfil</h1></nb-card-header>
 
     <nb-card-body>
+      <div *ngIf="user">
       <div class="form-group row">
         <label class="label col-sm-3 col-form-label" for="input-name" >Nombres</label>
         <div class="col-sm-9">
@@ -86,7 +87,7 @@
          readonly>
 </div>
 </div>
-
+</div>
   </nb-card-body>
   </nb-card>
 </div>
