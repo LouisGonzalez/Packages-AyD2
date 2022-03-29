@@ -3,6 +3,7 @@ package com.gt.interpackage.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.gt.interpackage.model.Checkpoint;
+import java.util.List;
 /**
  *
  * @author helmuth
@@ -19,5 +20,8 @@ public interface CheckpointRepository extends JpaRepository<Checkpoint, Long>{
     public boolean existsCheckpointByRouteId(Long routeId);
     
     public boolean existsCheckpointByRouteIdAndDescription(Long routeId, String description);
+    
+    public List<Checkpoint> findAllByAssignedOperatorCUIAndActiveTrueOrderByRouteId(Long cui);
+    
     
 }

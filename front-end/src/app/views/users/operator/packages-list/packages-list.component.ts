@@ -13,28 +13,26 @@ import { RecepService } from '../../others/services/recep.service';
 
 export class PackagesListComponent implements OnInit {
 
-  packages: Package[];
-  pack: Package;
-
   settings = {
+    noDataMessage: 'No hay ningun paquete por procesar en este punto de control.',
     actions: {
       columnTitle:'Procesar',
       add: false,
-      edit: false
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-compose"></i>',
-      confirmDelete: true
+      edit: false,
+      delete: false,
+      custom: [
+        { name: 'process', title: '<i class="nb-compose"></i>' }
+      ]
     },
     columns: {
-      package: {
-        title: 'Paquete',
-        type: 'number'
+      id: {
+        title: 'ID',
+        type: 'number',
       },
-      entryDate: {
-        title: 'Fecha de Entrada',
-        type: 'string'
-      },
+      description: {
+        title: 'Descripcion del Paquete',
+        type: 'string',
+      }
     }
   };
 
@@ -51,9 +49,8 @@ export class PackagesListComponent implements OnInit {
   }
 
   public getPackages(){
-    this.receptionistService.getPackagesInCheckpoint(Number(this.route.snapshot.paramMap.get('id'))).subscribe(response => {
-      this.packages = response;
-      this.source.load(this.packages);
+    this.receptionistService.getPackagesOnCheckpoint(Number(this.route.snapshot.paramMap.get('id'))).subscribe(response => {
+      this.source.load(this.convertData(response));
     })
   }
 
@@ -63,5 +60,17 @@ export class PackagesListComponent implements OnInit {
 
   public goBack(){
     this.router.navigate(['views', 'operator']);
+  }
+
+  private convertData(data : any) {
+    let array = [];
+    for (const iterator of data) {
+      let newData  = {
+        id : iterator['packages'].id,
+        description: iterator['packages'].description
+      }
+      array.push(newData);
+    }
+    return array;
   }
 }

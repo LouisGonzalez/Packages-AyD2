@@ -5,7 +5,7 @@
     </nb-card-header>
   
     <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="processPackage($event)">
+      <ng2-smart-table [settings]="settings" [source]="source" (custom)="processPackage($event)">
       </ng2-smart-table>
       
     </nb-card-body>

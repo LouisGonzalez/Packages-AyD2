@@ -16,6 +16,11 @@
                 <label class="label">Nombre: &nbsp; {{description}}</label> 
             </div>
             
+            <!-- Ruta Actual -->
+            <div class="form-group">
+               <label class="label">Ruta: &nbsp; {{routeName}}</label>  
+            </div>
+
             <!-- Punto de Control Actual -->
             <div class="form-group">
                 <label class="label">Punto de Control Actual: &nbsp; {{currentCheckpoint}}</label> 
@@ -25,6 +30,16 @@
             <div class="form-group">
                 <label class="label">Tiempo en Ruta: &nbsp; {{timeOnRoute}}</label> 
             </div>
+
+             <!-- Peso -->
+             <div class="form-group">
+                <label class="label">Peso: &nbsp; {{weight}}lb</label> 
+             </div>
+
+           <!-- Total -->
+           <div class="form-group">
+              <label class="label">Total Cancelado: &nbsp; Q{{total}}</label> 
+           </div>
 
             <div class="row">
                 <button nbButton status="primary" (click)="onClose()" hero>Regresar</button>&nbsp;&nbsp;

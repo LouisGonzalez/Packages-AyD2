@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalDataSource }from 'ng2-smart-table';
 import { CheckpointsService } from '../../others/services/checkpoint/checkpoints.service';
-import { CheckpointListTemplate } from '../../others/models/checkpoint-list-template';
 import { Router } from '@angular/router';
 import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 import { NbToastrService } from '@nebular/theme';
@@ -36,7 +34,10 @@ export class CheckpointListComponent implements OnInit {
       },
       operationFee: {
         title: 'Tarifa de operación',
-        type: 'number'
+        type: 'number',
+        valuePrepareFunction: (operationFee) => {
+          return `Q${operationFee}`;
+        }
       },
       packagesOnQueue: {
         title: 'Paquetes en cola',

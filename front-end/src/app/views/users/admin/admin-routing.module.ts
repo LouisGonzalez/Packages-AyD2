@@ -24,8 +24,8 @@ const routes: Routes = [
     children: [
       {
         path: 'routes',
-        loadChildren: () => import('./routes/routes.module')
-          .then(m => m.RoutesModule)
+        loadChildren: () => import('./routes/routes.module').then(m => m.RoutesModule),
+        canActivate: [AdminGuard]  
       },
       { // views/admin/rates
         path: 'rates',

@@ -24,4 +24,22 @@ public class EmployeeTypeService {
         return employeeTypeRepository.findByName(name).get();
     }
     
+    /**
+     * Metodo que hace uso del repositorio de tipos de empleado para 
+     * crear un nuevo tipo.
+     * @param employeeType
+     * @return 
+     */
+    public EmployeeType create(EmployeeType employeeType){
+        return employeeTypeRepository.save(employeeType);
+    }
+    
+    /**
+     * Metodo que hace uso del repositorio de tipos de empleado
+     * para eliminar todos los tipos de empleados existentes.
+     */
+    public void deleteAllTypes(){
+        employeeTypeRepository.deleteAll();
+    }
+    
 }

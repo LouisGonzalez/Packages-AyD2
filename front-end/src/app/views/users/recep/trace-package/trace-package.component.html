@@ -2,10 +2,11 @@
     <nb-card-header>
       <h2>Listado de Paquetes en Ruta</h2>
     </nb-card-header>
-  
     <nb-card-body>
-      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="tracePackage($event)">
+      <nb-search placeholder="No. Factura" type="column-curtain" tag="column-curtain" hint="Presione enter para buscar el paquete."></nb-search>
+      Buscar paquete por numero de factura
+      <ng2-smart-table [settings]="settings" [source]="source" (custom)="tracePackage($event)">
       </ng2-smart-table>
     </nb-card-body>
-  </nb-card>
-  
+</nb-card>
+

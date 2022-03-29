@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gt.interpackage.service;
 
 import com.gt.interpackage.repository.PackageRepository;
@@ -9,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.gt.interpackage.model.Package;
 import java.util.List;
+import org.springframework.data.domain.Page;
 import javax.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Pageable;
 /**
  *
  * @author Luis
@@ -24,21 +22,29 @@ public class PackageService {
      * Metodo que llama al repositorio de paquetes para obtener
      * los datos del paquete que se recibe como parametro
     */
-    public Package getById(Long id) throws Exception {
+    public Package getById(Long id)   {
         try {
-            Package pack = _packageRepository.getById(id);
-            return pack;
+            return  _packageRepository.findById(id).get();
         } catch(EntityNotFoundException e){
             return null;
         }
     }
     
     /*
-     * Metodo que llama al repositorio de paquetes en busca de 
-     * los paquetes que ya se encuentran en destino
+     * Metodo que llama al repositorio de paquetes para obtener una paginacion 
+     * con todos los paquetes que se encuentran en destino y no han sido retirados.
     */
-    public List<Package> findInDestination(){
-        return _packageRepository.getInDestination();
+    public Page<Package> getAllAtDestination(Pageable pageable){
+        return _packageRepository.findAllByAtDestinationTrueAndRetiredFalse(pageable);
+    }
+    
+    
+    /*
+     * Metodo que llama al repositorio de paquetes para obtener una paginacion 
+     * con todos los paquetes que se encuentran en ruta.
+    */
+    public Page<Package> getAllOnRoute(Pageable pageable){
+        return _packageRepository.findAllByOnWayTrue(pageable);
     }
     
     /*
@@ -65,6 +71,17 @@ public class PackageService {
             pack.setWeight(entity.getWeight());
             return _packageRepository.save(pack);
         } return null;
+    }
+    
+    /**
+     * Metodo que hace uso del repositorio de paquetes para obtener 
+     * un listado de paquetes cuyo id de factura sea igual al parametro que se
+     * recibe.
+     * @param id
+     * @return 
+     */
+    public List<Package> getPackagesOnRouteByInoviceId(Long id){
+        return _packageRepository.findAllByInvoiceIdAndOnWayTrue(id);
     }
     
     public List<Package> getPackagesByInvoice(Long id_invoice){

@@ -1,7 +1,6 @@
 package com.gt.interpackage.controller;
 
 import com.gt.interpackage.model.Checkpoint;
-import com.gt.interpackage.model.Destination;
 import com.gt.interpackage.service.CheckpointService;
 import com.gt.interpackage.service.EmployeeService;
 import com.gt.interpackage.service.RouteService;
@@ -11,9 +10,7 @@ import com.gt.interpackage.model.Employee;
 import com.gt.interpackage.service.EmployeeTypeService;
 import com.gt.interpackage.service.PackageCheckpointService;
 import java.net.URI;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -84,6 +81,17 @@ public class CheckpointController {
                     PageRequest.of(page, size, Sort.by("routeId"))
             );
             return new ResponseEntity<>(checkpoints, HttpStatus.OK);
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @CrossOrigin
+    @GetMapping("list/{cui}")
+    public ResponseEntity<List<Checkpoint>> getAllByAssignedOperator(@PathVariable Long cui){
+        try{  
+            return ResponseEntity.ok(checkpointService.getAllByAssignedOperator(cui));
         } catch(Exception e){
             System.out.println(e.getMessage());
             return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);

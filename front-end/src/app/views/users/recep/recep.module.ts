@@ -72,7 +72,6 @@ import { PackageInfoComponent } from './package-info/package-info.component';
     ReactiveFormsModule,
     Ng2SmartTableModule,
     NbRadioModule
-
   ]
 })
 export class RecepModule { }

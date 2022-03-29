@@ -8,6 +8,7 @@ import { Route } from '../models/Route';
 import { Invoice } from '../models/Invoice';
 import { Package } from '../models/Package';
 import { PackageInformation } from '../models/PackageInformation';
+import { CustomServerDataSource } from '../models/CustomServerDataSource';
 
 @Injectable({
   providedIn: 'root'
@@ -66,35 +67,57 @@ export class RecepService {
     return this.httpClient.get(`${this.urlApi}/package/in-destination/`);
   }
 
-   //Todos los paquetes que ya esten en destino
-   getPackagesInCheckpoint(checkpointId:number): Observable<Package[]> {
-    return this.httpClient.get<Package[]>(`${this.url}/package-checkpoint?checkpoint=${checkpointId}&processed=false`);
-  }
-
 //Todos los paquetes que estan en ruta
   getAllPackages(): Observable<Package[]> {
   return this.httpClient.get<Package[]>(`${this.url}/packages?atDestination=false&retired=false&onWay=true`);
   }
 
-  getPackage(id: number): Observable<Package>{
-    return this.httpClient.get<Package>(`${this.url}/packages?id=${id}`);
+  public getPackage(id: number): Observable<any>{
+    return this.httpClient.get<any>(`${this.urlApi}/package-checkpoint/${id}`);
   }
 
   editRetiredStatePackage(pack: Package){
     return this.httpClient.put(`${this.urlApi}/package/${pack.id}`, pack);
   }
 
-  /**
-   * No exite ningun recurso en el json server que permita obtener los datos
-   * requeridos, se debe de modificar la uri cuando ya se tenga la implementacion
-   * en el backen.
-   * @param packageId Id del paquete a obtener informacion.
-   * @returns
-   */
-  public getPackageInfo(packageId: number): Observable<PackageInformation>{
-    return this.httpClient.get<PackageInformation>(`${this.url}/packages/${packageId}`);
+  public getPackageInfo(packageId: number): Observable<any>{
+    return this.httpClient.get<any>(`${this.urlApi}/package-checkpoint/${packageId}`);
   }
 
+    /**
+   * datakey: Nombre del array que contiene los datos del servidor
+   * endPoint: URI 
+   * pagerPageKey: Nombre del parametro que representa el numero de pagina en el servidor.
+   * pagerLimitKey: Nombre del parametro que representa la cantidad de elementos por pagina en el servidor.
+   * totalKey: Nombre del atributo que contiene el numero total de elementos.
+   */
+  public getAllPackagesAtDestinationPaginated() {
+    return new CustomServerDataSource(this.httpClient, {
+      dataKey: 'content',
+      endPoint: this.urlApi + '/package/in-destination/',
+      pagerPageKey: 'page', 
+      pagerLimitKey: 'size', 
+      totalKey: 'totalElements' 
+    });
+  }
+
+  public getAllPackagesOnRoutePaginated() {
+    return new CustomServerDataSource(this.httpClient, {
+      dataKey: 'content',
+      endPoint: this.urlApi + '/package/on-route',
+      pagerPageKey: 'page', 
+      pagerLimitKey: 'size', 
+      totalKey: 'totalElements' 
+    });
+  }
+
+  public getPackageByInvoiceId(id: number){
+    return this.httpClient.get<any>(`${this.urlApi}/package/trace-by-invoice/${id}`);
+  }
+
+  public getPackagesOnCheckpoint(checkpointId : number): Observable<any> {
+    return this.httpClient.get<any>(`${this.urlApi}/package-checkpoint/list/${checkpointId}`);
+  }
 }
 
 

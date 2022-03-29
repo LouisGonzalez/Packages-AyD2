@@ -30,6 +30,7 @@ import com.gt.interpackage.model.Destination;
 import java.text.ParseException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 /**
  *
  * @author helmuth
@@ -72,9 +73,7 @@ public class RouteController {
         }
     }
     
-    
-    
-    
+   
     /**
      * Metodo que recibe una peticion GET para obtener un listado paginado de rutas.
      * @param page Numero de pagina actual. Por defecto 1.
@@ -88,11 +87,10 @@ public class RouteController {
         @RequestParam(defaultValue = "10") int size
     ){
         try{          
-            System.out.println(routeService);
             Page<Route> routes = routeService.getAll(
                PageRequest.of(page, size, Sort.by("name"))
             );
-            return new ResponseEntity<Page<Route>>(routes, HttpStatus.OK);
+            return new ResponseEntity<>(routes, HttpStatus.OK);
         } catch(Exception e){
             return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
