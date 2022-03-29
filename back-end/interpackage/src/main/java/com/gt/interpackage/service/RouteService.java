@@ -1,5 +1,6 @@
 package com.gt.interpackage.service;
 
+import com.gt.interpackage.dto.TopRouteDTO;
 import com.gt.interpackage.repository.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,13 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
 /**
  *
  * @author helmuth
@@ -17,6 +25,25 @@ public class RouteService {
     
     @Autowired
     private RouteRepository routeRepository; 
+    
+    private final String QUERY_TOP_FILTER =    
+            "SELECT COUNT(route.name) AS quantity, route.name AS route, destination.name AS destination "
+            + "FROM route "
+            + "INNER JOIN destination ON route.id_destination = destination.id "
+            + "INNER JOIN package ON package.route = route.id "
+            + "WHERE package.end_date BETWEEN :startDate AND :endDate "
+            + "GROUP BY route.name, destination.name "
+            + "ORDER BY quantity DESC "
+            + "LIMIT 3 ";
+    
+    private final String QUERY_TOP =    
+            "SELECT COUNT(route.name) AS quantity, route.name AS route, destination.name AS destination "
+            + "FROM route "
+            + "INNER JOIN destination ON route.id_destination = destination.id "
+            + "INNER JOIN package ON package.route = route.id "
+            + "GROUP BY route.name, destination.name "
+            + "ORDER BY quantity DESC "
+            + "LIMIT 3 ";
     
     /**
      * Metodo que llama al repositorio de rutas para crear una nueva ruta.
@@ -137,5 +164,34 @@ public class RouteService {
     */
     public List<Route> findRouteByDestination(Integer id_destination){
         return routeRepository.findRouteByDestination(id_destination);
+    }
+    
+    /*
+     * Metodo para obtener el top de rutas 
+    */
+    public List<TopRouteDTO> getTopRoute(EntityManager entityManager, String start, String end) throws ParseException {
+        List<TopRouteDTO> lista;
+        SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+        Query query = entityManager.createNativeQuery(QUERY_TOP_FILTER);
+        if (end == null && start == null) {
+            query = entityManager.createNativeQuery(QUERY_TOP);
+            return query.getResultList();
+        } 
+        if (end == null) {
+            Date startDate = dtf.parse(start);
+            Calendar calendar = Calendar.getInstance();
+            Date dateObj = calendar.getTime();
+            query.setParameter("startDate", startDate, TemporalType.DATE);
+            query.setParameter("endDate", dtf.format(dateObj));
+        } else {
+            Date startDate = dtf.parse(start);
+            Date endDate = dtf.parse(end);
+            System.out.println("StartDatet" + startDate);
+            System.out.println("EndDatet" + endDate);
+            query.setParameter("startDate", startDate, TemporalType.DATE);
+            query.setParameter("endDate", endDate, TemporalType.DATE);
+        }
+        lista = query.getResultList();
+        return lista;
     }
 }

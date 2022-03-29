@@ -1,5 +1,7 @@
 package com.gt.interpackage.controller;
 
+import com.gt.interpackage.dto.FilterDateDTO;
+import com.gt.interpackage.dto.TopRouteDTO;
 import com.gt.interpackage.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import com.gt.interpackage.model.Destination;
+import java.text.ParseException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 /**
  *
  * @author helmuth
@@ -38,6 +45,9 @@ public class RouteController {
     
     @Autowired
     private CheckpointService checkpointService;
+    
+    @PersistenceContext
+    private EntityManager entityManager;
     
     /**
      * Metodo que recibe una peticion POST para la creacion de una ruta.
@@ -195,9 +205,9 @@ public class RouteController {
         }
     }
     
-    @GetMapping ("/most-popular-route")
-    public ResponseEntity<List<Route>> getMostPopularRoute() {
-        return ResponseEntity.ok(routeService.getThreeRouteMostPopular());
+    @PostMapping ("/most-popular-route")
+    public ResponseEntity<List<TopRouteDTO>> getMostPopularRouteFilter(@RequestBody FilterDateDTO dto) throws ParseException {
+        return ResponseEntity.ok(routeService.getTopRoute(entityManager, dto.getStart(), dto.getEnd()));
     }
     
     /*

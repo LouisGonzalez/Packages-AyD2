@@ -5,11 +5,15 @@ import { RouteService } from './route.service';
 
 describe('TEST del Servicio "RouteService"', () => {
   let serviceGet: RouteService;
+  let servicePost: RouteService;
   let httpClientSpyGet: { get: jasmine.Spy }
+  let httpClientSpyPost: { post: jasmine.Spy }
 
   beforeEach(() => {
     httpClientSpyGet = jasmine.createSpyObj('HttpClient', ['get']);
+    httpClientSpyPost = jasmine.createSpyObj('HttpClient', ['post']);
     serviceGet = new RouteService(httpClientSpyGet as any);
+    servicePost = new RouteService(httpClientSpyPost as any);
   });
 
   it('Debe de exisitir el Servicio Route', () => {
@@ -117,6 +121,11 @@ describe('TEST del Servicio "RouteService"', () => {
   });
 
   it('Deberia retornar objecto Lista de Ruta (Obtener Listado de rutas mas populares)', (done: DoneFn) => {
+    let mockFilter = {
+      start: "2018-02-03",
+      end: "2018-12-12"
+    }
+
     let mockResult =  
     [
       {
@@ -160,8 +169,8 @@ describe('TEST del Servicio "RouteService"', () => {
       }, 
     ]  
 
-    httpClientSpyGet.get.and.returnValue(of(mockResult));
-    serviceGet.getMostPopularRoute()
+    httpClientSpyPost.post.and.returnValue(of(mockResult));
+    servicePost.getMostPopularRoute(mockFilter)
     .subscribe(res => {
       expect(res).toEqual(mockResult);  
       done();

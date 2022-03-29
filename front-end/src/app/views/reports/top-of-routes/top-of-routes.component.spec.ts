@@ -1,3 +1,4 @@
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,7 +23,8 @@ describe('TEST del componente "TopOfRoutesComponent"', () => {
         FormsModule, 
         ReactiveFormsModule,
       ],
-      declarations: [ TopOfRoutesComponent ]
+      declarations: [ TopOfRoutesComponent ],
+      providers: [DatePipe],
     })
     .compileComponents();
   });
