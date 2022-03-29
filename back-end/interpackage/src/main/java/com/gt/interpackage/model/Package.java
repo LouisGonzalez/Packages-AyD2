@@ -72,6 +72,19 @@ public class Package {
         this.route = route;
     }
 
+    public Package(Boolean onWay, Boolean atDestination, Boolean retired, Double weight, Double subTotal, Boolean priority, String description, Invoice invoice, Double unitTotal, Route route) {
+        this.onWay = onWay;
+        this.atDestination = atDestination;
+        this.retired = retired;
+        this.weight = weight;
+        this.unitTotal = unitTotal;
+        this.priority = priority;
+        this.description = description;
+        this.invoice = invoice;
+        this.route = route;
+    }
+
+    
     public LocalDate getDateStart() {
         return dateStart;
     }

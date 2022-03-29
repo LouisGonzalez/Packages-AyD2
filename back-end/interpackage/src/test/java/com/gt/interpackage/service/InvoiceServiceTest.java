@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import org.assertj.core.api.Assertions;
 import org.mockito.InjectMocks;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Arrays;
 /**
  *
  * @author Luis
@@ -44,5 +45,12 @@ public class InvoiceServiceTest {
         Mockito.when(_invRepository.save(ArgumentMatchers.any(Invoice.class))).thenReturn(invoice);
         LocalDate date = LocalDate.of(2020,05,02);
         assertNotNull(_invoiceService.save(new Invoice(date, 23.0, 555)));
+    }
+    
+    @Test
+    public void testGetInvoicesByClient() throws Exception{
+        System.out.println("InvoiceServiceTest - getInvoicesByClient");
+        Mockito.when(_invRepository.getInvoicesByClient(ArgumentMatchers.any(Integer.class))).thenReturn(Arrays.asList(invoice));
+        assertNotNull(_invoiceService.getInvoicesByClient(555));
     }
 }
