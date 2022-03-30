@@ -24,7 +24,7 @@ public class PackageService {
     */
     public Package getById(Long id)   {
         try {
-            return  _packageRepository.findById(id).get();
+            return  _packageRepository.getById(id);
         } catch(EntityNotFoundException e){
             return null;
         }

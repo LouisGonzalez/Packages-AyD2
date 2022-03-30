@@ -91,4 +91,12 @@ public class EmployeeService {
         return _empRepository.findByCuiContainsAndEmployeeTypeIs(cui, employeeType);
     }
     
+    
+    public boolean exists(String username){
+        return _empRepository.existsEmployeeByUsername(username);
+    }
+    
+    public boolean existsByCUI(Long CUI){
+        return _empRepository.existsEmployeeByCUI(CUI);
+    }
 }
