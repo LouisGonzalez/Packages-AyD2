@@ -24,10 +24,9 @@ public class EmployeeTypeControlller {
      */
     @EventListener
     public void insertEmployeeTypes(ApplicationReadyEvent event){
-    /*    employeeTypeService.deleteAllTypes();
-        employeeTypeService.create( new EmployeeType(new Long(1), "administrator", "Administrador"));
-        employeeTypeService.create( new EmployeeType(new Long(2), "operator", "Operador"));
-        employeeTypeService.create( new EmployeeType(new Long(3), "receptionist", "Recepcionista"));*/
+        employeeTypeService.create( new EmployeeType(1L, "administrator", "Administrador"));
+        employeeTypeService.create( new EmployeeType(2L, "operator", "Operador"));
+        employeeTypeService.create( new EmployeeType(3L, "receptionist", "Recepcionista"));
     }
    
 }

@@ -1,5 +1,6 @@
 package com.gt.interpackage.controller;
 
+import com.gt.interpackage.handlers.QueueHandler;
 import com.gt.interpackage.service.PackageCheckpointService;
 import com.gt.interpackage.source.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class PackageChekpointController {
     
     @Autowired
     private PackageService packageService;
+    
+    @Autowired
+    private QueueHandler queueHandler;
     
     /**
      * Metodo que recibe una peticion de tipo GET para obtener un objeto
@@ -217,6 +221,7 @@ public class PackageChekpointController {
                 routeService.update(tempPackageCheckpoint.getCheckpoint().getRoute());
             }
            
+            queueHandler.verifiyQueue();
             return ResponseEntity.ok().build();
         } catch(Exception e){
             System.out.println(e.getMessage());

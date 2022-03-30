@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.gt.interpackage.handlers;
 
 import com.gt.interpackage.model.*;
@@ -10,8 +6,6 @@ import com.gt.interpackage.service.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +37,7 @@ public class QueueHandler {
     /*
     Metodo para recorrer la cola, y comprobar si hay espacio para ser ingresado
     */
-    public void traverseQueue() throws Exception {
+    private void traverseQueue() throws Exception {
         List<Destination> destinations = destinationService.findAll();
         for (Destination destination : destinations) {
             List<Queue> queue = queueService.findByDestination(destination.getId());
@@ -80,7 +74,7 @@ public class QueueHandler {
         }
     }
 
-    public Checkpoint getCheckpointWithQueueAvailable(List<Checkpoint> checkpoints) {
+    private Checkpoint getCheckpointWithQueueAvailable(List<Checkpoint> checkpoints) {
         for (Checkpoint checkpoint : checkpoints) {
             if (checkpoint.getQueueCapacity() > checkpoint.getPackagesOnQueue()) return checkpoint;
         } return null;
