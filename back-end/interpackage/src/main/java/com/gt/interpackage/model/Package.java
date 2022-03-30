@@ -56,6 +56,10 @@ public class Package {
     @ManyToOne
     @JoinColumn (name = "id_invoice", nullable = false)
     private Invoice invoice;
+    
+    @ManyToOne
+    @JoinColumn (name = "id_destination", nullable = false)
+    private Destination destination;
 
     public Package() { }
     
@@ -70,6 +74,14 @@ public class Package {
         this.description = description;
         this.invoice = invoice;
         this.route = route;
+    }
+
+    public Destination getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Destination destination) {
+        this.destination = destination;
     }
 
     public LocalDate getDateStart() {

@@ -23,5 +23,7 @@ public interface CheckpointRepository extends JpaRepository<Checkpoint, Long>{
     
     public List<Checkpoint> findAllByAssignedOperatorCUIAndActiveTrueOrderByRouteId(Long cui);
     
-    
+    public List<Checkpoint> findAllByRoute_Destination_IdAndActiveOrderById(Long idDestination, Boolean active);
+
+    List<Checkpoint> findAllByRoute_Destination_IdAndRoute_ActiveAndActiveOrderById(Long idDestination, Boolean activeRoute, Boolean activeCheckpoint);
 }
