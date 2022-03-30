@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GeneralComponent } from './general.component';
 
-describe('GeneralComponent', () => {
+describe('TEST del componente GeneralComponent', () => {
   let component: GeneralComponent;
   let fixture: ComponentFixture<GeneralComponent>;
 
@@ -19,7 +19,7 @@ describe('GeneralComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Debe existir el componente GeneralComponent', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -7,9 +7,9 @@ describe('TEST al servicio "RatesService"', () => {
   let servicePost: RatesService;
   let serviceGet: RatesService;
   let servicePut: RatesService;
-  let httpClientSpyPost: { post: jasmine.Spy}; 
-  let httpClientSpyGet: { get: jasmine.Spy}; 
-  let httpClientSpyPut: { put: jasmine.Spy}; 
+  let httpClientSpyPost: { post: jasmine.Spy};
+  let httpClientSpyGet: { get: jasmine.Spy};
+  let httpClientSpyPut: { put: jasmine.Spy};
 
   beforeEach(() => {
     httpClientSpyPost = jasmine.createSpyObj('HttpClient', ['post']);
@@ -31,11 +31,11 @@ describe('TEST al servicio "RatesService"', () => {
       name: 'Tarifa por Operacion',
       fee: 15.50
     }
-    let mockResult = 
+    let mockResult =
     {
       "id": 1,
       "name": "Tarifa por operacion",
-      "fee": 25.50 
+      "fee": 25.50
     }
 
     httpClientSpyPut.put.and.returnValue(of(mockResult));
@@ -55,7 +55,7 @@ describe('TEST al servicio "RatesService"', () => {
       "data": {
         "id": 1,
         "name": "Tarifa por operacion",
-        "fee": 15.50 
+        "fee": 15.50
       }
     }
 
@@ -68,24 +68,24 @@ describe('TEST al servicio "RatesService"', () => {
   });
 
   it('Deberia retornar object rate (Obtener tarfias)', (done: DoneFn) => {
-    let mockResult =  
+    let mockResult =
     [
       {
         "id": 1,
         "name": "Tarifa por operacion",
-        "fee": 15.50 
-      }, 
+        "fee": 15.50
+      },
       {
         "id": 2,
         "name": "Tarifa por peso",
-        "fee": 25.50 
-      },  
+        "fee": 25.50
+      },
       {
         "id": 3,
         "name": "Tarifa por priorizacion",
-        "fee": 35.50 
-      }, 
-    ]  
+        "fee": 35.50
+      },
+    ]
 
     httpClientSpyGet.get.and.returnValue(of(mockResult));
     serviceGet.getRates()
@@ -96,24 +96,24 @@ describe('TEST al servicio "RatesService"', () => {
   });
 
   it('Deberia retornar object rate (Obtener tarfias - Lista Observable)', (done: DoneFn) => {
-    let mockResult =  
+    let mockResult =
     [
       {
         "id": 1,
         "name": "Tarifa por operacion",
-        "fee": 15.50 
-      }, 
+        "fee": 15.50
+      },
       {
         "id": 2,
         "name": "Tarifa por peso",
-        "fee": 25.50 
-      },  
+        "fee": 25.50
+      },
       {
         "id": 3,
         "name": "Tarifa por priorizacion",
-        "fee": 35.50 
-      }, 
-    ]  
+        "fee": 35.50
+      },
+    ]
 
     httpClientSpyGet.get.and.returnValue(of(mockResult));
     serviceGet.getOperationFee()

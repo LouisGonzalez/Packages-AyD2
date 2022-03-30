@@ -1,18 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { Client } from '../../others/models/Client';
 import { RecepService } from '../../others/services/recep.service';
-//import Swal from 'sweetalert2';
-import { EMPTY } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import {
   NbComponentStatus,
-  NbGlobalLogicalPosition,
   NbGlobalPhysicalPosition,
   NbGlobalPosition,
   NbToastrService,
-  NbToastrConfig,
 } from '@nebular/theme';
 import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 

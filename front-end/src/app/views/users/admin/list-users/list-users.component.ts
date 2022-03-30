@@ -2,7 +2,6 @@ import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild, ViewCont
 import { Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Subject } from 'rxjs';
-import { SmartTableData } from '../../../../@core/data/smart-table';
 import { User } from '../../others/models/employee';
 import { AdminService } from '../../others/services/admin.service';
 import { UpdateUserComponent } from '../update-user/update-user.component';
@@ -63,7 +62,7 @@ export class ListUsersComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver, private service: SmartTableData, private adminService: AdminService, private router: Router) {
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private adminService: AdminService, private router: Router) {
     this.getData();
   }
 
