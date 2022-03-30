@@ -82,4 +82,8 @@ public class CheckpointService {
     public List<Checkpoint> getAllByAssignedOperator(Long cui){
         return checkpointRepository.findAllByAssignedOperatorCUIAndActiveTrueOrderByRouteId(cui);
     }
+
+    public List<Checkpoint> getAllCheckpointsByDestinationId(Long idDestination) {
+        return checkpointRepository.findAllByRoute_Destination_IdAndRoute_ActiveAndActiveOrderById(idDestination, true, true);
+    }
 }

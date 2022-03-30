@@ -18,5 +18,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface QueueRepository extends JpaRepository<Queue, Long> {
     
-    public List<Queue> findAllByPackages_Id_Destination(Destination idDestionation);
+    public List<Queue> findAllByPackages_Destination_Id(Long id_Destination);
+
 }

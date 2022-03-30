@@ -27,9 +27,7 @@ public class ExampleController {
     
     @GetMapping
     public String prueba(){
-        queueHandler.traverseQueue(4L);
-        queueHandler.traverseQueue(5L);
-        queueHandler.traverseQueue(6L);
+        queueHandler.verifiyQueue();
         return "Hello World";
     }
 }

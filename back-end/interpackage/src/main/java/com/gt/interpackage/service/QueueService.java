@@ -23,12 +23,11 @@ public class QueueService {
     @Autowired
     private QueueRepository queueRepository;
     
-    public List<com.gt.interpackage.model.Package> findByDestination(EntityManager entityManager, Long idDestination) {
-      /*  TypedQuery<com.gt.interpackage.model.Package> query
-                // select * from queue INNER JOIN package ON  queue.id_package = package.id WHERE package.id_destiantion = '';
-                = entityManager.createNativeQuery("SELECT * FROM queue INNER JOIN package ON queue.id_package = package.id", com.gt.interpackage.model.Package.class)
-       return query.getResultList();*/
-      return new ArrayList<>();
+    public List<Queue> findByDestination(Long idDestination) {
+      return queueRepository.findAllByPackages_Destination_Id(idDestination);
     }
-    
+
+    public void deletePackageOnQueue(Queue queue) {
+        queueRepository.delete(queue);
+    }
 }
