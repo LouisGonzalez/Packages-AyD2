@@ -34,5 +34,17 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>{
     public Employee getByUsernameOrEmail(String username, String email);
     
     public Employee findByTokenPassword(String tokenPassword);
+    
+    /**
+     * Metodo que consulta desde la base de datos si existe un destino con el nombre 
+     * que se recibe como parametro name  y cuyo id no sea igual al que se recibe como 
+     * segundo parametro.
+     * @param name
+     * @param id
+     * @return 
+     */
+    public boolean existsEmployeeByUsername(String username);
+    
+    public boolean existsEmployeeByCUI(Long CUI);
 
 }

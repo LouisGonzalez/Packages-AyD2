@@ -51,6 +51,10 @@ public class EmployeeController {
     @PostMapping ("/")
     public ResponseEntity<Employee> addEmployee(@RequestBody Employee emp){
         try{
+            if(_employeeService.exists(emp.getUsername()))
+                return new ResponseEntity("El usuario con el id "+emp.getUsername()+" ya existe", HttpStatus.BAD_REQUEST);
+            if(_employeeService.existsByCUI(emp.getCUI()))
+                return new ResponseEntity("El usuario con el CUI "+emp.getCUI()+" ya existe", HttpStatus.BAD_REQUEST);
             Employee savedEmp = _employeeService.save(emp);
             return ResponseEntity.created(
             new URI("/employee/"+savedEmp.getCUI()))

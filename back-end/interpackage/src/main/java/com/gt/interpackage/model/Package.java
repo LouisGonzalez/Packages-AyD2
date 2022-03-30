@@ -76,6 +76,18 @@ public class Package {
         this.route = route;
     }
 
+    public Package(Boolean onWay, Boolean atDestination, Boolean retired, Double weight, Double subTotal, Boolean priority, String description, Invoice invoice, Double unitTotal, Route route) {
+        this.onWay = onWay;
+        this.atDestination = atDestination;
+        this.retired = retired;
+        this.weight = weight;
+        this.unitTotal = unitTotal;
+        this.priority = priority;
+        this.description = description;
+        this.invoice = invoice;
+        this.route = route;
+    }
+
     public Destination getDestination() {
         return destination;
     }
@@ -83,7 +95,6 @@ public class Package {
     public void setDestination(Destination destination) {
         this.destination = destination;
     }
-
     public LocalDate getDateStart() {
         return dateStart;
     }
