@@ -5,6 +5,7 @@ import com.gt.interpackage.model.Package;
 import com.gt.interpackage.service.*;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,7 @@ public class QueueHandler {
                         p.setDateStart(LocalDate.now());
                         p.setRoute(route);
                         packageService.update(p, p.getId());
-                        //queueService.deletePackageOnQueue(packageOnQueue);
+                        queueService.deletePackageOnQueue(packageOnQueue);
                     }
                 }
             }
