@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GLOBAL } from '../../../GLOBAL';
+import { CustomServerDataSource } from '../models/CustomServerDataSource';
 import { User } from '../models/employee';
 import { Route } from '../models/Route';
 
@@ -17,9 +18,23 @@ export class AdminService {
   userSession: any;
 constructor(private httpClient: HttpClient) { }
 
+  getAll() {
+    return new CustomServerDataSource(this.httpClient, {
+      dataKey: 'content',
+      endPoint: `${this.urlApi}/employee/`,
+      pagerPageKey: 'page',
+      pagerLimitKey: 'size',
+      totalKey: 'totalElements'
+    })
+  }
 
   getAllActivates(): Observable<any>{
     let a = this.httpClient.get(`${this.urlApi}/employee/actives/`);
+    return a;
+  }
+
+  getAllActivatesNotAdmin(): Observable<any>{
+    let a = this.httpClient.get(`${this.urlApi}/employee/actives/not-admin/`)
     return a;
   }
 

@@ -42,4 +42,12 @@ public class ClientService {
     public List<ClientReport> getClientReport(){
         return _clientRepository.clientDetails();
     }
+    
+    public boolean existsByCui(Long cui){
+        return _clientRepository.existsClientByCui(cui);
+    }
+    
+    public boolean existsByNit(Integer nit){
+        return _clientRepository.existsClientByNit(nit);
+    }
 }

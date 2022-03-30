@@ -50,7 +50,7 @@ public class Package {
     private LocalDate dateEnd;
     
     @ManyToOne
-    @JoinColumn (name="route", nullable = false)
+    @JoinColumn (nullable = true, name="route")
     private Route route;
     
     @ManyToOne
@@ -63,7 +63,7 @@ public class Package {
 
     public Package() { }
     
-    public Package(Long id, Boolean onWay, Boolean atDestination, Boolean retired, Double weight, Double subTotal, Boolean priority, String description, Invoice invoice, Double unitTotal, Route route) {
+    public Package(Long id, Boolean onWay, Boolean atDestination, Boolean retired, Double weight, Double subTotal, Boolean priority, String description, Invoice invoice, Double unitTotal, Route route, Destination destination) {
         this.id = id;
         this.onWay = onWay;
         this.atDestination = atDestination;
@@ -74,9 +74,10 @@ public class Package {
         this.description = description;
         this.invoice = invoice;
         this.route = route;
+        this.destination = destination;
     }
 
-    public Package(Boolean onWay, Boolean atDestination, Boolean retired, Double weight, Double subTotal, Boolean priority, String description, Invoice invoice, Double unitTotal, Route route) {
+    public Package(Boolean onWay, Boolean atDestination, Boolean retired, Double weight, Double subTotal, Boolean priority, String description, Invoice invoice, Double unitTotal, Route route, Destination destination) {
         this.onWay = onWay;
         this.atDestination = atDestination;
         this.retired = retired;
@@ -86,6 +87,7 @@ public class Package {
         this.description = description;
         this.invoice = invoice;
         this.route = route;
+        this.destination = destination;
     }
 
     public Destination getDestination() {

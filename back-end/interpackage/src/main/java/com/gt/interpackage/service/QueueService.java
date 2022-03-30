@@ -30,4 +30,8 @@ public class QueueService {
     public void deletePackageOnQueue(Queue queue) {
         queueRepository.delete(queue);
     }
+    
+    public <S extends Queue> S save(S entity){
+        return queueRepository.save(entity);
+    }
 }

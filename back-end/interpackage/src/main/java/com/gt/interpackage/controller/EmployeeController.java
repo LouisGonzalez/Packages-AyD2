@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,8 +22,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.data.domain.Page;
 /**
  *
  * @author Luis
@@ -38,10 +41,30 @@ public class EmployeeController {
     private EmployeeTypeService employeeTypeService;
         
 
+    @GetMapping("/")
+    public ResponseEntity<Page<Employee>> getAll(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
+        try {
+            Page<Employee> employees = _employeeService.findAll(
+                    PageRequest.of(page, size, Sort.by("name")));
+            return new ResponseEntity<Page<Employee>>(employees, HttpStatus.OK);
+        } catch(Exception e){
+            return new ResponseEntity("Error en el servidor.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @GetMapping("/actives/")
     public ResponseEntity<List<Employee>> getAllEmployees(){
         return ResponseEntity.ok(_employeeService.findAllActivates());
     }
+    
+    @GetMapping("/actives/not-admin/")
+    public ResponseEntity<List<Employee>> getAllEmployeesNotAdmin(){
+        return ResponseEntity.ok(_employeeService.findAllActivatesNotAdmin());
+    }
+    
     
     @GetMapping("/deactivates/")
     public ResponseEntity<List<Employee>> getAllDeactivatesEmployess(){
@@ -52,9 +75,9 @@ public class EmployeeController {
     public ResponseEntity<Employee> addEmployee(@RequestBody Employee emp){
         try{
             if(_employeeService.exists(emp.getUsername()))
-                return new ResponseEntity("El usuario con el id "+emp.getUsername()+" ya existe", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity("El usuario con el id: "+emp.getUsername()+" ya existe", HttpStatus.INTERNAL_SERVER_ERROR);
             if(_employeeService.existsByCUI(emp.getCUI()))
-                return new ResponseEntity("El usuario con el CUI "+emp.getCUI()+" ya existe", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity("El usuario con el CUI: "+emp.getCUI()+" ya existe", HttpStatus.INTERNAL_SERVER_ERROR);
             Employee savedEmp = _employeeService.save(emp);
             return ResponseEntity.created(
             new URI("/employee/"+savedEmp.getCUI()))

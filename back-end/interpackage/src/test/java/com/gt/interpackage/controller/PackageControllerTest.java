@@ -41,7 +41,7 @@ public class PackageControllerTest {
     @BeforeEach
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        pack = new Package(1L, true, false, false, 100.0, 50.0, false, "Esta es una descripcion", null, 50.0, null);
+        pack = new Package(1L, true, false, false, 100.0, 50.0, false, "Esta es una descripcion", null, 50.0, null, null);
         objectMapper = new ObjectMapper();
     }
     
@@ -62,8 +62,8 @@ public class PackageControllerTest {
     public void testUpdatePackage() throws Exception {
         System.out.println("PackageControllerTest - update");
         Mockito.when(_packageService.getById(ArgumentMatchers.any(Long.class))).thenReturn(pack);
-        Mockito.when(_packageService.update(ArgumentMatchers.any(Package.class), ArgumentMatchers.any(Long.class))).thenReturn( new Package(1L, true, false, false, 75.0, 50.0, false, "Esta es una descripcion 2", null, 50.0, null));
-        Package updated =  new Package(1L, true, false, false, 100.0, 50.0, false, "Esta es una descripcion", null, 50.0, null);
+        Mockito.when(_packageService.update(ArgumentMatchers.any(Package.class), ArgumentMatchers.any(Long.class))).thenReturn( new Package(1L, true, false, false, 75.0, 50.0, false, "Esta es una descripcion 2", null, 50.0, null, null));
+        Package updated =  new Package(1L, true, false, false, 100.0, 50.0, false, "Esta es una descripcion", null, 50.0, null, null);
         mockMvc.perform(MockMvcRequestBuilders.put(Constants.API_V1 + "/package/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updated)))

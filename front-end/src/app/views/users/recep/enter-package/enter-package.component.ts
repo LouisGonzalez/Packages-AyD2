@@ -87,9 +87,10 @@ export class EnterPackageComponent implements OnInit {
       }
   },
   (error) => {
+    console.log(error)
     this.notification.showToast(4, 'Not Found', `El cliente con el NIT: ${this.nitParameter} no existe`, 2500);
+    this.cleanData();
     this.openModalClient();
-
   })
   }
 
@@ -191,10 +192,12 @@ export class EnterPackageComponent implements OnInit {
           this.packages[i].route = {
             id: this.routeSelected[i]
           }
+          this.packages[i].destination = {
+            id: this.destinySelected[i]
+          }
           this.packages[i].onWay = false;
           this.packages[i].atDestination = false;
           this.packages[i].retired = false;
-          this.packages[i].idClient = this.client.id;
           this.packages[i].noInvoice = result.id;
           this.packages[i].invoice = result;
 
@@ -203,7 +206,7 @@ export class EnterPackageComponent implements OnInit {
           }
           this.packages[i].priority = this.priority[i];
           this.recepService.creaatePackage(this.packages[i]).subscribe(result => {
-            console.log('proceso finalizado')
+            this.createQueue(result);
             this.cleanData();
           })
         }
@@ -215,6 +218,16 @@ export class EnterPackageComponent implements OnInit {
       console.log('todos los paquetes deben ser llenados')
     }
 
+  }
+
+  createQueue(pack: Package){
+    let queue = {
+      packages: pack,
+      position: 0
+    }
+    this.recepService.createQueue(queue).subscribe(response => {
+
+    })
   }
 
   cleanData(){

@@ -20,10 +20,6 @@ export class ClientListComponent implements OnInit {
       delete: false
     },
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
       name: {
         title: 'Nombres',
         type: 'string',
