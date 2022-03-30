@@ -2,6 +2,7 @@ package com.gt.interpackage.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.gt.interpackage.model.PackageCheckpoint;
+import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 import org.springframework.data.jpa.repository.Modifying;
@@ -50,8 +51,8 @@ public interface PackageCheckpointRepository extends JpaRepository<PackageCheckp
     
     @Transactional
     @Modifying
-    @Query(value="UPDATE package_checkpoint SET current_checkpoint=?1, time_on_checkpoint=?2 WHERE id_package=?3 AND id_checkpoint=?4", nativeQuery = true)
-    public void update(Boolean currentCheckpoint, Time timeOnCheckpoint, Long idPackage, Long idCheckpoint);
+    @Query(value="UPDATE package_checkpoint SET current_checkpoint=?1, time_on_checkpoint=?2, date=?3 WHERE id_package=?4 AND id_checkpoint=?5", nativeQuery = true)
+    public void update(Boolean currentCheckpoint, Time timeOnCheckpoint, Date date, Long idPackage, Long idCheckpoint);
     
     @Transactional
     @Modifying

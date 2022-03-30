@@ -26,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import com.gt.interpackage.model.Destination;
 import java.text.ParseException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -59,7 +58,7 @@ public class RouteController {
     @PostMapping
     public ResponseEntity<Route> createRoute(@RequestBody Route route){
         try{
-            if(routeService.existsById(route.getName()))
+            if(routeService.existsByName(route.getName()))
                 return new ResponseEntity("Nombre de ruta ya registrado en el sistema", HttpStatus.BAD_REQUEST);
                 
             if(route.getName().isBlank() || route.getName().isEmpty() )

@@ -48,6 +48,29 @@
                     <label class="label required" *ngIf="formPackage.get('time').hasError('required')">{{ERROR_REQUIRED}}</label>
                 </div>  
             </div>
+
+             <!-- Fecha de procesamiento -->
+             <div class="form-group">
+                <label class="required">*</label>
+                <label for="time" class="label">Fecha de Procesamiento</label> 
+                <input 
+                    [ngClass]="{
+                    'inp-invalid': formPackage.get('date').invalid && formPackage.get('date').touched, 
+                    'nbInput': formPackage.get('date').valid
+                    }"
+                    type="date"
+                    formControlName="date"
+                    nbInput 
+                    fullWidth 
+                    id="date" 
+                    placeholder="Ingrese la fecha de procesamiento."
+                    required
+                />
+
+                <div *ngIf="formPackage.get('date').invalid && formPackage.get('date').touched" >
+                    <label class="label required" *ngIf="formPackage.get('date').hasError('required')">{{ERROR_REQUIRED}}</label>
+                </div>     
+            </div>
                 
             <div class="row">
                 <button type="submit" nbButton status="primary" (click)="proccessPackage()" hero>Procesar</button> &nbsp; &nbsp;

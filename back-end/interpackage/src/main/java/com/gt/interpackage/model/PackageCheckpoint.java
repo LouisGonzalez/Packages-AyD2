@@ -1,6 +1,7 @@
 package com.gt.interpackage.model;
 
 import com.gt.interpackage.pk.PKPackageCheckpoint;
+import java.sql.Date;
 import java.sql.Time;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +35,9 @@ public class PackageCheckpoint {
     
     @Column(name = "current_checkpoint", nullable = false)
     private Boolean currentCheckpoint;
+    
+    @Column(nullable = true)
+    private Date date;
 
     public PackageCheckpoint() { }
 
@@ -74,6 +78,14 @@ public class PackageCheckpoint {
 
     public void setCurrentCheckpoint(Boolean currentCheckpoint) {
         this.currentCheckpoint = currentCheckpoint;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
     
 }

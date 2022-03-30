@@ -26,6 +26,7 @@ export class ProcessPackageComponent implements OnInit {
    //Fomulario reactivo
    formPackage: FormGroup = new FormGroup({
     time: new FormControl(null, Validators.required),
+    date: new FormControl(null, Validators.required)
   });
 
   constructor(
@@ -48,7 +49,6 @@ export class ProcessPackageComponent implements OnInit {
       this.description = response.packages.description;
       this.weight = response.packages.weight;
       this.checkpointId = response.checkpoint.id;
-      console.log(response.checkpoint.route.id)
     })
   }
 
@@ -62,6 +62,7 @@ export class ProcessPackageComponent implements OnInit {
           id: this.packageId
         },
         timeOnCheckpoint: this.formPackage.get('time').value,
+        date: this.formPackage.get('date').value,
         currentCheckpoint: Boolean(false)
       }).subscribe({
         next : (res) => {

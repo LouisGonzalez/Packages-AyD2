@@ -51,12 +51,7 @@ public class RouteService {
      * @return Ruta creada.
      */
     public Route create(Route route){
-        try{            
         return routeRepository.save(route);
-        } catch(Exception e){
-            System.out.println(e);
-            return null;
-        }
     }
     
     /**
@@ -75,7 +70,7 @@ public class RouteService {
      * @param name
      * @return True o False. 
      */
-    public boolean existsById(String name){
+    public boolean existsByName(String name){
         return routeRepository.existsRouteByName(name);
     }
     
@@ -130,8 +125,8 @@ public class RouteService {
      * la ruta que se recibe como parametro. 
      * @param route 
      */
-    public void update(Route route){
-        routeRepository.save(route);
+    public Route update(Route route){
+        return routeRepository.save(route);
     }
     
     /**

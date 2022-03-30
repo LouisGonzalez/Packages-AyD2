@@ -202,6 +202,7 @@ public class PackageChekpointController {
                 Package tempPackage = packageService.getById(packageCheckpoint.getPackages().getId());
                 tempPackage.setAtDestination(true);
                 tempPackage.setOnWay(false);
+                tempPackage.setDateEnd(packageCheckpoint.getDate().toLocalDate());
                 packageService.update(tempPackage, tempPackage.getId());
                 
                 //Actualizar la tupla actual en package_checkpoint
