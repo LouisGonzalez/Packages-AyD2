@@ -34,7 +34,7 @@ public class Queue {
 
     public Queue() { }
     
-    public Queue(Long queue, Package packages, Integer position) {
+    public Queue (Long queue, Package packages, Integer position) {
         this.queue = queue;
         this.packages = packages;
         this.position = position;
