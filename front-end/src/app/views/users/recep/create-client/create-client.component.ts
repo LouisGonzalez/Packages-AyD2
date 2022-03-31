@@ -10,6 +10,8 @@ import {
   NbToastrService,
 } from '@nebular/theme';
 import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
+import { catchError } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
 
 
 @Component({
@@ -50,7 +52,11 @@ export class CreateClientComponent implements OnInit {
     if(this.form.valid){
       this.client = this.form.value;
       this.recepService.addClient(this.client).pipe(
-        )
+        catchError(error => {
+          this.notification.showToast(4, 'Error', error.error, 2500);
+          return EMPTY
+        })
+      )
       .subscribe(
         result => {
           this.ref.close(this.client);

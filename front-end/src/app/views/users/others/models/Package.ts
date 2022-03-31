@@ -1,3 +1,4 @@
+import { Destination } from "./destination";
 import { Invoice } from "./Invoice";
 import { Route } from "./Route";
 
@@ -14,4 +15,5 @@ export interface Package {
   unitTotal: number;
   description: string;
   priority: boolean;
+  destination: Destination;
 }

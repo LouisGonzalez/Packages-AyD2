@@ -31,7 +31,7 @@ export class InvoiceComponent implements OnInit {
     },
     columns: {
       id: {
-        title: 'NO.',
+        title: 'No. Factura',
         type: 'number'
       },
       dateEmit: {
@@ -40,7 +40,10 @@ export class InvoiceComponent implements OnInit {
       },
       total: {
         title: 'Total',
-        type: 'number'
+        type: 'number',
+        valuePrepareFunction: (total) => {
+          return `Q. ${total}`
+        }
       },
     }
   }

@@ -16,6 +16,7 @@ import { EditDestinationComponent } from './edit-destination/edit-destination.co
 import { RouteListComponent } from './route-list/route-list.component';
 import { EditRouteComponent } from './edit-route/edit-route.component';
 import { AdminGuard } from '../../auth/others/guards/admin.guard';
+import { ListEditUsersComponent } from './list-edit-users/list-edit-users.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,7 @@ const routes: Routes = [
       {
         path: 'routes',
         loadChildren: () => import('./routes/routes.module').then(m => m.RoutesModule),
-        canActivate: [AdminGuard]  
+        canActivate: [AdminGuard]
       },
       { // views/admin/rates
         path: 'rates',
@@ -46,6 +47,11 @@ const routes: Routes = [
       {
         path: 'list-users',
         component: ListUsersComponent,
+        canActivate: [AdminGuard]
+      },
+      {
+        path: 'list-edit-users',
+        component: ListEditUsersComponent,
         canActivate: [AdminGuard]
       },
       {
@@ -73,7 +79,7 @@ const routes: Routes = [
         component: UpdateAssignamentOperatorCheckpointComponent,
         canActivate: [AdminGuard]
       },
-      { 
+      {
         path: 'checkpoints',
         component: CheckpointListComponent,
         canActivate: [AdminGuard]

@@ -56,7 +56,7 @@ public class Queue {
         this.packages = packages;
     }
 
-    public Integer getPosition() {
+    public Integer gettion() {
         return position;
     }
 

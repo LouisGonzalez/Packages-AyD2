@@ -14,25 +14,14 @@ import { UpdateUserComponent } from '../update-user/update-user.component';
 export class ListUsersComponent implements OnInit {
 
 
-  @ViewChild('container', { read: ViewContainerRef })
-  container!: ViewContainerRef;
-
   users: User[];
   user: User;
   settings = {
     actions: {
+      columnTitle: 'Editar',
       add: false,
-      edit: false
-    },
-    // edit: {
-    //   editButtonContent: '<i class="nb-edit"></i>',
-    //   saveButtonContent: '<i class="nb-checkmark"></i>',
-    //   cancelButtonContent: '<i class="nb-close"></i>',
-    //   confirmEdit: true
-    // },
-    delete: {
-      deleteButtonContent: '<i class="nb-edit"></i>',
-      confirmDelete: true,
+      edit: false,
+      delete: false
     },
     columns: {
       name: {
@@ -55,51 +44,37 @@ export class ListUsersComponent implements OnInit {
         title: 'CUI',
         type: 'number',
       },
-
+      type: {
+        title: 'Tipo de Usuario',
+        type: 'string',
+        valuePrepareFunction: (type) => {
+          if(type == 1) return 'Administrador'
+          if(type == 2) return 'Operador'
+          if(type == 3) return 'Recepcionista'
+        },
+      },
+      activo: {
+        title: 'Estado',
+        type: 'string',
+        valuePrepareFunction: (activo) => {
+          if(activo == 1) return 'Activo'
+          if(activo == 0) return 'Desactivo'
+        }
+      }
     },
 
   };
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver, private adminService: AdminService, private router: Router) {
-    this.getData();
-  }
 
-  getData(){
-    this.adminService.getAllActivates().subscribe(response => {
-      this.users = response;
-      console.log(this.users)
-      this.source.load(this.users)
-    })
-  }
 
-  deactivateConfirm(event): void{
-    if(window.confirm('Estas seguro de desactivar a este usuario?')){
-    } else {
-      event.confirm.reject();
-    }
-  }
-
-  goToEdit(event){
-    console.log('hola mundo')
-
-  }
-
-  onDeleteConfirm(event): void {
-    const dynamicComponentFactory = this.componentFactoryResolver.resolveComponentFactory(UpdateUserComponent);
-    const componentRef = this.container.createComponent(dynamicComponentFactory);
-    componentRef.instance.userReceive = event.data;
-    componentRef.instance.users = this.users;
-    componentRef.instance.source = this.source;
-    document.getElementById('table-employeers').style.display = "none";
-  }
-
-  onCustom(event): void {
-    console.log('hola mundo');
+  constructor(private adminService: AdminService) {
+    this.source = this.adminService.getAll();
   }
 
   ngOnInit(): void {
   }
+
 
 }

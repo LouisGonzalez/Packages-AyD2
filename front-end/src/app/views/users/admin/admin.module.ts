@@ -42,6 +42,7 @@ import { ActivateUsersComponent } from './activate-users/activate-users.componen
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { RouteListComponent } from './route-list/route-list.component';
 import { EditRouteComponent } from './edit-route/edit-route.component';
+import { ListEditUsersComponent } from './list-edit-users/list-edit-users.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { EditRouteComponent } from './edit-route/edit-route.component';
     ListDestinationsComponent,
     EditDestinationComponent,
     RouteListComponent,
-    EditRouteComponent
+    EditRouteComponent,
+    ListEditUsersComponent
   ],
   imports: [
     CommonModule,

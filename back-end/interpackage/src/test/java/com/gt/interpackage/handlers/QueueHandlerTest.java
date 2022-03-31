@@ -53,7 +53,7 @@ public class QueueHandlerTest {
         destination = new Destination("GT-PTN-1", "Guatemala-Peten", 15.50);
         route = new Route(1L, "Ruta 1", 10, 15, true, destination);
         checkpoint = new Checkpoint(1L, "PuntoControl1", 15.50, 15, 5, true, null, route);
-        aPackage = new Package(1L, true, false, false, 100.0, 50.0, false, "Esta es una descripcion", null, 50.0, route);
+        aPackage = new Package(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, 15.50, 15.50, Boolean.TRUE, "Descripcion ", null, 15.50, route, destination);
         aPackage.setDestination(destination);
         packageCheckpoint = new PackageCheckpoint(checkpoint, aPackage, null, true);
         queue = new Queue(1L, aPackage, 1);

@@ -6,7 +6,9 @@ import com.gt.interpackage.model.Employee;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 /**
  *
  * @author Luis
@@ -17,12 +19,20 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository _empRepository;
     
+    public Page<Employee> findAll(Pageable pageable){
+        return _empRepository.findAll(pageable);
+    }
+    
     public List<Employee> findAllActivates(){
         return _empRepository.getAllActivates();
     }
     
     public List<Employee> findAllDeactivates(){
         return _empRepository.getAllDeactivates();
+    }
+    
+    public List<Employee> findAllActivatesNotAdmin(){
+        return _empRepository.getAllActivatesNotAdmin();
     }
     
     public Employee getByCUI(Long CUI) throws Exception {

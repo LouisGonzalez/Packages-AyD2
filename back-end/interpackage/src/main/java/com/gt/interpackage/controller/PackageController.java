@@ -78,6 +78,7 @@ public class PackageController {
             Package tempPackage = _packageService.addPackage(pack);
             return ResponseEntity.created(new URI("/package/"+tempPackage.getId())).body(tempPackage);
         } catch(Exception e){
+            System.out.println(e);
             return new ResponseEntity("Error en el servidor", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

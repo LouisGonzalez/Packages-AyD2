@@ -50,8 +50,11 @@ export class Report3Component implements OnInit {
         type: 'number'
       },
       totalIngresos: {
-        title: 'Ingresos (Q.)',
-        type: 'number'
+        title: 'Ingresos',
+        type: 'number',
+        valuePrepareFunction: (totalIngresos) => {
+          return `Q. ${totalIngresos}`
+        }
       }
     }
   }

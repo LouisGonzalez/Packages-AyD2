@@ -13,6 +13,7 @@ import com.gt.interpackage.source.Constants;
 import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +58,10 @@ public class ClientController {
     @PostMapping ("/")
     public ResponseEntity<Client> addClient(@RequestBody Client client){
         try {
+            if(_clientService.existsByCui(client.getCui()))
+                return new ResponseEntity("El cliente con el id: "+client.getCui()+" ya existe", HttpStatus.INTERNAL_SERVER_ERROR);
+            if(_clientService.existsByNit(client.getNit()))
+                return new ResponseEntity("El cliente con el numero de NIT: "+client.getNit()+" ya existe", HttpStatus.INTERNAL_SERVER_ERROR);
             Client savedClient = _clientService.save(client);
             return ResponseEntity.created(
                     new URI("/client/" + savedClient.getCui()))

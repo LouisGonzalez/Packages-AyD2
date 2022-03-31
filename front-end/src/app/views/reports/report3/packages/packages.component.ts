@@ -28,7 +28,11 @@ export class PackagesComponent implements OnInit {
     columns: {
       onWay: {
         title: 'En camino',
-        type: 'boolean'
+        type: 'boolean',
+        valuePrepareFunction: (onWay) => {
+          if(!onWay) return 'Aun en cola'
+          if(onWay) return 'Afirmativo'
+        }
       },
       atDestination: {
         title: 'En destino',
@@ -51,8 +55,11 @@ export class PackagesComponent implements OnInit {
         type: 'number'
       },
       unitTotal: {
-        title: 'Total Unitario (Q.)',
-        type: 'number'
+        title: 'Total Unitario',
+        type: 'number',
+        valuePrepareFunction: (unitTotal) => {
+          return `Q. ${unitTotal}`
+        }
       }
     }
   }

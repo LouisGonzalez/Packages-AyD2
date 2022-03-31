@@ -81,15 +81,19 @@ export const ADMINISTRATOR_MENU_ITEMS: NbMenuItem[] = [
         icon: 'person-outline',
         children:[
             {
-                title: 'Lista de Usuarios',
+                title: 'Listado General',
                 link: '/views/users/admin/list-users'
             },
             {
-              title: 'Registo de usuarios',
+                title: 'Edicion',
+                link: '/views/users/admin/list-edit-users'
+            },
+            {
+              title: 'Registo',
               link: '/views/users/admin/register'
             },
             {
-              title: 'Activar usuarios',
+              title: 'Activacion',
               link: '/views/users/admin/activate-users'
             },
             // Aca se agregan los links a cada una de las acciones de este apartado

@@ -46,9 +46,11 @@ export class RegisterUserComponent implements OnInit {
     this.form.value.activo = 1;
     if(this.form.valid){
       this.user = this.form.value;
-      this.adminService.add(this.user).pipe(
+      this.adminService.add(this.user)
+      .pipe(
         catchError(error => {
-        this.notification.showToast(4, 'Error', `Error durante la creacion del usuario, intente nuevamente`, 2500);
+          console.log(error.error)
+        this.notification.showToast(4, 'Error', error.error, 2500);
         return EMPTY
         })
       )

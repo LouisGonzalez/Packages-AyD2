@@ -2,6 +2,8 @@ package com.gt.interpackage.controller;
 
 import com.gt.interpackage.dto.FilterDateDTO;
 import com.gt.interpackage.dto.TopRouteDTO;
+import com.gt.interpackage.model.Destination;
+import com.gt.interpackage.model.EmployeeType;
 import com.gt.interpackage.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.text.ParseException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 
 /**
  *
@@ -218,6 +222,7 @@ public class RouteController {
         return ResponseEntity.ok(routeService.findRouteByDestination(id_destination));
     }
 
+   
 }
     
 

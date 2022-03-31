@@ -1,6 +1,6 @@
 export type Destination = {
     id?: number;
-    name : string;
+    name? : string;
     description ?: string;
-    fee : number;
+    fee? : number;
 }

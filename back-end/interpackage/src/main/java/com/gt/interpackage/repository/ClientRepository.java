@@ -28,5 +28,9 @@ public interface ClientRepository extends JpaRepository<Client, Long>{
     
     @Query(value = "SELECT * FROM client e JOIN invoice i ON e.nit = i.nit", nativeQuery = true)
     List<ClientReport> clientDetails();
+    
+    public boolean existsClientByCui(Long CUI);
+    
+    public boolean existsClientByNit(Integer nit);
         
 }

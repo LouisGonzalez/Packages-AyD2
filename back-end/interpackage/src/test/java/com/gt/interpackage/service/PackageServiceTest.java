@@ -34,7 +34,7 @@ public class PackageServiceTest {
     @BeforeEach
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        pack = new Package(1L, true, false, false, 100.0, 50.0, false, "Esta es una descripcion", null, 50.0, null);
+        pack = new Package(1L, true, false, false, 100.0, 50.0, false, "Esta es una descripcion", null, 50.0, null, null);
     }
     
     @Test
@@ -50,15 +50,15 @@ public class PackageServiceTest {
     public void testAddPackage(){
         System.out.println("PackageServiceTest - addPackage");
         Mockito.when(_packageRepository.save(ArgumentMatchers.any(Package.class))).thenReturn(pack);
-        assertNotNull(_packageService.addPackage(new Package(true, false, false, 100.0, 50.0, false, "Esta es una descripcion", null, 50.0, null)));
+        assertNotNull(_packageService.addPackage(new Package(true, false, false, 100.0, 50.0, false, "Esta es una descripcion", null, 50.0, null, null)));
     }
     
     @Test
     public void testUpdate() throws Exception {
         System.out.println("PackageServiceTest - update");
         Mockito.when(_packageRepository.getById(ArgumentMatchers.any(Long.class))).thenReturn(pack);
-        Mockito.when(_packageRepository.save(ArgumentMatchers.any(Package.class))).thenReturn(new Package(1L, true, false, false, 100.0, 50.0, false, "Esta es una descripcion 2", null, 50.0, null));
-        Package updated = new Package(1L, true, false, false, 100.0, 50.0, false, "Esta es una descripcion 2", null, 50.0, null);
+        Mockito.when(_packageRepository.save(ArgumentMatchers.any(Package.class))).thenReturn(new Package(1L, true, false, false, 100.0, 50.0, false, "Esta es una descripcion 2", null, 50.0, null, null));
+        Package updated = new Package(1L, true, false, false, 100.0, 50.0, false, "Esta es una descripcion 2", null, 50.0, null, null);
         Package packUpdated = _packageService.update(updated, 1L);
         assertNotNull(packUpdated);
         assertEquals(updated.getDescription(), packUpdated.getDescription());

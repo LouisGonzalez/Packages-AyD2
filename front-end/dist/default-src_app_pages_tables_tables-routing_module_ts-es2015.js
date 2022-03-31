@@ -24212,7 +24212,13 @@ class TreeGridComponent {
                 ],
             },
         ];
-        this.dataSource = this.dataSourceBuilder.create(this.data);
+        this.data2 = [];
+        this.cl = { data: { name: 'Other', kind: 'dir', size: '109 MB', items: 2 } };
+        this.c3 = [{ data: { name: 'Otasdfasdf', kind: 'dir', size: '109 MB', items: 2 } },
+            { data: { name: 'Oxdddddd', kind: 'dir', size: '109 MB', items: 2 } }];
+        //    this.data2.push(this.cl);
+        this.method();
+        this.dataSource = this.dataSourceBuilder.create(this.data2);
     }
     updateSort(sortRequest) {
         this.sortColumn = sortRequest.column;
@@ -24223,6 +24229,12 @@ class TreeGridComponent {
             return this.sortDirection;
         }
         return _nebular_theme__WEBPACK_IMPORTED_MODULE_1__.NbSortDirection.NONE;
+    }
+    method() {
+        //    c2: TreeNode<FSEntry> = { data: { name: 'Other', kind: 'dir', size: '109 MB', items: 2 }};
+        let a = "asfd";
+        this.data2.push({ data: { name: 'Other', kind: 'dir', size: '109 MB', items: 2 },
+            children: this.c3 });
     }
     getShowOn(index) {
         const minWithForMultipleColumns = 400;
