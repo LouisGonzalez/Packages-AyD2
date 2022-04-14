@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { Package } from '../models/Package';
 
 import { RecepService } from './recep.service'
 
@@ -216,7 +217,7 @@ describe('TEST al servicio RecepService', () => {
   })
 
   it('RecepService -> Debe retornar el objeto del paquete creado', (done: DoneFn) => {
-    let mockPackage = {
+    let mockPackage : Package = {
       id: null,
       idClient: null,
       route: null,
@@ -228,7 +229,8 @@ describe('TEST al servicio RecepService', () => {
       invoice: null,
       unitTotal: 400,
       description: 'es un paquete',
-      priority: false
+      priority: false,
+      destination: null
     }
     let mockResult = {
       id: 1,

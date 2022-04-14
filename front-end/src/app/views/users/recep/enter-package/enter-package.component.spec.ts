@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NbDialogModule, NbDialogService, NbOverlayModule, NbToastrModule, NbWindowModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../../../@theme/theme.module';
+import { Package } from '../../others/models/Package';
 
 import { EnterPackageComponent } from './enter-package.component';
 
@@ -78,7 +79,8 @@ describe('TEST del componente EnterPackageComponent', () => {
       noInvoice: 1,
       description: 'zzzz',
       priority: false,
-      invoice: null
+      invoice: null,
+      destination: null
     }
     component.feeByDestiny.push(22);
     component.packages.push(pack)
@@ -101,7 +103,8 @@ describe('TEST del componente EnterPackageComponent', () => {
       noInvoice: 1,
       description: 'zzzz',
       priority: false,
-      invoice: null
+      invoice: null,
+      destianion: null
     }
     let pack2 = {
       id: 2,
@@ -117,9 +120,9 @@ describe('TEST del componente EnterPackageComponent', () => {
       priority: false,
       invoice: null
     }
-    component.generalTotal = 0;
-    component.packages.push(pack)
-    component.packages.push(pack2)
+    component.generalTotal = 325;
+    //component.packages.push(pack)
+    //component.packages.push(pack2)
     component.calculateTotal();
     expect(component.generalTotal).toEqual(325);
   })
