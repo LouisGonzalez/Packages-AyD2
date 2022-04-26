@@ -40,11 +40,11 @@ public class Employee {
     //@JsonDeserialize (using = BCryptPasswordDeserializer.class)
     private String password;
     
-    public Employee() { }
+
 
     @Column (nullable = false)
     private Boolean activo;
-    
+    public Employee() { }
     public Employee(Long CUI, String name, String lastname, Integer type, String password, String email, String username, Boolean activo) {
         this.CUI = CUI;
         this.name = name;

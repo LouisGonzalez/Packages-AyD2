@@ -10,22 +10,22 @@ import { Rate } from "../../models/rate";
 })
 export class RatesService {
 
-  constructor(private http: HttpClient) {}
+  constructor (private http: HttpClient) {}
 
-  postRates(data: any) {
-    return this.http.post<any>(global.GLOBAL.urlApi + "/fee/", data);
+  public postRates(data: any) {
+    return this.http.post<any>(global.GLOBAL.urlMicroserviceAdministration + "/fee/", data);
   }
 
   public getOperationFee(): Observable<Rate[]>{
-    return this.http.get<Rate[]>(global.GLOBAL.urlApi + "/fee/")
+    return this.http.get<Rate[]>(global.GLOBAL.urlMicroserviceAdministration + "/fee/")
   }
 
-  getRates(){
-    return this.http.get<Rate[]>(global.GLOBAL.urlApi + "/fee/");
+  public getRates(){
+    return this.http.get<Rate[]>(global.GLOBAL.urlMicroserviceAdministration + "/fee/");
   }
 
-  putRates(data : any, id : number) {
-    return this.http.put<any>(global.GLOBAL.urlApi + "/fee/" + id, data);
+  public putRates(data : any, id : number) {
+    return this.http.put<any>(global.GLOBAL.urlMicroserviceAdministration + "/fee/" + id, data);
   }
 }
 

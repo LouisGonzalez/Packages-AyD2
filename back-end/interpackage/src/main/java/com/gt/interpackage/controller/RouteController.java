@@ -83,7 +83,6 @@ public class RouteController {
      * @param size Tamaño de la pagina. Por defecto 10.
      * @return 
      */
-    @CrossOrigin
     @GetMapping("list")
     public ResponseEntity<Page<Route>> getRoutes(
         @RequestParam(defaultValue = "1") int page,
