@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DestinationService } from '../../others/services/destination/destination.service'; 
+import { DestinationService } from '../../others/services/destination/destination.service';
 import { Router } from '@angular/router';
 import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 import { NbToastrService } from '@nebular/theme';
@@ -17,7 +17,7 @@ export class ListDestinationsComponent implements OnInit {
   showPerPage = 10;
 
   settings = {
-    mode: 'external', 
+    mode: 'external',
     noDataMessage: 'No exite ningun destino en el sistema.',
     pager:{
       display: true,
@@ -56,7 +56,7 @@ export class ListDestinationsComponent implements OnInit {
   };
 
   constructor(
-    private destinationService : DestinationService,  
+    private destinationService : DestinationService,
     private router: Router,
     private toastrService: NbToastrService) { }
 
@@ -68,13 +68,13 @@ export class ListDestinationsComponent implements OnInit {
   public onCustomAction(event){
     switch(event.action){
       case 'edit':
-        this.router.navigate(['views', 'admin', 'edit-destination', event.data['id']]);    
+        this.router.navigate(['views', 'admin', 'edit-destination', event.data['id']]);
         break;
-      
+
       case 'delete':
         this.delete(event.data['id']);
         break;
-    }  
+    }
   }
 
   private delete(id : number) {
@@ -83,12 +83,12 @@ export class ListDestinationsComponent implements OnInit {
         next:(res) => {
           this.notification.showToast(1, 'Exito', 'Destino eliminado exitosamente.', 3000);
           this.source.remove(id);
-        },  
+        },
         error:(error) => {
           this.notification.showToast(3, 'Error', error.error , 4000);
         }
       })
-    } 
+    }
   }
 
 }

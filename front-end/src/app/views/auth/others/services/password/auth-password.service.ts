@@ -10,14 +10,14 @@ export class AuthPasswordService {
   constructor(private http: HttpClient) { }
 
   sendEmail(data : any) {
-    return this.http.post<any>(global.GLOBAL.urlApi +"/email/send-email-forgot-password/", data);
+    return this.http.post<any>(global.GLOBAL.urlMicroserviceAuthentication +"/email/send-email-forgot-password/", data);
   }
 
   searchUserByEmail(email : any) {
-    return this.http.get<any>(global.GLOBAL.urlApi +"/employee/search-by-email/" + email);
+    return this.http.get<any>(global.GLOBAL.urlMicroserviceAuthentication +"/employee/search-by-email/" + email);
   }
 
   changePassword(data : any) {
-    return this.http.post<any>(`${global.GLOBAL.urlApi}/employee/change-password/`, data);
+    return this.http.post<any>(`${global.GLOBAL.urlMicroserviceAuthentication}/employee/change-password/`, data);
   }
 }

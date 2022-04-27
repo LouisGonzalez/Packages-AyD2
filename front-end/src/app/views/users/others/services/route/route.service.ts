@@ -35,7 +35,7 @@ export class RouteService {
   public getAllRoutesPaginated() {
     return new CustomServerDataSource(this.http, {
       dataKey: 'content',
-      endPoint: global.GLOBAL.urlApi + '/route/list',
+      endPoint: global.GLOBAL.urlMicroserviceReports + '/route/list',
       pagerPageKey: 'page', 
       pagerLimitKey: 'size', 
       totalKey: 'totalElements' 
@@ -52,7 +52,7 @@ export class RouteService {
     public getRoutesByActivePaginated(active : boolean) {
       return new CustomServerDataSource(this.http, {
         dataKey: 'content',
-        endPoint: global.GLOBAL.urlApi + '/route/list/' + active,
+        endPoint: global.GLOBAL.urlMicroserviceReports + '/route/list/' + active,
         pagerPageKey: 'page', 
         pagerLimitKey: 'size', 
         totalKey: 'totalElements' 
@@ -77,7 +77,7 @@ export class RouteService {
   }
 
   public getMostPopularRoute(data) {
-    return this.http.post<any>(global.GLOBAL.urlApi + "/route/most-popular-route", data)
+    return this.http.post<any>(global.GLOBAL.urlMicroserviceReports + "/route/most-popular-route", data)
   }
 
 }

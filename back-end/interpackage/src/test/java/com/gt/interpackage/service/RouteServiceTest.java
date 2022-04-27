@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -36,11 +37,8 @@ public class RouteServiceTest {
     
     @Mock
     private Destination destination;
-    
-    @Mock
+
     private Page<Route> page;
-    
-    @Mock
     private Pageable pageable;
     
     @BeforeEach
@@ -49,6 +47,7 @@ public class RouteServiceTest {
         destination = new Destination(1L, "GUATEMALA-PETEN", "De Gautemala a Peten", 52.50);
         route = new Route(1L, "Ruta 1", 45, 150, true, destination);
         pageable = PageRequest.of(1, 10);
+        page = new PageImpl<>(Arrays.asList(route), PageRequest.of(1, 10), 400L);
     }
     
     @Test
@@ -57,9 +56,9 @@ public class RouteServiceTest {
         Mockito.when(
                 routeRepository
                         .findAllByActive(ArgumentMatchers.any(Pageable.class), ArgumentMatchers.any(Boolean.class)))
-                .thenReturn(Page.empty());
-        Page<Route> page =routeService.getRoutesByActive(ArgumentMatchers.any(Pageable.class), ArgumentMatchers.any(Boolean.class));
-        assertNotNull(Page.empty());
+                .thenReturn(page);
+        Page page = routeService.getRoutesByActive(ArgumentMatchers.any(Pageable.class), ArgumentMatchers.any(Boolean.class));
+        assertNull(page);
     }
     
     @Test

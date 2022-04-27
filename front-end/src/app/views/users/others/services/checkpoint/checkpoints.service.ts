@@ -46,11 +46,11 @@ export class CheckpointsService {
   }
 
   putCheckpoint(data : CheckpointListTemplate, id : number) {
-    return this.http.put<any>(`${global.GLOBAL.urlApi}/checkpoint/update/` + id, data);
+    return this.http.put<any>(`${global.GLOBAL.urlMicroserviceAdministration}/checkpoint/update/` + id, data);
   }
 
   putOperatorCheckpoint(data : CheckpointListTemplate, id : number) {
-    return this.http.put<any>(`${global.GLOBAL.urlApi}/checkpoint/operator/` + id, data);
+    return this.http.put<any>(`${global.GLOBAL.urlMicroserviceAdministration}/checkpoint/operator/` + id, data);
   }
 
   public deleteCheckpoint(id : number) {
