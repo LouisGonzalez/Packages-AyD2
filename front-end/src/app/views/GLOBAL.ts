@@ -5,6 +5,7 @@ export var GLOBAL = {
     urlMicroserviceAdministration: 'http://localhost:8080/api/administration/v1',
     urlMicroserviceAuthentication: 'http://localhost:8080/api/authentication/v1',
     urlMicroserviceReports: 'http://localhost:8080/api/reports/v1',
+    urlMicroserviceReceptionist: "http://localhost:8080/api/recepcionist/v1",
     querysUrl: 'https://api-dummie.herokuapp.com/',
     ERROR_REQUIRED: 'Este campo es requerido.',
     ERROR_MIN: 'El valor mínimo debe ser 0.',

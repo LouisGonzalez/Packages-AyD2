@@ -87,7 +87,7 @@ export class RecepService {
   }
 
   public getPackageInfo(packageId: number): Observable<any>{
-    return this.httpClient.get<any>(`${this.urlApi}/package-checkpoint/${packageId}`);
+    return this.httpClient.get<any>(`${GLOBAL.urlMicroserviceReceptionist}/package-checkpoint/${packageId}`);
   }
 
     /**
@@ -100,7 +100,7 @@ export class RecepService {
   public getAllPackagesAtDestinationPaginated() {
     return new CustomServerDataSource(this.httpClient, {
       dataKey: 'content',
-      endPoint: this.urlApi + '/package/in-destination/',
+      endPoint: GLOBAL.urlMicroserviceReceptionist + '/package/in-destination/',
       pagerPageKey: 'page',
       pagerLimitKey: 'size',
       totalKey: 'totalElements'
@@ -110,7 +110,7 @@ export class RecepService {
   public getAllPackagesOnRoutePaginated() {
     return new CustomServerDataSource(this.httpClient, {
       dataKey: 'content',
-      endPoint: this.urlApi + '/package/on-route',
+      endPoint: GLOBAL.urlMicroserviceReceptionist + '/package/on-route',
       pagerPageKey: 'page',
       pagerLimitKey: 'size',
       totalKey: 'totalElements'
@@ -118,7 +118,7 @@ export class RecepService {
   }
 
   public getPackageByInvoiceId(id: number){
-    return this.httpClient.get<any>(`${this.urlApi}/package/trace-by-invoice/${id}`);
+    return this.httpClient.get<any>(`${GLOBAL.urlMicroserviceReceptionist}/package/trace-by-invoice/${id}`);
   }
 
   public getPackagesOnCheckpoint(checkpointId : number): Observable<any> {
