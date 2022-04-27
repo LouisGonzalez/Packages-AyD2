@@ -24,7 +24,7 @@ export class DestinationService {
    * @returns Listado de destinos que coinciden con el patron de busquda
    */
   public getDestinations(pattern: string):Observable<Destination[]>{
-    return this.http.get<Destination[]>(global.GLOBAL.urlApi + "/destination/search-by-name/"+pattern);
+    return this.http.get<Destination[]>(global.GLOBAL.urlMicroserviceAdministration + "/destination/search-by-name/"+pattern);
   }
 
   /**
@@ -36,11 +36,11 @@ export class DestinationService {
   }
 
   public getDestination(id: number):Observable<any>{
-    return this.http.get<any>(global.GLOBAL.urlApi + '/destination/' + id);
+    return this.http.get<any>(global.GLOBAL.urlMicroserviceAdministration + '/destination/' + id);
   }
 
   public updateDestination(destination: any) {
-    return this.http.patch<any>(`${global.GLOBAL.urlApi}/destination`, destination);
+    return this.http.patch<any>(`${global.GLOBAL.urlMicroserviceAdministration}/destination`, destination);
   }
 
   public getDestinationById(id : number) {
@@ -57,7 +57,7 @@ export class DestinationService {
   public getAllDestinationsPaginated() {
     return new CustomServerDataSource(this.http, {
       dataKey: 'content',
-      endPoint: global.GLOBAL.urlApi + '/destination/list',
+      endPoint: global.GLOBAL.urlMicroserviceAdministration + '/destination/list',
       pagerPageKey: 'page', 
       pagerLimitKey: 'size', 
       totalKey: 'totalElements' 
@@ -65,6 +65,6 @@ export class DestinationService {
   }
 
   public deleteDestination(id : number) {
-    return this.http.delete<any>(`${global.GLOBAL.urlApi}/destination/` + id);
+    return this.http.delete<any>(`${global.GLOBAL.urlMicroserviceAdministration}/destination/` + id);
   }
 }

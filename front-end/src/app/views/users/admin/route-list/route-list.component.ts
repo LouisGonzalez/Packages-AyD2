@@ -73,7 +73,7 @@ export class RouteListComponent implements OnInit {
 
   ngOnInit(): void {
     this.notification = new NotificationsComponent(this.toastrService);
-    this.source = this.api.getAllRoutesPaginated();
+    this.source = this.api.getAllRoutesPaginated2();
   }
 
   onCustomAction(event){

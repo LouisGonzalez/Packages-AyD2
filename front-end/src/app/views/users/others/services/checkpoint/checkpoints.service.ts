@@ -30,7 +30,7 @@ export class CheckpointsService {
     public getAllCheckpointsPaginated() {
       return new CustomServerDataSource(this.http, {
         dataKey: 'content',
-        endPoint: global.GLOBAL.urlApi + '/checkpoint/list',
+        endPoint: global.GLOBAL.urlMicroserviceAdministration + '/checkpoint/list',
         pagerPageKey: 'page', 
         pagerLimitKey: 'size', 
         totalKey: 'totalElements' 
@@ -42,7 +42,7 @@ export class CheckpointsService {
   }
 
   getCheckpoint(id : number) {
-    return this.http.get<any>(`${global.GLOBAL.urlApi}/checkpoint/` + id);
+    return this.http.get<any>(`${global.GLOBAL.urlMicroserviceAdministration}/checkpoint/` + id);
   }
 
   putCheckpoint(data : CheckpointListTemplate, id : number) {
@@ -54,7 +54,7 @@ export class CheckpointsService {
   }
 
   public deleteCheckpoint(id : number) {
-    return this.http.delete<any>(`${global.GLOBAL.urlApi}/checkpoint/` + id);
+    return this.http.delete<any>(`${global.GLOBAL.urlMicroserviceAdministration}/checkpoint/` + id);
   }
 
 }

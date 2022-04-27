@@ -1,4 +1,4 @@
-export type Destination = {
+export class Destination{
     id?: number;
     name? : string;
     description ?: string;

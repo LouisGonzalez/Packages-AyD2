@@ -33,7 +33,7 @@ export class EditRouteComponent implements OnInit {
   data: any;
 
   routeId: number;
-  
+
   //Fomulario reactivo
   formRoute: FormGroup = new FormGroup({
     name: new FormControl(null, Validators.required),

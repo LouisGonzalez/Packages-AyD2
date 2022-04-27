@@ -12,7 +12,7 @@ export class CheckpointService {
   constructor(private http: HttpClient) { }
 
   createCheckpoint(checkpointData: any){
-    return this.http.post<any>(global.GLOBAL.urlApi + "/checkpoint", checkpointData);
+    return this.http.post<any>(global.GLOBAL.urlMicroserviceAdministration + "/checkpoint", checkpointData);
   }
 
 }
