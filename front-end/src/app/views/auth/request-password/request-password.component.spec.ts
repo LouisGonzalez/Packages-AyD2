@@ -43,4 +43,30 @@ describe('TEST del componente "RequestPasswordComponent"', () => {
     expect(component.form.invalid).toBeFalsy();
   });
 
+  it ('Formulario invalido', () => {
+    let email = component.user.email
+    email = ('juan123@gmail.com');
+    component.requestPass()
+    expect(component.form.valid).toBeFalsy()
+  })
+
+  it ('Formulario valido', () => {
+    component.user.email = 'juan123@gmail.com';
+    component.requestPass()
+    expect(component.form.valid).toBeTruthy()
+  })
+
+  it ('Search User By Email, Fail', () => {
+    let email = 'juan123@gmail.com';
+    component.searchUserByEmail(email)
+    expect(component.showMessages.error).toBeFalsy()
+  })
+
+  it ('Send Email Forgot Password, Fail', () => {
+    let email = 'juan123@gmail.com';
+    let username = 'juan123';
+    component.sendEmailForgotPassword(email, username)
+    expect(component.showMessages.error).toBeFalsy()
+  })
+
 });

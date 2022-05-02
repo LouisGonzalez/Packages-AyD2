@@ -69,15 +69,12 @@ export class TopOfRoutesComponent implements OnInit {
     this.routeService.getMostPopularRoute(filter)
     .subscribe(
         (res) => {
+          this.results = []
+          this.results = [...this.results]
+          this.progressInfoData = []
           if (res == null || res.length === 0) {
             this.notification.showToast(3, "No hay rutas", "No se encuentran paquetes registrados en el inteervalo inidicado rutas registradas", 3500);
-            this.results = []
-            this.results = [...this.results]
-            this.progressInfoData = []
           } else {
-            this.results = []
-            this.results = [...this.results]
-            this.progressInfoData = []
             for (const iterator of res) {
               this.addNewTop(iterator[1], Number(iterator[0]), iterator[2]);
             }

@@ -114,6 +114,11 @@
           "options": {
             "main": "src/test.ts",
             "karmaConfig": "./karma.conf.js",
+            "codeCoverageExclude": 
+            [
+              "src/@core/**/*",
+              "src/@theme/**/*"
+            ],
             "codeCoverage": true,
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",

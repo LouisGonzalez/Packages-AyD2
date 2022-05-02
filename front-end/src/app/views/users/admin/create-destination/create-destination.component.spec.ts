@@ -48,4 +48,26 @@ describe('TEST del componente "CreateDestinationComponent"', () => {
 
     expect(component.formDestination.invalid).toBeFalsy();
   })
+
+  it('Crear Destino - Form Valid', () => {
+    let name = component.formDestination.controls['name'];
+    let fee = component.formDestination.controls['fee'];
+    let description = component.formDestination.controls['description'];
+    
+    name.setValue("Guatemla-Peten");
+    fee.setValue("50.50");
+    description.setValue("Destiono de Guatemala a Peten");
+    component.create_destination()
+    expect(component.formDestination.invalid).toBeFalsy();
+  })
+
+  it('Crear Destino - Form invalid', () => {
+    component.create_destination()
+    expect(component.formDestination.invalid).toBeTruthy();
+  })
+
+  it('Cancel Create Destination', () => {
+    component.onCancel()
+    expect(component.formDestination.invalid).toBeTruthy();
+  })
 });

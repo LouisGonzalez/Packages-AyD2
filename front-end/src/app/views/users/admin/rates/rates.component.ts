@@ -82,13 +82,13 @@ export class RatesComponent implements OnInit {
     });
   }
 
-  private getIdRate(name) : Rate {
+  getIdRate(name) : Rate {
     return this.datarates.find( function(item){
         return item.name === name;
     });
   }
 
-  private addField(data){
+  addField(data){
     this.datarates = data;
     for (const iterator of data) {
       if (iterator['name'] === 'Tarifa por operación') {
@@ -101,7 +101,7 @@ export class RatesComponent implements OnInit {
     }
   }
 
-  private addRates(name, fee, redirect) {
+  addRates(name, fee, redirect) {
     let newRate : Rate;
     let rateSearch = this.getIdRate(name);
     if (rateSearch != null) {

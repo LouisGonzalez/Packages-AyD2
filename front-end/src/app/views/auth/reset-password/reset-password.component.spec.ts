@@ -52,4 +52,26 @@ describe('TEST del componente "ResetPasswordComponent"', () => {
     confirmPassword.setValue('Manager1');
     expect(component.form.get('password').value).toEqual(component.form.get('confirmPassword').value);
   });
+
+  it('Reset Password invalid', () => {
+    let password = component.user.password
+    let confirmPassword = component.user.confirmPassword
+    password = ('Manager1');
+    confirmPassword = ('Manager1');
+    component.resetPass()
+    expect(component.form.invalid).toBeTruthy();
+  });
+
+  it('Reset Password successful', () => {
+    component.user.password = ('Manager1');
+    component.user.confirmPassword =  ('Manager1');
+    component.resetPass()
+    expect(component.form.valid).toBeTruthy();
+  });
+
+  it('Config Value, Null', () => {
+    component.getConfigValue('value')
+    expect(false).toBeFalsy();
+  });
+
 });

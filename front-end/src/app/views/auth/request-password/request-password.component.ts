@@ -51,7 +51,7 @@ export class RequestPasswordComponent implements OnInit {
     }
   }
 
-  private searchUserByEmail(email){
+  searchUserByEmail(email){
     this.api.searchUserByEmail(email)
     .subscribe({
       next : (res) => {
@@ -71,7 +71,7 @@ export class RequestPasswordComponent implements OnInit {
     });
   }
 
-  private sendEmailForgotPassword(email, useranme){
+  sendEmailForgotPassword(email, useranme){
     const userForgotPassword = {
       mailTo: email,
       username: useranme
