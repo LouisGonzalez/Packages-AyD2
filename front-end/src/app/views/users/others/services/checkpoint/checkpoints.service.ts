@@ -38,7 +38,7 @@ export class CheckpointsService {
     }
   
   getAllCheckpointsAssignedToOperator(operatorId: number) {
-    return this.http.get<CheckpointListTemplate[]>(`${global.GLOBAL.urlApi}/checkpoint/list/${operatorId}`)
+    return this.http.get<CheckpointListTemplate[]>(`${global.GLOBAL.urlMicroserviceOperator}/checkpoint/list/${operatorId}`)
   }
 
   getCheckpoint(id : number) {

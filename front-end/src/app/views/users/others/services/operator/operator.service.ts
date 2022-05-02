@@ -16,7 +16,7 @@ export class OperatorService {
   }
 
   public processPackage(data: any ){
-    return this.http.patch<any>(`${global.GLOBAL.urlApi}/package-checkpoint`, data);
+    return this.http.patch<any>(`${global.GLOBAL.urlMicroserviceOperator}/package-checkpoint`, data);
   }
 
 }

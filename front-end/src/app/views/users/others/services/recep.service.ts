@@ -79,7 +79,7 @@ export class RecepService {
   }
 
   public getPackage(id: number): Observable<any>{
-    return this.httpClient.get<any>(`${this.urlApi}/package-checkpoint/${id}`);
+    return this.httpClient.get<any>(`${GLOBAL.urlMicroserviceOperator}/package-checkpoint/${id}`);
   }
 
   editRetiredStatePackage(pack: Package){
@@ -122,7 +122,7 @@ export class RecepService {
   }
 
   public getPackagesOnCheckpoint(checkpointId : number): Observable<any> {
-    return this.httpClient.get<any>(`${this.urlApi}/package-checkpoint/list/${checkpointId}`);
+    return this.httpClient.get<any>(`${GLOBAL.urlMicroserviceOperator}/package-checkpoint/list/${checkpointId}`);
   }
 }
 
