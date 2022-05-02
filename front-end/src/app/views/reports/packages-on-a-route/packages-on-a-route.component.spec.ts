@@ -41,4 +41,10 @@ describe('TEST del componente "PackagesOnARouteComponent"', () => {
     component.on = false;
     expect(component.on).toBeFalsy();
   });
+
+  it('Cambio de estado para la busqueda de Rutas Exitosa', () => {
+    component.on = false;
+    component.status()
+    expect(component.on).toBeTruthy();
+  });
 });
