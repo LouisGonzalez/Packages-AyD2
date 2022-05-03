@@ -19,6 +19,10 @@ export class OperatorService {
     return this.http.patch<any>(`${global.GLOBAL.urlMicroserviceOperator}/package-checkpoint`, data);
   }
 
+  public processQueue(){
+    this.http.get(global.GLOBAL.urlMicroserviceAdministration + "/queue/");
+  }
+
 }
 
 
