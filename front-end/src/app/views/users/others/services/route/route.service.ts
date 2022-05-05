@@ -14,11 +14,11 @@ export class RouteService {
   constructor(private http: HttpClient) { }
 
   createRoute(routeData: any){
-    return this.http.post<any>(global.GLOBAL.urlApi + "/route", routeData);
+    return this.http.post<any>(global.GLOBAL.urlMicroserviceAdministration + "/route", routeData);
   }
 
   public getRoutes(pattern: string):Observable<Route[]>{
-    return this.http.get<Route[]>(global.GLOBAL.urlApi + "/route/search-by-name/"+pattern);
+    return this.http.get<Route[]>(global.GLOBAL.urlMicroserviceAdministration + "/route/search-by-name/"+pattern);
   }
 
   getAllRoutes() {
@@ -36,6 +36,16 @@ export class RouteService {
     return new CustomServerDataSource(this.http, {
       dataKey: 'content',
       endPoint: global.GLOBAL.urlMicroserviceReports + '/route/list',
+      pagerPageKey: 'page', 
+      pagerLimitKey: 'size', 
+      totalKey: 'totalElements' 
+    });
+  }
+
+  public getAllRoutesPaginated2() {
+    return new CustomServerDataSource(this.http, {
+      dataKey: 'content',
+      endPoint: global.GLOBAL.urlMicroserviceAdministration + '/route/list',
       pagerPageKey: 'page', 
       pagerLimitKey: 'size', 
       totalKey: 'totalElements' 
@@ -60,15 +70,15 @@ export class RouteService {
     }
 
   public getRoute(id : number) {
-    return this.http.get<any>(global.GLOBAL.urlApi + "/route/" + id);
+    return this.http.get<any>(global.GLOBAL.urlMicroserviceAdministration + "/route/" + id);
   }
 
   public patchRoute(data : any) {
-    return this.http.patch<any>(global.GLOBAL.urlApi + "/route", data);
+    return this.http.patch<any>(global.GLOBAL.urlMicroserviceAdministration + "/route", data);
   }
 
   public deleteRoute(id : number) {
-    return this.http.delete<any>(`${global.GLOBAL.urlApi}/route/` + id);
+    return this.http.delete<any>(`${global.GLOBAL.urlMicroserviceAdministration}/route/` + id);
   }
   
   getAllRoutesStatus(status : boolean) {

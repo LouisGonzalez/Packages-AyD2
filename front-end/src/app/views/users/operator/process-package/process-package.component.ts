@@ -72,7 +72,9 @@ export class ProcessPackageComponent implements OnInit {
         error : (error) => {
           this.notification.showToast(4, 'Error', error.error, 5000);
         }
+        
       });
+      this.operatorService.processQueue();
     }else{
       this.formPackage.markAllAsTouched();
     }

@@ -9,6 +9,8 @@ import { NotificationsComponent } from '../../../others/source/notifications/not
 import {
   NbToastrService,
 } from '@nebular/theme';
+import { Route } from '../../../others/models/Route';
+import { Destination } from '../../../others/models/destination';
 
 @Component({
   selector: 'ngx-create-route',
@@ -73,16 +75,17 @@ export class CreateRouteComponent implements OnInit {
    * @param routeName Nombre de la ruta
    * @param routeDestinationId  Id del destino de la ruta
    */
-  private create(routeName: string, routeDestinationId: number){
+  private create(routeName: string, routeDestinationId: number){    
     this.routeService.createRoute({
+      id: 0,
       name: routeName, 
       packagesOnRoute: 0,
       totalPackages: 0,
       active: false,
-      destination: {
+      destination:  {
         id: routeDestinationId
-      } 
-    }).subscribe({
+      }
+     }).subscribe({
       next : (res) => {
         this.notification.showToast(1, 'Exito', `Ruta ${routeName} creada exitosamente.`, 5000);
         this.formRoute.reset();

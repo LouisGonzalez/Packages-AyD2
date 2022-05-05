@@ -15,7 +15,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: DeliverPackageComponent
+        component: DeliverPackageComponent,
+        canActivate: [RecepGuard]
       },
       {
         path: 'client-list',

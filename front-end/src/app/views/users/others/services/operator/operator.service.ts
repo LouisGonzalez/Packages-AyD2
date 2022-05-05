@@ -12,11 +12,15 @@ export class OperatorService {
   constructor(private http: HttpClient) { }
 
   public getOperators(pattern: string):Observable<Operator[]>{
-    return this.http.get<Operator[]>(global.GLOBAL.urlApi + "/employee/search-by-cui/" + pattern);
+    return this.http.get<Operator[]>(global.GLOBAL.urlMicroserviceAdministration + "/employee/search-by-cui/" + pattern);
   }
 
   public processPackage(data: any ){
-    return this.http.patch<any>(`${global.GLOBAL.urlApi}/package-checkpoint`, data);
+    return this.http.patch<any>(`${global.GLOBAL.urlMicroserviceOperator}/package-checkpoint`, data);
+  }
+
+  public processQueue(){
+    this.http.get(global.GLOBAL.urlMicroserviceAdministration + "/queue/");
   }
 
 }

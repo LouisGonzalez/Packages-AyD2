@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource }from 'ng2-smart-table';
 import { CheckpointsService } from '../../others/services/checkpoint/checkpoints.service';
-import { CheckpointListTemplate } from '../../others/models/checkpoint-list-template';
 import { Router } from '@angular/router';
 import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
 import { NbToastrService } from '@nebular/theme';
-import { CustomServerDataSource } from '../../others/models/CustomServerDataSource';
 
 @Component({
   selector: 'ngx-checkpoints-list',
@@ -70,7 +68,7 @@ export class CheckpointsListComponent implements OnInit {
 
   private getAllCheckpointsAssigned(){
     let user = JSON.parse(localStorage.getItem('user'));
-    this.checkpointService.getAllCheckpointsAssignedToOperator(Number(user.cui))
+    this.checkpointService.getAllCheckpointsAssignedToOperator(Number(1))
     .subscribe({
       next:(res) => {
         this.source.load(res);

@@ -45,4 +45,34 @@ describe('TEST del componente "TopOfRoutesComponent"', () => {
     expect(component.progressInfoData.length).toEqual(1);
   });
 
+  it('Range Date Null', () => {
+    let date = {
+      queue: null
+    }
+    component.range(date)
+    expect(true).toBeTruthy()
+  });
+
+  it('Range End Date Null', () => {
+    let date = {
+      queue: {
+        start: '2018-02-03',
+        end: null
+      }
+    }
+    component.range(date)
+    expect(true).toBeTruthy();
+  });
+
+  it('Range Date Success', () => {
+    let date = {
+      queue: {
+        start: '2018-02-03',
+        end: '2018-04-04'
+      }
+    }
+    component.range(date)
+    expect(true).toBeTruthy();
+  });
+
 });
