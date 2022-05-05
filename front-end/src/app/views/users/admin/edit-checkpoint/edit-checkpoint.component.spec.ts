@@ -37,7 +37,14 @@ describe('TEST del componente "EditCheckpointComponent"', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Debe retornar el formulario valido', () => {
+  it('Edit Checkpoint - formulario valido', () => {
+    let data = {
+      queueCapacity: null,
+      operationFee: null,
+      description: null
+    }
+
+    component.data = data;
     let queueCapacity = component.formEditCheckpoint.controls['queueCapacity'];
     let operationFee = component.formEditCheckpoint.controls['operationFee'];
     let name = component.formEditCheckpoint.controls['description']
@@ -45,7 +52,17 @@ describe('TEST del componente "EditCheckpointComponent"', () => {
     queueCapacity.setValue('85');
     operationFee.setValue('25.50');
     name.setValue('Punto de control 1');
-
+    component.edit_checkpoint()
     expect(component.formEditCheckpoint.invalid).toBeFalsy();
+  });
+
+  it('Edit Checkpoint - formulario invalido', () => {
+    component.edit_checkpoint()
+    expect(component.formEditCheckpoint.invalid).toBeTruthy();
+  });
+
+  it('Cancel Edit Checkpoint', () => {
+    component.onCancel()
+    expect(component.formEditCheckpoint.valid).toBeFalsy();
   });
 });
