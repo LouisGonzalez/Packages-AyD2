@@ -18,6 +18,8 @@ export class RecepService {
 
   url = GLOBAL.url;
   urlApi = GLOBAL.urlApi;
+  urlAdmin = GLOBAL.urlMicroserviceAdministration
+  urlRecep = GLOBAL.urlMicroserviceRecepcionist
   public client = null;
 
   constructor(private httpClient: HttpClient) { }
@@ -30,42 +32,42 @@ export class RecepService {
 
   //Querys relacionadas a clientes
   getAllClients(): Observable<any>{                                   //LISTO
-    let a = this.httpClient.get(`${this.urlApi}/client/`);
+    let a = this.httpClient.get(`${this.urlRecep}/client/`);
     return a;
   }
 
   getClient(nit: number): Observable<any>{                            //LISTO
-    let a = this.httpClient.get(`${this.urlApi}/client/${nit}`);
+    let a = this.httpClient.get(`${this.urlRecep}/client/${nit}`);
     return a;
   }
 
   addClient(client: Client): Observable<any>{                         //LISTO
-    return this.httpClient.post(`${this.urlApi}/client/`, client);
+    return this.httpClient.post(`${this.urlRecep}/client/`, client);
   }
 
   //Querys relacionadas a destinos
   getAllDestinys(): Observable<any>{                                  //LISTO
-    let a = this.httpClient.get(`${this.urlApi}/destination/`);
+    let a = this.httpClient.get(`${this.urlAdmin}/destination/`);
     return a;
   }
 
   //busca de rutas segun destino
   getRouteByDestiny(idDestiny: number): Observable<any>{              //LISTO
-    let a = this.httpClient.get<any>(`${this.urlApi}/route/destination/${idDestiny}`);
+    let a = this.httpClient.get<any>(`${this.urlAdmin}/route/destination/${idDestiny}`);
     return a;
   }
 
   getDestinyById(idDestiny: number): Observable<any>{                 //LISTO
-    let a = this.httpClient.get(`${this.urlApi}/destination/${idDestiny}`);
+    let a = this.httpClient.get(`${this.urlAdmin}/destination/${idDestiny}`);
     return a;
   }
 
   createInvoice(invoice: Invoice): Observable<any>{                   //LISTO
-    return this.httpClient.post(`${this.urlApi}/invoice/`, invoice);
+    return this.httpClient.post(`${this.urlRecep}/invoice/`, invoice);
   }
 
   creaatePackage(pack: Package): Observable<any>{                     //LISTO
-    return this.httpClient.post(`${this.urlApi}/package/`, pack);
+    return this.httpClient.post(`${this.urlRecep}/package/`, pack);
   }
 
   //Todos los paquetes que ya esten en destino

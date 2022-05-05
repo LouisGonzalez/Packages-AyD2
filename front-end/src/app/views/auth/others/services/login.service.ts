@@ -11,11 +11,13 @@ export class LoginService {
 
   public url: string;
   public urlApi: string;
+  public urlAuth: string;
   public user = null;
   userSession: any;
   constructor(private httpClient: HttpClient) {
     this.url = GLOBAL.url
     this.urlApi = GLOBAL.urlApi
+    this.urlAuth = GLOBAL.urlMicroserviceAuthentication
   }
 
   setUserSesion(val: boolean){
@@ -50,7 +52,7 @@ export class LoginService {
 
   login(username: string, password: string): Observable<any> {
     let body = { username: username, password: password }
-    let a = this.httpClient.post(`${this.urlApi}/auth/login`, body);
+    let a = this.httpClient.post(`${this.urlAuth}/login/`, body);
     return a;
   }
 }

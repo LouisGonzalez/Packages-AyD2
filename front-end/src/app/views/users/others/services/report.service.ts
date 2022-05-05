@@ -9,21 +9,23 @@ import { Observable } from 'rxjs';
 export class ReportService {
 
   urlApi = GLOBAL.urlApi;
+  urlRecep = GLOBAL.urlMicroserviceRecepcionist
+  urlReport = GLOBAL.urlMicroserviceReports
 
   constructor(private httpClient: HttpClient) { }
 
   getAllClients(): Observable<any>{
-    let a = this.httpClient.get(`${this.urlApi}/client/`);
+    let a = this.httpClient.get(`${this.urlRecep}/client/`);
     return a;
   }
 
   getAllInvoices(nit: any): Observable<any> {
-    let a = this.httpClient.get(`${this.urlApi}/invoice/client/${nit}`)
+    let a = this.httpClient.get(`${this.urlReport}/invoice/client/${nit}`)
     return a;
   }
 
   getPackagesByInvoice(idInvoice: any): Observable<any> {
-    let a = this.httpClient.get(`${this.urlApi}/package/invoice/${idInvoice}`)
+    let a = this.httpClient.get(`${this.urlReport}/package/invoice/${idInvoice}`)
     return a;
   }
 

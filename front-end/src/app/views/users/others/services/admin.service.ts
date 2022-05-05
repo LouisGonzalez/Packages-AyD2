@@ -14,6 +14,7 @@ export class AdminService {
 
   url = GLOBAL.url;
   urlApi = GLOBAL.urlApi;
+  urlAdmin = GLOBAL.urlMicroserviceAdministration
   public user = null;
   userSession: any;
 constructor(private httpClient: HttpClient) { }
@@ -21,7 +22,7 @@ constructor(private httpClient: HttpClient) { }
   getAll() {
     return new CustomServerDataSource(this.httpClient, {
       dataKey: 'content',
-      endPoint: `${this.urlApi}/employee/`,
+      endPoint: `${this.urlAdmin}/employee/`,
       pagerPageKey: 'page',
       pagerLimitKey: 'size',
       totalKey: 'totalElements'
@@ -29,28 +30,28 @@ constructor(private httpClient: HttpClient) { }
   }
 
   getAllActivates(): Observable<any>{
-    let a = this.httpClient.get(`${this.urlApi}/employee/actives/`);
+    let a = this.httpClient.get(`${this.urlAdmin}/employee/actives/`);
     return a;
   }
 
   getAllActivatesNotAdmin(): Observable<any>{
-    let a = this.httpClient.get(`${this.urlApi}/employee/actives/not-admin/`)
+    let a = this.httpClient.get(`${this.urlAdmin}/employee/actives/not-admin/`)
     return a;
   }
 
   //Falta arreglar
   getAllDeactivates(): Observable<any>{
-    let a = this.httpClient.get(`${this.urlApi}/employee/deactivates/`);
+    let a = this.httpClient.get(`${this.urlAdmin}/employee/deactivates/`);
     return a;
   }
 
   updateUser(user: User){
-    return this.httpClient.put(`${this.urlApi}/employee/${user.cui}`, user);
+    return this.httpClient.put(`${this.urlAdmin}/employee/${user.cui}`, user);
   }
 
 
   add(user: User): Observable<any>{
-    return this.httpClient.post(`${this.urlApi}/employee/`, user);
+    return this.httpClient.post(`${this.urlAdmin}/employee/`, user);
   }
 
   getAllRoutes(){
