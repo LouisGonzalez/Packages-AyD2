@@ -11,6 +11,7 @@ import { InvoiceComponent } from '../invoice/invoice.component';
 import * as moment from 'moment'
 import { Invoice } from '../../others/models/Invoice';
 import { NotificationsComponent } from '../../others/source/notifications/notifications.component';
+import { OperatorService } from '../../others/services/operator/operator.service';
 
 @Component({
   selector: 'ngx-enter-package',
@@ -42,7 +43,7 @@ export class EnterPackageComponent implements OnInit {
   age: number; CUI: number; NIT: number;
   nitParameter: number;
 
-  constructor(iconsLibrary: NbIconLibraries, private recepService: RecepService, private dialogService: NbDialogService, private windowService: NbWindowService, private toastrService: NbToastrService) {
+  constructor(iconsLibrary: NbIconLibraries, private recepService: RecepService, private dialogService: NbDialogService, private windowService: NbWindowService, private toastrService: NbToastrService, private operatorService: OperatorService) {
     this.evaIcons = Array.from(iconsLibrary.getPack('eva').icons.keys())
       .filter(icon => icon.indexOf('outline') === -1);
 
@@ -200,7 +201,6 @@ export class EnterPackageComponent implements OnInit {
           this.packages[i].retired = false;
           this.packages[i].noInvoice = result.id;
           this.packages[i].invoice = result;
-
           if(this.priority[i] == undefined){
             this.priority[i] = false;
           }
@@ -211,13 +211,14 @@ export class EnterPackageComponent implements OnInit {
           })
         }
         this.notification.showToast(1, 'Completado', `Factura realizada con exito`, 2500);
-     })
+        this.operatorService.processQueue();
+      })
     } else {
       //Aqui debe ir un modal
       this.notification.showToast(3, 'Cuidado', `Todos los paquetes deben ser llenados antes de su proceso`, 2500);
       console.log('todos los paquetes deben ser llenados')
     }
-
+    
   }
 
   createQueue(pack: Package){
@@ -225,9 +226,26 @@ export class EnterPackageComponent implements OnInit {
       packages: pack,
       position: 0
     }
-    this.recepService.createQueue(queue).subscribe(response => {
-
-    })
+    this.recepService.createQueue(queue)
+    .subscribe({
+      next: (res) => {
+        setTimeout(() => {
+          console.log('Recorriendo cola');
+          this.operatorService.processQueue().subscribe({
+            next: (res) => {
+              console.log('Cola recorrdia: ');
+            },
+            error: (err) => {
+              console.log('Error al recorrer la cola');
+              console.log(err);
+            }
+          });  
+        }, 3000);
+      },
+      error: (err) => {
+        console.log('Error: ' + err);
+      }
+    });
   }
 
   cleanData(){

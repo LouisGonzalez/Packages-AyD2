@@ -26,7 +26,7 @@ export class RecepService {
 
 
   createQueue(queue: Queue): Observable<any> {
-    let a = this.httpClient.post(`${this.urlApi}/queue/`, queue);
+    let a = this.httpClient.post(`${this.urlAdmin}/queue/`, queue);
     return a;
   }
 
