@@ -66,8 +66,21 @@ export class ProcessPackageComponent implements OnInit {
         currentCheckpoint: Boolean(false)
       }).subscribe({
         next : (res) => {
-          this.notification.showToast(1, 'Exito', `Paquete procesado exitosamente.`, 3000);
-          this.goBack();
+          setTimeout(() => {
+            console.log('Recorriendo cola');
+            this.notification.showToast(1, 'Exito', `Paquete procesado exitosamente.`, 3000);
+            this.operatorService.processQueue().subscribe({
+              next: (res) => {
+                console.log('Cola recorrdia: ');
+                this.goBack();
+              },
+              error: (err) => {
+                console.log('Error al recorrer la cola');
+                console.log(err);
+                this.goBack();
+              }
+            });  
+          }, 1000);
         },
         error : (error) => {
           this.notification.showToast(4, 'Error', error.error, 5000);
@@ -78,6 +91,10 @@ export class ProcessPackageComponent implements OnInit {
     }else{
       this.formPackage.markAllAsTouched();
     }
+  }
+
+  public processQueue() {
+    
   }
 
   public goBack(){

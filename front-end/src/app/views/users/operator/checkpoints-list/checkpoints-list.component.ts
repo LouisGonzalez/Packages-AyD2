@@ -68,7 +68,8 @@ export class CheckpointsListComponent implements OnInit {
 
   private getAllCheckpointsAssigned(){
     let user = JSON.parse(localStorage.getItem('user'));
-    this.checkpointService.getAllCheckpointsAssignedToOperator(Number(1))
+    console.log(user);
+    this.checkpointService.getAllCheckpointsAssignedToOperator(user.cui)
     .subscribe({
       next:(res) => {
         this.source.load(res);

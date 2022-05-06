@@ -20,7 +20,7 @@ export class OperatorService {
   }
 
   public processQueue(){
-    this.http.get(global.GLOBAL.urlMicroserviceAdministration + "/queue/");
+    return this.http.get(global.GLOBAL.urlMicroserviceAdministration + "/queue/");
   }
 
 }
