@@ -85,7 +85,7 @@ export class RecepService {
   }
 
   editRetiredStatePackage(pack: Package){
-    return this.httpClient.put(`${this.urlApi}/package/${pack.id}`, pack);
+    return this.httpClient.put(`${this.urlRecep}/package/${pack.id}`, pack);
   }
 
   public getPackageInfo(packageId: number): Observable<any>{
