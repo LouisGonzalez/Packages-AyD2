@@ -1,0 +1,34 @@
+@import "../../../../../@theme/styles/themes.scss";
+
+@include nb-install-component() {
+  nb-card {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.required {
+  color: red;
+}
+
+.black {
+  color: black;
+}
+
+.borderless {
+  border-style: none;
+}
+
+.inp-invalid {
+  background-color: rgb(255, 204, 204);
+  box-shadow: 0 0 5px red;
+}
+
+.inp-valid {
+  background-color: rgb(219, 255, 214);
+  box-shadow: 0 0 5px green;
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OPERATOR_MENU_ITEMS } from './menu';
 
 @Component({
   selector: 'ngx-operator',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OperatorComponent implements OnInit {
 
+  menu = OPERATOR_MENU_ITEMS;
   constructor() { }
 
   ngOnInit(): void {

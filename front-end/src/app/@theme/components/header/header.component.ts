@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { LoginService } from '../../../views/auth/others/services/login.service';
 
 @Component({
   selector: 'ngx-header',
@@ -16,6 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+  user2: any;
 
   themes = [
     {
@@ -38,17 +41,39 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [ { title: 'Inicio' }, { title: 'Perfil' }, { title: 'Salir' } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,
               private userService: UserData,
               private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+              private breakpointService: NbMediaBreakpointsService,
+              private router: Router,
+              private loginService: LoginService) {
   }
 
   ngOnInit() {
+    let user = JSON.parse(localStorage.getItem('user')!);
+    this.user2 = JSON.parse(localStorage.getItem('user')!);
+    this.menuService.onItemClick()
+      .subscribe((event) => {
+      if(event.item.title === 'Salir'){
+        localStorage.clear();
+        this.loginService.setUserSesion(false);
+        this.router.navigate(['/views/auth/login']);
+      } else if(event.item.title === 'Perfil'){
+        this.router.navigate(['/views/general/profile']);
+      } else if(event.item.title === 'Inicio'){
+        if(user.type == 1){
+          this.router.navigate(['/views/users/admin']);
+        } else if(user.type == 2){
+          this.router.navigate(['/views/users/operator']);
+        } else if(user.type == 3){
+          this.router.navigate(['/views/users/recep']);
+        }
+      }
+    })
     this.currentTheme = this.themeService.currentTheme;
 
     this.userService.getUsers()

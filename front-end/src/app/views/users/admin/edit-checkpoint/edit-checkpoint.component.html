@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+      <nb-card>
+        <!-- Titulo del formulario para la creacion de Destinos  -->
+        <nb-card-header>
+          <nb-icon icon="edit-outline" pack="eva"></nb-icon>
+          <nb-icon icon="compass-outline" pack="eva"></nb-icon>
+          Punto de Control
+        </nb-card-header>
+        <nb-card-body>
+          <!-- Formulario para editar un punto de control -->
+          <form [formGroup]="formEditCheckpoint">
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- Capacidad de la cola  -->
+                    <div class="form-group">
+                        <label for="queueCapacity" class="label">Capaciad de la cola</label> 
+                        <div *ngIf="formEditCheckpoint.get('queueCapacity')?.errors && formEditCheckpoint.get('queueCapacity')?.touched || errors" >
+                            <label class="label" style="color: red;" *ngIf="formEditCheckpoint.get('queueCapacity').hasError('required')">{{ERROR_REQUIRED}}</label>
+                            <label class="label" style="color: red;" *ngIf="formEditCheckpoint.get('queueCapacity').hasError('min')">{{ERROR_MIN}}</label><br>
+                            <label class="label" style="color: red;" *ngIf="formEditCheckpoint.get('queueCapacity').hasError('pattern')">{{ERROR_NUMBER}}</label>
+                        </div>
+                        <input 
+                        type="number"
+                        [class.inp-invalid]="formEditCheckpoint.get('queueCapacity')?.errors && formEditCheckpoint.get('queueCapacity')?.touched || errors" 
+                        formControlName="queueCapacity"
+                        step="1" 
+                        min="0" 
+                        nbInput
+                        fullWidth 
+                        id="queueCapacity" 
+                        placeholder="Capacidad de la cola"
+                        required
+                        />
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <!-- Tarifa de operacion -->
+                    <div class="form-group">
+                        <label for="operationFee" class="label">Tarifa de operación</label> 
+                        <div *ngIf="formEditCheckpoint.get('operationFee')?.errors && formEditCheckpoint.get('operationFee')?.touched || errors" >
+                        <label class="label" style="color: red;" *ngIf="formEditCheckpoint.get('operationFee').hasError('required')">{{ERROR_REQUIRED}}</label>
+                        <label class="label" style="color: red;" *ngIf="formEditCheckpoint.get('operationFee').hasError('min')">{{ERROR_MIN}}</label><br>
+                        <label class="label" style="color: red;" *ngIf="formEditCheckpoint.get('operationFee').hasError('pattern')">{{ERROR_NUMBER}}</label>
+                        </div>
+                        <input 
+                        type="number"
+                        [class.inp-invalid]="formEditCheckpoint.get('operationFee')?.errors && formEditCheckpoint.get('operationFee')?.touched || errors" 
+                        formControlName="operationFee" 
+                        step="0.01" 
+                        min="0" 
+                        nbInput 
+                        fullWidth 
+                        id="operationFee" 
+                        placeholder="Tarifa de operación"
+                        required
+                        />
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            
+            <!-- Descripcion -->
+            <div class="form-group">
+                <label for="description" class="label">Nombre del punto de control</label>
+                <textarea 
+                formControlName="description" 
+                nbInput 
+                fullWidth 
+                id="description"
+                placeholder="Descripción"
+                ></textarea>
+            </div>
+            
+            <div class="row">
+              <button type="submit" nbButton status="primary" (click)="edit_checkpoint()" hero>Editar</button>&nbsp;&nbsp;
+              <button nbButton status="danger" (click)="onCancel()" hero>Cancelar</button>
+            </div>
+          </form>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>

@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-md-6 col-lg-4 col-xxxl-3">
+        <nb-card>
+            <nb-card-header>Fecha: </nb-card-header>
+            <nb-card-body>
+            <input nbInput placeholder="Selecciona un rango" [nbDatepicker]="rangepicker">
+            <nb-rangepicker #rangepicker></nb-rangepicker>
+            <br>
+            <button nbButton status="primary" (click)="range(rangepicker)" ghost>
+                Filtrar
+            </button>
+            <button nbButton status="primary" (click)="getTop(null, null)" ghost>
+                Todos
+            </button>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xxl-9">
+        <nb-card>
+            <nb-card-header>Rutas Populares</nb-card-header>
+                <nb-card-body>
+                    <ngx-charts-bar-vertical
+                        [scheme]="colorScheme"
+                        [results]="results"
+                        [xAxis]="showXAxis"
+                        [yAxis]="showYAxis"
+                        [legend]="showLegend"
+                        [xAxisLabel]="xAxisLabel"
+                        [yAxisLabel]="yAxisLabel">
+                    </ngx-charts-bar-vertical>
+                </nb-card-body>
+            </nb-card>
+    </div>
+
+    <div class="col-xxl-3">
+        <nb-card size="large">
+            <nb-card-header>Rutas Populares</nb-card-header>
+            <nb-card-body>
+                <br>
+                <div class="progress-info" *ngFor="let item of progressInfoData">
+                    <div class="h3">{{ item.title }}</div>
+                    <div class="subtitle">Paquetes: {{ item.value | ngxNumberWithCommas }}</div>
+                    <div class="caption description">
+                        <b>Destino: </b> <bdi>{{ item.description }}</bdi>
+                    </div>
+                    <br><br><br>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

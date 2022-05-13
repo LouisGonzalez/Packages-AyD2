@@ -1,0 +1,167 @@
+
+<div class="row">
+  <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+    <nb-card >
+      <nb-card-header><h1 id="title" class="title">Register</h1></nb-card-header>
+
+        <nb-card-body>
+
+<form [formGroup]="form" aria-labelledby="title">
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label" for="input-name" >Nombres</label>
+    <div class="col-sm-9">
+
+    <input nbInput
+           formControlName="name"
+           id="input-name"
+           name="fullName"
+           placeholder="Full name"
+           autofocus
+           fullWidth>
+     <div *ngIf="form.get('name')?.errors && form.get('name')?.touched || errors" >
+      <label class="label" style="color: red;" *ngIf="form.get('name').hasError('required')">{{ERROR_REQUIRED}}</label>
+    </div>
+  </div>
+</div>
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label" for="input-name" >Apellidos</label>
+    <div class="col-sm-9">
+
+    <input nbInput
+           formControlName="lastname"
+           id="input-lastname"
+           name="fullName"
+           placeholder="Full name"
+           autofocus
+           fullWidth>
+           <!-- Aqui abajo va la condicional de si el fullname no existe -->
+     <div *ngIf="form.get('lastname')?.errors && form.get('lastname')?.touched || errors" >
+      <label class="label" style="color: red;" *ngIf="form.get('lastname').hasError('required')">{{ERROR_REQUIRED}}</label>
+    </div>
+  </div>
+</div>
+
+
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label" for="input-email">Email:</label>
+    <div class="col-sm-9">
+      <input nbInput
+           formControlName="email"
+           id="input-email"
+           name="email"
+           placeholder="Email address"
+           fullWidth>
+           <!-- Abajo la condicional de si el email no existe o tiene errores -->
+      <div *ngIf="form.get('email')?.errors && form.get('email')?.touched || errors" >
+        <label class="label" style="color: red;" *ngIf="form.get('email').hasError('required')">{{ERROR_REQUIRED}}</label>
+        <label class="label" style="color: red;" *ngIf="form.get('email').hasError('email')">Debe ser un email valido</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label"  for="input-email">Username:</label>
+    <div class="col-sm-9">
+    <input nbInput
+            formControlName="username"
+           id="input-username"
+           name="username"
+           placeholder="Username"
+           fullWidth>
+           <!-- Abajo la condicional de si el email no existe o tiene errores -->
+      <div *ngIf="form.get('username')?.errors && form.get('username')?.touched || errors" >
+        <label class="label" style="color: red;" *ngIf="form.get('username').hasError('required')">{{ERROR_REQUIRED}}</label>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label"  for="input-password">Contraseña:</label>
+    <div class="col-sm-9">
+    <input nbInput
+          formControlName="password"
+           type="password"
+           id="input-password"
+           name="password"
+           placeholder="Password"
+           fullWidth>
+           <!-- Abajo la condicional de si el password no existe o tiene errores -->
+      <div *ngIf="form.get('password')?.errors && form.get('password')?.touched || errors" >
+        <label class="label" style="color: red;" *ngIf="form.get('password').hasError('required')">{{ERROR_REQUIRED}}</label>
+        <label class="label" style="color: red;" *ngIf="form.get('password').hasError('minLength')">La contraseña debe tener almenos 7 caracteres</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label"  for="input-re-password">Repetir contraseña</label>
+    <div class="col-sm-9">
+      <input nbInput
+           type="password"
+           id="input-re-password"
+           name="rePass"
+           placeholder="Confirm Password"
+           fullWidth
+           formControlName="repitPassword">
+           <!-- Abajo la condicional de si la verificacion de password no existe o tiene errores -->
+         <div *ngIf="form.get('repitPassword')?.errors && form.get('repitPassword')?.touched || errors" >
+          <label class="label" style="color: red;" *ngIf="form.get('repitPassword').hasError('required')">{{ERROR_REQUIRED}}</label>
+          <label class="label" style="color: red;" *ngIf="form.get('repitPassword').hasError('minLength')">La contraseña debe tener almenos 7 caracteres</label>
+          </div>
+          <div *ngIf="form.get('repitPassword').value != form.get('password').value && form.get('repitPassword')?.touched ">
+            <label class="label" style="color: red;">El campo no coincide con la contraseña previamente definida</label>
+          </div>
+
+        </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label"  for="input-name" >CUI</label>
+    <div class="col-sm-9">
+      <input nbInput
+           formControlName="cui"
+           id="input-cui"
+           name="cui"
+           placeholder="CUI"
+           autofocus
+           fullWidth>
+           <!-- Aqui abajo va la condicional de si el fullname no existe -->
+      <div *ngIf="form.get('CUI')?.errors && form.get('CUI')?.touched || errors" >
+        <label class="label" style="color: red;" *ngIf="form.get('CUI').hasError('required')">{{ERROR_REQUIRED}}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="label col-sm-3 col-form-label"  for="input-name" >Tipo de usuario</label>
+    <div class="col-sm-9">
+
+    <nb-select [selected]=1 status="primary" formControlName="type">
+      <nb-option [value]="1">Administrador</nb-option>
+      <nb-option [value]="2">Operador</nb-option>
+      <nb-option [value]="3">Recepcionista</nb-option>
+    </nb-select>
+    </div>
+  </div>
+
+  <div class="form-control-group">
+    <button nbButton
+    status="primary"
+    [disabled]="form.invalid"
+    (click)="submit()">
+      Register
+    </button>
+
+  </div>
+</form>
+</nb-card-body>
+
+</nb-card>
+</div>
+</div>

@@ -1,0 +1,108 @@
+<div class="center">
+    <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+      <nb-card>
+
+        <!-- Titulo del formulario para creacion de rutas  -->
+        <nb-card-header>
+          <nb-icon icon="edit-outline" pack="eva"></nb-icon>
+            <nb-icon icon="car-outline" pack="eva"></nb-icon>
+            Ruta
+        </nb-card-header>
+        
+        <!-- Cuerpo del formulario para creacion de rutas -->
+        <nb-card-body>
+          <form [formGroup]="formRoute">
+            
+            <!-- Nombre -->
+            <div class="form-group">
+                <label class="required">*</label>
+                <label for="name" class="label">Nombre</label> 
+                <input 
+                  [ngClass]="{
+                    'inp-invalid': formRoute.get('name').invalid && formRoute.get('name').touched, 
+                    'nbInput': formRoute.get('name').valid
+                  }"
+                  type="text"
+                  formControlName="name"
+                  nbInput 
+                  fullWidth 
+                  id="name" 
+                  placeholder="Ingrese el nombre de la ruta a crear."
+                  required
+                />
+                <div *ngIf="formRoute.get('name').invalid && formRoute.get('name').touched" >
+                    <label class="label required" *ngIf="formRoute.get('name').hasError('required')">{{ERROR_REQUIRED}}</label>
+                </div>  
+            </div>
+
+            <!-- Destino -->
+            <div class="form-group">
+              <label class="required">*</label>
+              <label for="destination" class="label">Destino: &nbsp;</label>
+              <label class="label black" #destinationLabel>No seleccionado.</label>
+              <br>   
+              
+              <!-- Barra de busqueda -->
+              <input
+                [ngClass]="{
+                  'inp-invalid': formRoute.get('destination')?.invalid && formRoute.get('destination')?.touched, 
+                  'nbInput': formRoute.get('destination').valid
+                }"
+                #destinationSearchInput
+                nbInput
+                fullWidth
+                [ngClass]="{'loading': isLoading}"
+                [spellcheck]="false"
+                placeholder="Buscar destino"
+                type="text"
+                (ngModelChange)="search($event)"
+                [(ngModel)]="src"
+                [ngModelOptions]="{standalone: true}">
+
+              <!-- Etiqueta de mensajes -->
+              <div *ngIf="formRoute.get('destination')?.invalid && formRoute.get('destination')?.touched" >
+                <label class="label required" *ngIf="formRoute.get('destination').hasError('required')">{{ERROR_REQUIRED}}</label>
+              </div>
+              
+              <!-- Lista con los destinos obtenidos tras la busqueda -->
+              <nb-card 
+                [hidden]="data == null ? true : false"
+                [nbSpinner]="isLoading" 
+                nbSpinnerStatus="primary" 
+                class="list-card borderless" size="small">
+                  <nb-list >
+                    <nb-list-item 
+                      (click)="setDestination(item.id, item.name)" 
+                      *ngFor="let item of data | async"
+                      (mouseenter)="setHoverBorder($event)"
+                      (mouseleave)="setHoverBorder($event)">
+                        {{item.name}} <br>
+                        Tarifa: Q{{item.fee}}
+                    </nb-list-item>
+                  </nb-list>
+              </nb-card>  
+
+              <!-- Estado de la Ruta -->
+            <div class="form-group">
+              <br>
+              <label class="required">*</label>
+              <label for="fee" class="label">Ruta Activa</label> 
+              <br>
+                <label class="switch" for="checkbox">
+                  <input #activeToggle (change)="setActiveValue()" type="checkbox" id="checkbox" />
+                  <div class="slider round"></div>
+                </label>   
+            </div>  
+               
+          </div>
+             
+            <div class="row">
+              <button type="submit" nbButton status="primary" (click)="updateRoute()" hero>Actualizar</button>&nbsp;&nbsp;
+              <button (click)="goBack()" nbButton status="danger" hero>Cancelar</button>
+            </div>
+          </form>
+
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>

@@ -1,0 +1,30 @@
+<nb-card>
+  <nb-card-header>Ingrese los datos del cliente</nb-card-header>
+  <nb-card-body>
+
+    <form [formGroup]="form">
+      <div class="form-control-group">
+        <input nbInput placeholder="Nombres" formControlName="name" required>
+    </div>
+    <div class="form-control-group">
+      <input nbInput placeholder="Apellidos" formControlName="lastname" required>
+  </div>
+  <div class="form-control-group">
+    <input type="number" nbInput placeholder="Edad" formControlName="age" required>
+</div>
+<div class="form-control-group">
+  <input type="number" nbInput placeholder="CUI" formControlName="cui" required>
+</div>
+<div class="form-control-group">
+  <input type="number" nbInput placeholder="NIT" formControlName="nit" required>
+</div>
+<div class="form-control-group">
+  <input nbInput placeholder="Direccion" formControlName="address" required>
+</div>
+</form>
+</nb-card-body>
+  <nb-card-footer>
+    <button class="cancel" nbButton status="danger" (click)="cancel()">Cancelar</button>
+    <button nbButton status="success" (click)="submit()">Registrar</button>
+  </nb-card-footer>
+</nb-card>

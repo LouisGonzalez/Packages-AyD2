@@ -1,0 +1,18 @@
+<nb-card id="table-invoices">
+  <nb-card-header>
+    <form class="form-inline">
+
+    Facturas del cliente: {{clientReceive.name}} {{clientReceive.lastname}}&nbsp;&nbsp;
+    <input type="hidden" nbInput fullWidth placeholder="Email">
+
+    <button type="submit" nbButton status="primary"  (click)="back()" hero>Volver</button>&nbsp;&nbsp;
+    </form>
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings2" [source]="source" (custom)="onCustomAction($event)">
+    </ng2-smart-table>
+
+  </nb-card-body>
+</nb-card>
+<ng-container #container2></ng-container>
+

@@ -8,20 +8,20 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { NbMenuModule } from '@nebular/theme';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
+
 @NgModule({
-  declarations: [
-    ViewsComponent,
-  ],
   imports: [
     CommonModule,
     ViewsRoutingModule,
     AuthModule,
     ThemeModule,
     ReactiveFormsModule,
-    NbMenuModule,
     UsersModule,
     ReportsModule,
-
+    NbMenuModule,
+  ],
+  declarations: [
+    ViewsComponent,
   ]
 })
 export class ViewsModule { }

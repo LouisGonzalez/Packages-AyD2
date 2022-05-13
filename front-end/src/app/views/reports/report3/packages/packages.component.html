@@ -1,0 +1,17 @@
+<nb-card id="table-packages">
+  <nb-card-header>
+    Paquetes de la factura NO. {{invoiceReceive.id}}&nbsp;&nbsp;
+    <input type="hidden" nbInput fullWidth placeholder="Email">
+
+    <button type="submit" nbButton status="primary"  (click)="close()" hero>Volver</button>&nbsp;&nbsp;
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source">
+    </ng2-smart-table>
+
+
+  </nb-card-body>
+  <ng-container #container></ng-container>
+
+</nb-card>
+

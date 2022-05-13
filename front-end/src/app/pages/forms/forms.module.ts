@@ -42,6 +42,6 @@ import { FormsModule as ngFormsModule } from '@angular/forms';
     FormInputsComponent,
     FormLayoutsComponent,
     DatepickerComponent,
-  ],
+  ]
 })
 export class FormsModule { }

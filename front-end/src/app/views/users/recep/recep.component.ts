@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RECEPTIONIST_MENU_ITEMS } from './menu';
 
 @Component({
   selector: 'ngx-recep',
@@ -11,5 +12,7 @@ export class RecepComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  menu = RECEPTIONIST_MENU_ITEMS;
 
 }

@@ -15,12 +15,6 @@ export const routes: Routes = [
     loadChildren: () => import('./views/views.module')
       .then(m => m.ViewsModule)
   },
-
-
-
-
-
-
   {
     path: 'pages',
     loadChildren: () => import('./pages/pages.module')
@@ -56,7 +50,7 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
+  { path: '', redirectTo: 'views', pathMatch: 'full' },
   { path: '**', redirectTo: 'pages' },
 ];
 

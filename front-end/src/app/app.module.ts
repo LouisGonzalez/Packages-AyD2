@@ -19,12 +19,13 @@ import {
   NbSidebarModule,
   NbToastrModule,
   NbWindowModule,
+  NbButtonModule
 } from '@nebular/theme';
-import { ViewsModule } from './views/views.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ],
   imports: [
+    NbButtonModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -40,7 +41,6 @@ import { ViewsModule } from './views/views.module';
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
-    ViewsModule,
   ],
   bootstrap: [AppComponent],
 })

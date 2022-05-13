@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+        <nb-card>
+        <!-- Titulo de actualizar assignacion de operador -->
+        <nb-card-header>
+            <nb-icon icon="edit-outline" pack="eva"></nb-icon>
+            <nb-icon icon="compass-outline" pack="eva"></nb-icon>
+            Asignación de Operador
+        </nb-card-header>
+        <nb-card-body>
+            <!-- Formulario para asignar un operador -->
+            <form [formGroup]="formOperatorAssigment">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!-- Operador actual  -->
+                        <div class="form-group">
+                            <label for="currentOperator" class="label">Operador actual</label> 
+                            <input 
+                            type="text"
+                            formControlName="currentOperator" 
+                            nbInput
+                            fullWidth 
+                            id="currentOperator" 
+                            placeholder="Operador Actual"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <!-- Operador Seleccionado -->
+                        <div class="form-group">
+                            <label for="selectedOperator" class="label">Operador Seleccionado</label> 
+                            <div *ngIf="formOperatorAssigment.get('selectedOperator')?.errors && formOperatorAssigment.get('selectedOperator')?.touched || errors" >
+                                <label class="label" style="color: red;" *ngIf="formOperatorAssigment.get('selectedOperator').hasError('required')">{{ERROR_REQUIRED}}</label>
+                            </div>
+                            <input 
+                            type="text"
+                            [class.inp-invalid]="formOperatorAssigment.get('selectedOperator')?.errors && formOperatorAssigment.get('selectedOperator')?.touched || errors" 
+                            formControlName="selectedOperator" 
+                            nbInput 
+                            fullWidth 
+                            id="selectedOperator" 
+                            placeholder="Operador seleccionado"
+                            readonly
+                            required
+                            />
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-sm-12">
+                    <!-- Seleccionado -->
+                    <label for="operator" class="label">Buscar Operador por CUI: &nbsp;</label>
+                    <br>   
+
+                    <input
+                    [class.inp-invalid]="formOperatorAssigment.get('selectedOperator')?.errors && formOperatorAssigment.get('selectedOperator')?.touched || errors" 
+                    #operatorsSearchInput
+                    nbInput
+                    fullWidth
+                    [ngClass]="{'loading': operatorsLoading}"
+                    [spellcheck]="false"
+                    placeholder="Buscar el operador por CUI."
+                    type="text"
+                    (ngModelChange)="searchOperators($event)"
+                    [(ngModel)]="operatorsSrc"
+                    [ngModelOptions]="{standalone: true}">
+                </div>
+
+                <br>
+
+                <!-- Lista con los operadores obtenidos tras la busqueda -->
+                <nb-card 
+                    [hidden]="operatorsData == null ? true : false"
+                    [nbSpinner]="operatorsLoading" nbSpinnerStatus="primary"
+                    class="list-card"
+                    size="small">
+                    <nb-list>
+                        <nb-list-item 
+                        (click)="setOperator(item.cui, item.name, item.lastname)" 
+                        *ngFor="let item of operatorsData | async"
+                        (mouseenter)="setHoverBorder($event)"
+                        (mouseleave)="setHoverBorder($event)">
+                            {{item.name + ' ' + item.lastname}}
+                            <br>
+                            {{item.cui}}
+                        </nb-list-item>
+                    </nb-list>
+                </nb-card>
+
+                <div class="row">
+                    <button type="submit" nbButton status="primary" (click)="modify_operator()" hero>Editar</button>&nbsp;&nbsp;
+                    <button nbButton status="danger" (click)="onCancel()" hero>Cancelar</button>        
+                </div>
+
+                <br>
+
+                
+        </form>
+        </nb-card-body>
+    </nb-card>
+    </div>
+</div>

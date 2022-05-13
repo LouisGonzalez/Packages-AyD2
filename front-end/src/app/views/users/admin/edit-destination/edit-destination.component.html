@@ -1,0 +1,82 @@
+<div class="row center">
+    <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+      <nb-card>
+        <!-- Titulo del formulario para la creacion de Destinos  -->
+        <nb-card-header>
+          <nb-icon icon="edit-outline" pack="eva"></nb-icon>
+          <nb-icon icon="map-outline" pack="eva"></nb-icon>
+          Destino
+        </nb-card-header>
+        <nb-card-body>
+          <!-- Formulario para destino -->
+          <form [formGroup]="formDestination">
+            
+            <!-- Nombre -->
+            <div class="form-group">
+                <label class="required">*</label>
+                <label for="name" class="label">Nombre</label> 
+                <input
+                    [ngClass]="{
+                        'inp-invalid': formDestination.get('name').invalid && formDestination.get('name').touched, 
+                        'nbInput': formDestination.get('name').valid
+                    }" 
+                    type="text"
+                    formControlName="name"
+                    nbInput 
+                    fullWidth 
+                    id="name" 
+                    placeholder="Nombre"
+                    required
+                />
+                <div *ngIf="formDestination.get('name').invalid && formDestination.get('name').touched" >
+                    <label class="label required" *ngIf="formDestination.get('name').hasError('required')">{{ERROR_REQUIRED}}</label>
+                  </div>  
+            </div>
+            
+            <!-- Precio -->
+            <div class="form-group">
+                <label class="required">*</label>
+                <label for="fee" class="label">Tarifa</label> 
+                <input 
+                    [ngClass]="{
+                        'inp-invalid': formDestination.get('fee').invalid && formDestination.get('fee').touched, 
+                        'nbInput': formDestination.get('fee').valid
+                    }" 
+                    type="number"
+                    formControlName="fee" 
+                    step="0.01" 
+                    min="0" 
+                    nbInput 
+                    fullWidth 
+                    id="fee" 
+                    placeholder="Tarifa"
+                    required
+                />
+                <div *ngIf="formDestination.get('fee').invalid && formDestination.get('fee').touched" >
+                    <label class="label required" *ngIf="formDestination.get('fee').hasError('required')">{{ERROR_REQUIRED}}</label>
+                    <label class="label required" *ngIf="formDestination.get('fee').hasError('min')">{{ERROR_MIN}}</label><br>
+                    <label class="label required" *ngIf="formDestination.get('fee').hasError('pattern')">{{ERROR_NUMBER}}</label>
+                  </div>
+            </div>
+            
+            <!-- Descripcion -->
+            <div class="form-group">
+                <label for="description" class="label">Descripción</label>
+                <textarea 
+                    formControlName="description" 
+                    nbInput 
+                    fullWidth 
+                    id="description"
+                    placeholder="Descripción"> 
+                </textarea>
+            </div>
+            
+            <div class="row">
+              <button type="submit" nbButton status="primary" (click)="updateDestination()" hero>Actualizar</button>&nbsp;&nbsp;
+              <button nbButton status="danger" (click)="onCancel()" hero>Cancelar</button>
+            </div>
+          </form>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>

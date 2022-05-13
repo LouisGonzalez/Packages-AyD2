@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
+      <nb-card>
+        <!-- Titulo del formulario para la creacion de Destinos  -->
+        <nb-card-header>
+          <nb-icon icon="plus" pack="eva"></nb-icon>
+          <nb-icon icon="map-outline" pack="eva"></nb-icon>
+          Destino
+        </nb-card-header>
+        <nb-card-body>
+          <!-- Formulario para destino -->
+          <form [formGroup]="formDestination">
+            
+            <!-- Nombre -->
+            <div class="form-group">
+                <label for="name" class="label">Nombre</label> 
+                <div *ngIf="formDestination.get('name')?.errors && formDestination.get('name')?.touched || errors" >
+                  <label class="label" style="color: red;" *ngIf="formDestination.get('name').hasError('required')">{{ERROR_REQUIRED}}</label>
+                </div>
+                <input 
+                type="text"
+                [class.inp-invalid]="formDestination.get('name')?.errors && formDestination.get('name')?.touched || errors" 
+                formControlName="name"
+                nbInput 
+                fullWidth 
+                id="name" 
+                placeholder="Nombre"
+                required
+                />
+            </div>
+            
+            <!-- Precio -->
+            <div class="form-group">
+                <label for="fee" class="label">Tarifa</label> 
+                <div *ngIf="formDestination.get('fee')?.errors && formDestination.get('fee')?.touched || errors" >
+                  <label class="label" style="color: red;" *ngIf="formDestination.get('fee').hasError('required')">{{ERROR_REQUIRED}}</label>
+                  <label class="label" style="color: red;" *ngIf="formDestination.get('fee').hasError('min')">{{ERROR_MIN}}</label><br>
+                  <label class="label" style="color: red;" *ngIf="formDestination.get('fee').hasError('pattern')">{{ERROR_NUMBER}}</label>
+                </div>
+                <input 
+                type="number"
+                [class.inp-invalid]="formDestination.get('fee')?.errors && formDestination.get('fee')?.touched || errors" 
+                formControlName="fee" 
+                step="0.01" 
+                min="0" 
+                nbInput 
+                fullWidth 
+                id="fee" 
+                placeholder="Tarifa"
+                required
+                />
+            </div>
+            
+            <!-- Descripcion -->
+            <div class="form-group">
+                <label for="description" class="label">Descripción</label>
+                <textarea 
+                formControlName="description" 
+                nbInput 
+                fullWidth 
+                id="description"
+                placeholder="Descripción"
+                ></textarea>
+            </div>
+            
+            <div class="row">
+              <button type="submit" nbButton status="primary" (click)="create_destination()" hero>Agregar</button>&nbsp;&nbsp;
+              <button nbButton status="danger" (click)="onCancel()" hero>Cancelar</button>
+            </div>
+          </form>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>

@@ -1,0 +1,190 @@
+
+
+ <div class="row">
+  <div class="col-md-12">
+    <nb-card class="inline-form-card">
+      <nb-card-header>Busqueda de cliente por NIT:</nb-card-header>
+      <nb-card-body>
+        <div class="form-inline">
+          <input type="number" [(ngModel)]="nitParameter"  nbInput fullWidth >
+          <nb-icon [icon]="icons.ionicons[0]" pack="ion"></nb-icon>
+          <!-- <div *ngIf="searchInput != ''">
+            <a *ngFor="client of clients; let i=index" (click)="functionClick(i)">{{client.NIT}}</a>
+
+          </div> -->
+          <button type="submit" nbButton status="primary" (click)="searchClient()">Buscar</button>
+          <button type="submit" nbButton status="success" (click)="openModalClient()">Nuevo cliente</button>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>Datos del cliente</nb-card-header>
+      <nb-card-body>
+        <div class="form-inline">
+
+          <div class="form-group row">
+            <label for="inputEmail1" class="label col-sm-3 col-form-label">Nombres</label>
+
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth [ngModel]="name" readonly>
+              </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="inputEmail1" class="label col-sm-3 col-form-label">NIT</label>
+
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth [ngModel]="NIT" readonly>
+              </div>
+            </div>
+        </div>
+        <div class="form-inline">
+          <div class="form-group row">
+            <label for="inputEmail1" class="label col-sm-3 col-form-label">Apellidos</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth [ngModel]="lastname" readonly>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputEmail1" class="label col-sm-3 col-form-label">CUI</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth [ngModel]="CUI" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="form-inline">
+          <div class="form-group row">
+            <label for="address1" class="label col-sm-3 col-form-label">Direccion</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth [ngModel]="address" readonly>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="age1" class="label col-sm-3 col-form-label">Edad</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth [ngModel]="age" readonly>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<div class="row" *ngFor="let pack of packages index as i">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>Informacion de paquete No. {{i+1}}</nb-card-header>
+      <nb-card-body>
+        <div class="form-inline">
+
+          <div class="form-group row">
+            <label for="inputEmail1" class="label col-sm-3 col-form-label">Peso (Lb)</label>
+            <div class="col-sm-9">
+              <input type="number" nbInput fullWidth (keyup)="calculateUnitTotal(i)"  [(ngModel)]="packages[i].weight">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="inputEmail1" class="label col-sm-3 col-form-label">Total</label>
+
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth [(ngModel)]="packages[i].unitTotal" readonly>
+              </div>
+            </div>
+        </div>
+        <div class="form-inline">
+          <div class="form-group row">
+            <label for="inputEmail1" class="label col-sm-3 col-form-label">Descripcion</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth  [(ngModel)]="packages[i].description">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="inputEmail1" class="label col-sm-3 col-form-label">Rutas</label>
+              <div class="col-sm-9">
+                <nb-select status="primary" [selected]="1" [(ngModel)]="routeSelected[i]" >
+                  <nb-option *ngFor="let route of routes" [value]="route.id" >{{route.name}}</nb-option>
+                </nb-select>
+                <!-- <input type="text" nbInput fullWidth  readonly> -->
+
+              </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputEmail1" class="label col-sm-3 col-form-label">Destino</label>
+              <div class="col-sm-9">
+                <nb-select status="primary" [selected]="1" [(ngModel)]="destinySelected[i]" (ngModelChange)="findRoutes($event, i)" >
+                  <nb-option *ngFor="let dest of destinys" [value]="dest.id" >{{dest.name}}</nb-option>
+                </nb-select>
+              </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-sm-3 col-sm-9">
+              <nb-checkbox [(ngModel)]="priority[i]">Dar prioridad</nb-checkbox>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="form-inline">
+      <button type="submit" nbButton status="success" (click)="newPackage()">Nuevo paquete</button>
+      <button type="submit" nbButton status="warning" (click)="cleanPackages()">Limpiar cola</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>Resumen de la factura</nb-card-header>
+      <nb-card-body>
+        <div class="form-inline">
+
+          <div class="form-group row">
+            <label for="inputEmail1" class="label col-sm-3 col-form-label">Total de paquetes:</label>
+
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth [value]="packages.length" readonly>
+              </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="inputEmail1" class="label col-sm-3 col-form-label">Total General:</label>
+
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth [(ngModel)]="generalTotal" readonly>
+              </div>
+            </div>
+        </div>
+        <div class="form-inline">
+          <div class="form-group row">
+            <label for="inputEmail1" class="label col-sm-3 col-form-label">Fecha de emision:</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth [(ngModel)]="actualDate" readonly>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-9">
+              <button type="submit" nbButton status="success" (click)="createInvoice()">Confirmar transaccion</button>
+              </div>
+            </div>
+
+        </div>
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
